@@ -36,11 +36,22 @@
   --motion-slow: 480ms;
 }
 
+/* Root size bump — Stratum 2 has a small x-height, so 16px body reads small.
+   112.5% lifts the rem base to 18px, landing body copy in the brand guide's
+   16–18px range (§4.3). Stopgap; a targeted per-component pass can refine later. */
+html {
+  font-size: 112.5%;
+}
+
 html,
 body {
   background: var(--color-bg);
   color: var(--color-fg);
   font-family: var(--font-body), system-ui, sans-serif;
+}
+
+body {
+  line-height: 1.5; /* brand guide §4.3 body line height */
 }
 
 ::selection {

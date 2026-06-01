@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { submitNewsletterSignup } from "@/app/actions/submit-newsletter-signup";
-import { trackEvent } from "@/lib/analytics/plausible";
+import { trackEvent } from "@/lib/analytics/events";
 
 interface Props {
   source: "footer" | "popup";

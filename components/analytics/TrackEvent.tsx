@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import { trackEvent, type PlausibleEvent } from "@/lib/analytics/plausible";
+import { trackEvent, type AnalyticsEvent } from "@/lib/analytics/events";
 
-export function TrackEvent({ name }: { name: PlausibleEvent }) {
+export function TrackEvent({ name }: { name: AnalyticsEvent }) {
   useEffect(() => {
     trackEvent(name);
   }, [name]);
