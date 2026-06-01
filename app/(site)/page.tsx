@@ -11,6 +11,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CTAButton } from "@/components/ui/CTAButton";
 import { Container } from "@/components/ui/Container";
 import { ParallaxBackdrop } from "@/components/ui/ParallaxBackdrop";
+import { MapEmbed } from "@/components/find-us/MapEmbed";
 import dynamic from "next/dynamic";
 import { LocalBusinessJsonLd } from "@/components/seo/LocalBusinessJsonLd";
 
@@ -162,23 +163,26 @@ export default async function HomePage() {
       <ParallaxBackdrop image="/images/F4A1AF15-D276-4C98-8D5A-A7B26E859A3F.png" />
 
       {/* Find us strip */}
-      <section className="relative border-t border-tilt-purple/30 bg-after-dark py-12" aria-labelledby="find-us-heading">
+      <section className="relative border-t border-tilt-purple/30 bg-after-dark py-16" aria-labelledby="find-us-heading">
         <Container>
-          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
             <div>
               <h2
                 id="find-us-heading"
-                className="font-heading text-xl font-bold text-crema"
+                className="font-heading text-2xl font-bold text-crema md:text-3xl"
               >
                 113 Regent Street, Redfern.
               </h2>
-              <p className="mt-1 font-body text-sm text-crema/60">
-                Two minutes from Redfern Station.
+              <p className="mt-2 font-body text-base text-crema/70">
+                Two minutes from Redfern Station. T2, T3 and T8 all stop there.
               </p>
+              <div className="mt-6">
+                <CTAButton href="/find-us" variant="secondary">
+                  Find us
+                </CTAButton>
+              </div>
             </div>
-            <CTAButton href="/find-us" variant="secondary">
-              Find us
-            </CTAButton>
+            <MapEmbed height={300} className="border border-tilt-purple/20" />
           </div>
         </Container>
       </section>

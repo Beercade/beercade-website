@@ -3,13 +3,8 @@ import { sanityClient } from "@/lib/sanity/client";
 import { openingHoursQuery } from "@/lib/sanity/queries";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import dynamic from "next/dynamic";
+import { MapEmbed } from "@/components/find-us/MapEmbed";
 import { LocalBusinessJsonLd } from "@/components/seo/LocalBusinessJsonLd";
-
-const MapEmbed = dynamic(
-  () => import("@/components/find-us/MapEmbed").then((m) => m.MapEmbed),
-  { ssr: false }
-);
 
 export const revalidate = 60;
 
