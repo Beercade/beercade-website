@@ -22,7 +22,7 @@ export function SectionHeading({
       )}
       <Tag
         className={cn(
-          // Gear Wide for page titles (h1); Obviously for section headings (h2/h3)
+          // Archivo Black for page titles (h1); Archivo Bold for section headings (h2/h3)
           Tag === "h1" ? "font-display" : "font-heading",
           "text-3xl font-bold text-crema md:text-4xl"
         )}

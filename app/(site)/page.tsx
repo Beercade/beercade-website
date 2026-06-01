@@ -12,6 +12,7 @@ import { CTAButton } from "@/components/ui/CTAButton";
 import { Container } from "@/components/ui/Container";
 import { ParallaxBackdrop } from "@/components/ui/ParallaxBackdrop";
 import { MapEmbed } from "@/components/find-us/MapEmbed";
+import { KitFormEmbed } from "@/components/newsletter/KitFormEmbed";
 import dynamic from "next/dynamic";
 import { LocalBusinessJsonLd } from "@/components/seo/LocalBusinessJsonLd";
 
@@ -120,6 +121,29 @@ export default async function HomePage() {
         </section>
         </>
       )}
+
+      {/* Newsletter signup */}
+      <section
+        className="border-y border-tilt-purple/30 bg-last-train-purple py-16"
+        aria-labelledby="newsletter-heading"
+      >
+        <Container>
+          <div className="mx-auto max-w-xl text-center">
+            <h2
+              id="newsletter-heading"
+              className="font-heading text-2xl font-bold text-crema md:text-3xl"
+            >
+              Thursday nights, tournament dates, new machines.
+            </h2>
+            <p className="mt-3 font-body text-base text-crema/70">
+              {/* FILLME: in-voice newsletter pitch line */}
+            </p>
+            <div className="mt-6">
+              <KitFormEmbed uid="68d090bd38" />
+            </div>
+          </div>
+        </Container>
+      </section>
 
       <ParallaxBackdrop image="/images/4D862F80-A335-45C0-8BB5-2EBDC22F8837.png" />
 

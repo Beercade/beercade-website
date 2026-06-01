@@ -16,14 +16,13 @@
   --color-action: var(--color-high-score-orange);
   --color-text-muted: rgb(247 239 227 / 0.72);
 
-  /* Type — display/heading/body via Adobe Fonts (Typekit kit xel4rnf), accent via next/font/google */
-  /* Gear Wide is reserved for titles (H1, hero, wordmark, big numerals). */
-  --font-display: "gear-wide", system-ui, sans-serif;
-  /* Obviously Narrow carries section + card headings (H2/H3). */
-  /* Narrow ships Semibold (600) + Bold (700) — matches the font-semibold/font-bold heading classes. */
-  /* Swap to "obviously" (Normal, 400/600 only) or "obviously-condensed" to retune width. */
-  --font-heading: "obviously-narrow", system-ui, sans-serif;
-  --font-body: "stratum-2-web", system-ui, sans-serif;
+  /* Type — Archivo superfamily via next/font/google (brand guide §4), accent via next/font/google */
+  /* Archivo Black is reserved for display: H1, hero, wordmark, buttons, big numerals. */
+  --font-display: var(--font-archivo-black), system-ui, sans-serif;
+  /* Headings (H2/H3) use Archivo Bold — the weight step-down from Archivo Black marks
+     the hierarchy. The font-semibold/font-bold heading classes pick up Archivo's 700. */
+  --font-heading: var(--font-archivo), system-ui, sans-serif;
+  --font-body: var(--font-archivo), system-ui, sans-serif;
   --font-accent: var(--font-press-start);
 
   /* Spacing rhythm */
@@ -36,9 +35,8 @@
   --motion-slow: 480ms;
 }
 
-/* Root size bump — Stratum 2 has a small x-height, so 16px body reads small.
-   112.5% lifts the rem base to 18px, landing body copy in the brand guide's
-   16–18px range (§4.3). Stopgap; a targeted per-component pass can refine later. */
+/* Root size bump — 112.5% lifts the rem base to 18px, the top of the brand
+   guide's 16–18px body range (§4.3). Archivo carries well at this size. */
 html {
   font-size: 112.5%;
 }

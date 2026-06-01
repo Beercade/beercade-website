@@ -1,11 +1,10 @@
 # Beercade Brand Guide
 
-Regent Street, Redfern NSW · v2.0 · May 2026
+Regent Street, Redfern NSW · v3.0 · June 2026
 
 Owner: Roger Robertson
 Author: Brand & Marketing Partner
 Status: Working document — supersedes all prior brand collateral except the existing wordmark and mascot.
-Revision: v2.0 (30 May 2026) — typography system replaced. Space Grotesk and Inter retired in favour of Gear Wide for titles, Obviously Narrow for headings, and Stratum 2 for body, all served via Adobe Fonts (Typekit kit `xel4rnf`); Press Start 2P retained as the pixel accent. Section 4 rewritten; sections 10 and 11 updated to match.
 
 ---
 
@@ -14,6 +13,8 @@ Revision: v2.0 (30 May 2026) — typography system replaced. Space Grotesk and I
 Beercade is a pinball-and-arcade bar in Redfern — inner south Sydney, two minutes from the station — that pulls a crowd of mid-30s regulars from across the Inner West and inner south, function bookers, and pinball obsessives. The brand should read as one thing above all else: a proper pub night that happens to have something to do. Not a gaming venue. Not a kids' birthday venue. Not a try-hard "experiential" venue. A confident, slightly deadpan adult bar with an unusually good lineup of machines and an unusually low tolerance for wankery.
 
 This guide locks the colour palette (purple, orange, warm white), the typography system, the layout principles, the photography direction, and the brand voice rules. The existing neon-tube wordmark and mascot are retained. Everything else is being rebuilt.
+
+> Revision note (1 June 2026): typography system replaced again. Display moves from Gear Wide to **Archivo Black**; body moves from Stratum 2 to **Archivo** (regular family). Both are free Google Fonts from the same superfamily (Omnibus-Type). Reason: Gear Wide read cold and ran wide — a four-word headline ate horizontal space and forced constant line-break rework — and the earlier Space Grotesk system read generic. Both lived in the same cold-geometric lane, which was the actual problem. Archivo Black is a bold grotesque with poster weight that matches the gig-poster layout brief (Section 6); Archivo regular sits under it as a tight, readable body. The operational win: both are free Google Fonts, so the Creative Cloud activation requirement is gone — install once from Google Fonts, no per-machine font syncing. External docx files should still be PDF-exported (with embedded fonts) before sharing, as a precaution. Sections 4, 10, and 11 are updated accordingly.
 
 ---
 
@@ -99,37 +100,32 @@ Accessibility: Crema on Last Train Purple passes WCAG AA at body sizes; Crema on
 
 ## 4. Typography
 
-Three typefaces with distinct jobs, plus one pixel accent. The title, heading, and body faces are licensed through Adobe Fonts (Typekit kit `xel4rnf`), which covers web delivery and desktop sync. Press Start 2P is free via Google Fonts.
+Two weights of one free superfamily plus one optional tertiary for arcade accent moments. Both faces are Google Fonts — install once on each machine from fonts.google.com (or load the web kit on the site); no Creative Cloud activation, no per-machine font syncing. Documents going to external recipients should still be PDF-exported (with embedded fonts) so Word substitution doesn't break the brand.
 
-Practical note: the type now sits behind an Adobe Fonts subscription rather than a free licence, so staff producing ad-hoc print (table cards, blackboard mock-ups, function flyers) need to be signed into the venue Adobe account, or work from pre-exported templates. Flag for Roger before the next print run.
+### 4.1 Display — Archivo Black
 
-### 4.1 Titles — Gear Wide
+Used for all major headlines, posters, web hero text, social tile copy, venue signage, and the wordmark applications outside the existing neon-tube logo. Track slightly tight (-0.01em to -0.02em) at large sizes. Set in all caps for short slogans and event titles only; otherwise sentence case.
 
-The widest, heaviest voice, rationed hard. Used only for titles: the one H1 on each surface, the web hero word, poster headlines, the venue name on signage, and big numerals (prices, high scores, countdowns). Ultra (900) for the hero word only; Bold (700) for everything else. Set tight, sentence case, all caps for short slogans and event titles only.
+Why this typeface: a bold grotesque by Omnibus-Type with real poster weight. Reads as confident and deliberate — the typographic equivalent of a screen-printed gig poster, which is exactly the register Section 6 asks for. It carries a hero word at 180pt and still holds at 24pt on a function quote, and unlike Gear Wide it sits at a normal width, so headlines don't sprawl.
 
-Why this typeface: a wide industrial display face that reads like a sign over a door, not a tech logo. On every heading it stops meaning anything; reserved for the top of a surface, it does the brand's loudest work.
+Note: Archivo Black is a single fixed weight — heavy and tight by design. It does the shouting; it does not flex. Anywhere you'd want a lighter "sub-display" tier (H2, sub-heads, a quieter deck), step down to **Archivo Bold** from the regular family rather than setting Archivo Black smaller. That keeps a readable weight contrast instead of two near-identical blocks of black.
 
-### 4.2 Headings — Obviously Narrow
+### 4.2 Body — Archivo
 
-Section and card headings (H2, H3), sub-display on posters, and button labels. Semibold (600) for most headings, Bold (700) where a section needs to carry. The Narrow width is the point: it contrasts Gear Wide's extreme width, so the step from title to heading reads as hierarchy, not repetition.
+Used for all long-form copy, web body, email body, function quotes, signage paragraphs, menus, and the sub-display/H2 tier (Bold). Regular for body, Medium for emphasis, Bold for inline subheads and H2. Set 16–18px on web, 11pt on print, with 1.5 line height.
 
-Why this typeface: Obviously was drawn from the stretched and squished lettering on vinyl shopfront signage, which is the gig-poster register Beercade wants. It has personality without shouting, and it bridges the loud title and the technical body.
+Why this typeface: the regular-width sibling of Archivo Black, also Omnibus-Type. A clean, slightly squared grotesque built for both screen and print. Sitting it directly under Archivo Black gives a one-superfamily system — the headline and the paragraph are visibly related without the body competing. Strong long-read legibility; if a single document exceeds ~3,000 words of body copy, drop to 10pt and tighten the line-height to 1.4.
 
-### 4.3 Body — Stratum 2
+### 4.3 Tertiary accent — Press Start 2P (use sparingly)
 
-All long-form copy: web body, email body, function quotes, signage paragraphs, menus. Regular (400) for body, Bold (700) for emphasis and inline subheads. Set 16–18px on web, 11pt on print, 1.5 line height. Its square, engineered shapes read as utilitarian, which suits a venue that lists opening hours and machine names more than it writes marketing prose.
+A literal arcade pixel font, used only in specific arcade-homage contexts: "HI SCORE" leaderboards, retro flourishes inside event posters, the digital countdown to event start. No more than five words on screen at any time, no body copy use, no headlines longer than two words. If in doubt, use Gear Wide instead.
 
-### 4.4 Pixel accent — Press Start 2P (use sparingly)
+### 4.4 Hierarchy rules
 
-A literal arcade pixel font, used only in arcade-homage contexts: "HI SCORE" leaderboards, retro flourishes inside event posters, the digital countdown to event start. No more than five words on screen at once, no body copy, no headline longer than two words. If in doubt, use Obviously Narrow instead.
-
-### 4.5 Hierarchy rules
-
-- One H1 per surface. Gear Wide Bold (Ultra for the hero word only), sentence case, no exclamation marks above the fold.
-- H2 and H3 in Obviously Narrow Semibold; Bold where a section needs more weight.
-- Body in Stratum 2 Regular. Stratum 2 Bold for emphasis inside body copy; bold sparingly, never to lend weight to filler.
-- Buttons in Obviously Narrow Semibold, all caps, tight tracking. Gear Wide is too wide to read at button size.
-- Big numerals (prices, high scores, the countdown) in Gear Wide; they should read like a scoreboard.
+- One H1 per surface. Archivo Black, sentence case, no exclamation marks above the fold.
+- H2s in Archivo Bold (not Archivo Black), 1.5x body size — the weight step down from H1 is what marks the hierarchy.
+- Body in Archivo Regular. Archivo Medium for emphasis inside body copy — bold sparingly, never to lend weight to filler.
+- Buttons in Archivo Black, all caps, tracking -0.01em.
 
 ---
 
@@ -219,10 +215,10 @@ The brand voice is the single highest-leverage element in this guide. It runs ac
 ## 10. Channel-specific brand rules
 
 - **Website.** Hero loop autoplays muted, full-bleed video of the room at 9pm Thursday. Tilt Purple background. Single CTA above the fold: BOOK A FUNCTION. Everything else is one scroll-depth down.
-- **Instagram grid.** No third-party templates. Posts are either: a photo, a Reel cover, or a single Gear Wide slogan on a Tilt Purple ground. Three of the nine most recent posts must always include a visible machine.
+- **Instagram grid.** No third-party templates. Posts are either: a photo, a Reel cover, or a single Archivo Black slogan on a Tilt Purple ground. Three of the nine most recent posts must always include a visible machine.
 - **Google Business Profile.** Category set to "Bar" first, "Amusement Centre" second. Photos rotated quarterly. Reviews responded to in voice within 72 hours.
 - **Email (Kit).** Sender name: *Beercade Australia*. Sender email: *hello@beercade.com.au*. Subject lines lowercase except machine names. No emoji in subject lines.
-- **In-venue signage.** Crema text on Tilt Purple: Gear Wide for the venue name, Obviously Narrow Semibold for headers, Stratum 2 for instructions. The blackboard is hand-lettered — that is the one exception to the typography system.
+- **In-venue signage.** Crema text on Tilt Purple, Archivo Black for headers, Archivo for instructions. The blackboard is hand-lettered — that is the one exception to the typography system.
 
 ---
 
@@ -232,7 +228,7 @@ The current site at *beercadeaustralia.com.au* leans on an amber-and-teal palett
 
 - **CSS variables.** Replace `--amber`, `--amber-2`, `--teal`, `--teal-dim` with `--tilt-purple` (`#7A3CE2`), `--high-score-orange` (`#FF5E1F`), `--crema` (`#F7EFE3`), `--last-train` (`#2A1745`), and `--after-dark` (`#14101A`). The `--text` variable shifts from `#f5f1e8` to `#F7EFE3` (close but on-system).
 - **Body background.** Replace the dual amber/teal radial gradients with a single low-opacity Tilt Purple wash on Last Train Purple ground.
-- **Type system (implemented).** The Adobe Fonts kit `xel4rnf` now serves Gear Wide (titles), Obviously Narrow (headings), and Stratum 2 (body); Press Start 2P loads via `next/font/google`. CSS tokens: `--font-display: "gear-wide"`, `--font-heading: "obviously-narrow"`, `--font-body: "stratum-2-web"`. See section 4 for the rules. (This supersedes the original recommendation to use Space Grotesk via Google Fonts.)
+- **Display font.** The current setup falls back to Orbitron; switch to Archivo Black via Google Fonts for the website build. In `globals.css`, set `--font-display` to `'Archivo Black', sans-serif` and remove the Orbitron and Impact fallbacks from the `.display-font` class. Body switches to Archivo (regular family) loaded from the same Google Fonts request. No Adobe Fonts kit needed — one `<link>` to fonts.googleapis.com covers both.
 - **Glassmorphic panels.** Replace `.panel` and `.panel-dark` with flat Last Train Purple cards with a 1px Tilt Purple border; remove the backdrop blur.
 - **Display-font glow.** The current `.display-font` class layers four coloured text-shadows in teal and amber. Replace with a single Tilt Purple text-shadow at lower opacity, used only on the hero word.
 - **Scanlines and grid overlay.** Keep both — they're on-brand. Recolour the grid overlay lines to Crema at 6% opacity.

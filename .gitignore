@@ -20,6 +20,9 @@ import.env
 *.pem
 Thumbs.db
 
+# claude code — local tooling config
+.claude/
+
 # debug logs
 npm-debug.log*
 yarn-debug.log*

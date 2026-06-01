@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
-import { NewsletterSignup } from "@/components/newsletter/NewsletterSignup";
 
 const links = [
   { label: "Machines", href: "/machines" },
@@ -51,18 +50,10 @@ export function Footer() {
         </div>
 
         <div className="mt-10 border-t border-tilt-purple/20 pt-8">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-sm space-y-2">
-              <p className="font-body text-sm font-medium text-crema">
-                Thursday nights, tournament dates, new machines.
-              </p>
-              <NewsletterSignup source="footer" />
-            </div>
-            <p className="font-body text-xs text-crema/40">
-              © {new Date().getFullYear()} Beercade Australia. Licensed venue.
-              Drink responsibly.
-            </p>
-          </div>
+          <p className="font-body text-xs text-crema/40">
+            © {new Date().getFullYear()} Beercade Australia. Licensed venue.
+            Drink responsibly.
+          </p>
         </div>
       </Container>
     </footer>
