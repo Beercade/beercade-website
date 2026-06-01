@@ -13,7 +13,7 @@ const links = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-tilt-purple/30 bg-after-dark py-12">
+    <footer className="border-t border-tilt-purple/30 bg-last-train-purple py-12">
       <Container>
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div className="space-y-2">

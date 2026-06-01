@@ -163,7 +163,7 @@ export default async function HomePage() {
       <ParallaxBackdrop image="/images/F4A1AF15-D276-4C98-8D5A-A7B26E859A3F.png" />
 
       {/* Find us strip */}
-      <section className="relative border-t border-tilt-purple/30 bg-after-dark py-16" aria-labelledby="find-us-heading">
+      <section className="relative border-t border-tilt-purple/30 bg-last-train-purple py-16" aria-labelledby="find-us-heading">
         <Container>
           <div className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
             <div>

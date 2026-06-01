@@ -227,7 +227,7 @@ export function HeroLoop({
       {/* Wordmark — neon sign, parallaxed; powers down on scroll.
           Sits top-centre on mobile, right-of-headline on desktop. */}
       <div
-        className="pointer-events-none absolute inset-x-0 top-[6%] z-[3] flex justify-center px-6 md:inset-x-auto md:left-auto md:right-[4%] md:top-1/2 md:-translate-y-1/2 md:justify-end md:px-0"
+        className="pointer-events-none absolute inset-x-0 top-[6%] z-[3] flex justify-center px-6 md:inset-x-auto md:left-auto md:right-[3%] md:top-1/2 md:-translate-y-1/2 md:justify-end md:px-0"
         style={{ perspective: "1000px", opacity: logoFade }}
         aria-hidden="true"
       >
@@ -245,7 +245,7 @@ export function HeroLoop({
             height={514}
             priority
             sizes="(max-width: 768px) 58vw, 360px"
-            className={`h-auto w-[min(58vw,300px)] md:w-[min(34vw,360px)] ${reducedMotion ? "" : "hero-neon-flicker"}`}
+            className={`h-auto w-[min(56vw,280px)] md:w-[min(31vw,330px)] ${reducedMotion ? "" : "hero-neon-flicker"}`}
             style={{
               filter: `drop-shadow(0 0 ${20 * logoGlow}px rgb(122 60 226 / ${
                 0.55 * logoGlow
@@ -269,7 +269,7 @@ export function HeroLoop({
         }}
       >
         <div className="mx-auto w-full max-w-layout px-(--grid-gutter-mobile) md:px-(--grid-gutter)">
-          <h1 className="max-w-3xl font-display text-5xl font-bold text-crema md:text-7xl lg:text-8xl">
+          <h1 className="max-w-2xl font-display text-3xl font-bold text-crema sm:text-5xl md:max-w-[56%] md:text-6xl lg:text-7xl">
             {headline ?? (
               /* PLACEHOLDER */
               "The pub night that actually has something to do."
