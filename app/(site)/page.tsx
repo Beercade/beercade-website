@@ -10,6 +10,7 @@ import { EventCard } from "@/components/event/EventCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CTAButton } from "@/components/ui/CTAButton";
 import { Container } from "@/components/ui/Container";
+import { ParallaxBackdrop } from "@/components/ui/ParallaxBackdrop";
 import dynamic from "next/dynamic";
 import { LocalBusinessJsonLd } from "@/components/seo/LocalBusinessJsonLd";
 
@@ -43,6 +44,8 @@ export default async function HomePage() {
 
       {/* Machines teaser — 6 featured */}
       {homepage?.featuredMachines?.length > 0 && (
+        <>
+        <ParallaxBackdrop image="/images/22A7540B-2514-4CCD-B2E7-C6F8B2E7D7F0.png" />
         <section className="py-20" aria-labelledby="machines-heading">
           <Container>
             <div className="mb-10 flex items-end justify-between gap-4">
@@ -74,10 +77,13 @@ export default async function HomePage() {
             </div>
           </Container>
         </section>
+        </>
       )}
 
       {/* What's on — 3 upcoming events */}
       {homepage?.featuredEvents?.length > 0 && (
+        <>
+        <ParallaxBackdrop image="/images/254BC9ED-D70C-44A4-B7AE-7CC00C58E59B.png" />
         <section className="bg-tilt-purple/10 py-20" aria-labelledby="events-heading">
           <Container>
             <div className="mb-10 flex items-end justify-between gap-4">
@@ -111,7 +117,10 @@ export default async function HomePage() {
             </div>
           </Container>
         </section>
+        </>
       )}
+
+      <ParallaxBackdrop image="/images/4D862F80-A335-45C0-8BB5-2EBDC22F8837.png" />
 
       {/* Function strip */}
       <section className="py-20" aria-labelledby="functions-heading">
@@ -150,8 +159,10 @@ export default async function HomePage() {
         </Container>
       </section>
 
+      <ParallaxBackdrop image="/images/F4A1AF15-D276-4C98-8D5A-A7B26E859A3F.png" />
+
       {/* Find us strip */}
-      <section className="border-t border-tilt-purple/30 bg-after-dark py-12" aria-labelledby="find-us-heading">
+      <section className="relative border-t border-tilt-purple/30 bg-after-dark py-12" aria-labelledby="find-us-heading">
         <Container>
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div>

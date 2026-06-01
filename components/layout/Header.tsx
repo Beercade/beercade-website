@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { CTAButton } from "@/components/ui/CTAButton";
 
@@ -15,10 +16,17 @@ export function Header() {
         <div className="flex h-16 items-center justify-between gap-6">
           <Link
             href="/"
-            className="font-display text-lg font-bold uppercase tracking-tight text-crema focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crema"
+            className="shrink-0 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crema"
             aria-label="Beercade — home"
           >
-            Beercade
+            <Image
+              src="/images/beercade-horizontal-crema.png"
+              alt="Beercade"
+              width={271}
+              height={129}
+              priority
+              className="h-8 w-auto md:h-9"
+            />
           </Link>
 
           <ul className="hidden items-center gap-6 md:flex" role="list">

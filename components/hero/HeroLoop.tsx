@@ -128,6 +128,13 @@ export function HeroLoop({
   const scrollScale =
     1 + Math.min(capped * (isMobile ? 0.00006 : 0.00012), isMobile ? 0.025 : 0.06);
 
+  // Hero wordmark — a neon sign that powers down as you descend into the venue.
+  const logoLift = capped * (isMobile ? 0.4 : 0.6); // foreground parallax, faster than content
+  const logoScale = 1 - Math.min(capped / 2600, 0.18); // eases 1 → ~0.82
+  const logoTilt = Math.min(capped / 26, 16); // rotateX 0 → 16deg — look up as you pass under
+  const logoFade = 1 - Math.min(capped / 440, 1); // gone by ~440px so it never fights the headline
+  const logoGlow = Math.max(0, 1 - capped / 480); // neon dims as the sign switches off
+
   return (
     <section
       className="relative flex min-h-[90svh] items-end overflow-hidden bg-tilt-purple"
@@ -216,6 +223,41 @@ export function HeroLoop({
         }}
         aria-hidden="true"
       />
+
+      {/* Wordmark — neon sign, parallaxed; powers down on scroll.
+          Sits top-centre on mobile, right-of-headline on desktop. */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-[6%] z-[3] flex justify-center px-6 md:inset-x-auto md:left-auto md:right-[4%] md:top-1/2 md:-translate-y-1/2 md:justify-end md:px-0"
+        style={{ perspective: "1000px", opacity: logoFade }}
+        aria-hidden="true"
+      >
+        <div
+          style={{
+            transform: `translateY(${-logoLift}px) scale(${logoScale}) rotateX(${logoTilt}deg)`,
+            transformOrigin: "center top",
+            willChange: "transform",
+          }}
+        >
+          <Image
+            src="/images/beercade-wordmark.png"
+            alt=""
+            width={788}
+            height={514}
+            priority
+            sizes="(max-width: 768px) 58vw, 360px"
+            className={`h-auto w-[min(58vw,300px)] md:w-[min(34vw,360px)] ${reducedMotion ? "" : "hero-neon-flicker"}`}
+            style={{
+              filter: `drop-shadow(0 0 ${20 * logoGlow}px rgb(122 60 226 / ${
+                0.55 * logoGlow
+              })) drop-shadow(0 0 ${40 * logoGlow}px rgb(122 60 226 / ${
+                0.3 * logoGlow
+              })) drop-shadow(0 0 ${56 * logoGlow}px rgb(255 94 31 / ${
+                0.22 * logoGlow
+              }))`,
+            }}
+          />
+        </div>
+      </div>
 
       {/* Content */}
       <div

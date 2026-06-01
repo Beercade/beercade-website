@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { NewsletterSignup } from "@/components/newsletter/NewsletterSignup";
 
@@ -16,9 +17,15 @@ export function Footer() {
       <Container>
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div className="space-y-2">
-            <p className="font-display text-lg font-bold uppercase tracking-tight text-crema">
-              Beercade
-            </p>
+            <Link href="/" aria-label="Beercade — home" className="inline-block rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crema">
+              <Image
+                src="/images/beercade-horizontal-crema.png"
+                alt="Beercade"
+                width={271}
+                height={129}
+                className="h-10 w-auto"
+              />
+            </Link>
             <p className="font-body text-sm text-crema/60">
               113 Regent Street, Redfern NSW 2016
             </p>

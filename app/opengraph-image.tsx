@@ -5,43 +5,43 @@ export const alt = "Beercade — Arcade bar in Redfern";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function Image() {
+export default async function Image() {
+  const wordmark = await fetch(
+    new URL("./og-wordmark.png", import.meta.url)
+  ).then((res) => res.arrayBuffer());
+
   return new ImageResponse(
     (
       <div
         style={{
-          background: "#7A3CE2",
           width: "100%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          alignItems: "flex-start",
-          justifyContent: "flex-end",
-          padding: "80px",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 44,
+          background: "#2A1745",
+          backgroundImage:
+            "radial-gradient(circle at 72% 26%, rgba(122,60,226,0.55), transparent 46%), radial-gradient(circle at 24% 80%, rgba(255,94,31,0.28), transparent 44%)",
         }}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={wordmark as unknown as string}
+          width={760}
+          height={362}
+          alt=""
+        />
         <div
           style={{
             color: "#F7EFE3",
-            fontSize: 88,
-            fontWeight: 700,
+            opacity: 0.72,
+            fontSize: 30,
             fontFamily: "sans-serif",
-            letterSpacing: "-2px",
-            lineHeight: 1,
           }}
         >
-          BEERCADE
-        </div>
-        <div
-          style={{
-            color: "#F7EFE3",
-            opacity: 0.6,
-            fontSize: 28,
-            fontFamily: "sans-serif",
-            marginTop: 16,
-          }}
-        >
-          113 Regent Street, Redfern · Arcade bar
+          113 Regent Street, Redfern · Pinball, arcade, cold beer
         </div>
       </div>
     ),
