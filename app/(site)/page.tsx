@@ -11,7 +11,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CTAButton } from "@/components/ui/CTAButton";
 import { Section } from "@/components/ui/Section";
 import { FeatureImage } from "@/components/ui/FeatureImage";
-import { KitFormEmbed } from "@/components/newsletter/KitFormEmbed";
+import { NewsletterSignup } from "@/components/newsletter/NewsletterSignup";
 import { MapEmbed } from "@/components/find-us/MapEmbed";
 import dynamic from "next/dynamic";
 import { LocalBusinessJsonLd } from "@/components/seo/LocalBusinessJsonLd";
@@ -148,15 +148,16 @@ export default async function HomePage() {
 
       {/* Newsletter signup */}
       <Section tone="raised" hairline aria-labelledby="newsletter-heading">
-        <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
+        <div className="grid gap-8 md:grid-cols-[1.2fr_1fr] md:items-center">
           <div>
+            <p className="t-kicker mb-3">The list</p>
             <h2 id="newsletter-heading" className="t-h2 text-crema text-balance">
               Thursday nights, tournament dates, new machines.
             </h2>
             {/* FILLME: in-voice newsletter pitch line */}
           </div>
-          <div className="w-full md:w-auto md:min-w-100">
-            <KitFormEmbed uid="68d090bd38" />
+          <div className="w-full">
+            <NewsletterSignup source="footer" />
           </div>
         </div>
       </Section>
