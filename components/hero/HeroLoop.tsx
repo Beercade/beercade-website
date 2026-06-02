@@ -43,10 +43,8 @@ export function HeroLoop({
   const [activeIdx, setActiveIdx] = useState(0);
   const [fadingIdx, setFadingIdx] = useState<number | null>(null);
   const [offsetY, setOffsetY] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Build a normalised slide list — fall back to legacy single-media props
   const normalisedSlides: HeroSlide[] = slides?.length
     ? slides
     : videoUrl
@@ -81,15 +79,14 @@ export function HeroLoop({
     };
   }, [activeIdx, reducedMotion, hasMultiple, normalisedSlides.length]);
 
-  // Scroll-driven parallax (vanilla, rAF-throttled). Skipped under reduced motion.
+  // One gentle scroll layer: the media drifts and the content fades as you
+  // descend. No differential multi-layer parallax — restraint reads as confidence.
   useEffect(() => {
     if (reducedMotion) {
       setOffsetY(0);
       return;
     }
-
     let frame = 0;
-    const updateViewport = () => setIsMobile(window.innerWidth < 768);
     const onScroll = () => {
       if (frame) return;
       frame = window.requestAnimationFrame(() => {
@@ -97,15 +94,10 @@ export function HeroLoop({
         frame = 0;
       });
     };
-
-    updateViewport();
     onScroll();
-    window.addEventListener("resize", updateViewport);
     window.addEventListener("scroll", onScroll, { passive: true });
-
     return () => {
       if (frame) window.cancelAnimationFrame(frame);
-      window.removeEventListener("resize", updateViewport);
       window.removeEventListener("scroll", onScroll);
     };
   }, [reducedMotion]);
@@ -118,29 +110,16 @@ export function HeroLoop({
     setTimeout(() => setFadingIdx(null), FADE_DURATION);
   };
 
-  // Cap the scroll input so the hero settles rather than drifting forever.
-  const capped = Math.min(offsetY, 1600);
-  const mediaTranslate = capped * (isMobile ? 0.14 : 0.26);
-  const gradientTranslate = capped * (isMobile ? 0.22 : 0.42);
-  const glowTranslate = capped * (isMobile ? 0.1 : 0.18);
-  const contentTranslate = capped * (isMobile ? 0.12 : 0.2);
-  const contentOpacity = 1 - Math.min(capped / 520, 1);
-  const scrollScale =
-    1 + Math.min(capped * (isMobile ? 0.00006 : 0.00012), isMobile ? 0.025 : 0.06);
-
-  // Hero wordmark — a neon sign that powers down as you descend into the venue.
-  const logoLift = capped * (isMobile ? 0.4 : 0.6); // foreground parallax, faster than content
-  const logoScale = 1 - Math.min(capped / 2600, 0.18); // eases 1 → ~0.82
-  const logoTilt = Math.min(capped / 26, 16); // rotateX 0 → 16deg — look up as you pass under
-  const logoFade = 1 - Math.min(capped / 440, 1); // gone by ~440px so it never fights the headline
-  const logoGlow = Math.max(0, 1 - capped / 480); // neon dims as the sign switches off
+  const capped = Math.min(offsetY, 800);
+  const mediaTranslate = capped * 0.15;
+  const contentOpacity = 1 - Math.min(capped / 480, 1);
 
   return (
     <section
-      className="relative flex min-h-[90svh] items-end overflow-hidden bg-tilt-purple"
+      className="relative flex min-h-[88svh] items-end overflow-hidden bg-tilt-purple"
       aria-label="Hero"
     >
-      {/* Slide stack */}
+      {/* Slide stack — photography carries the hero (brand §7). */}
       {normalisedSlides.map((slide, i) => {
         const isActive = i === activeIdx;
         const isFading = i === fadingIdx;
@@ -156,7 +135,7 @@ export function HeroLoop({
               opacity: isActive ? 1 : 0,
               transitionDuration: `${FADE_DURATION}ms`,
               zIndex: isActive ? 1 : 0,
-              transform: `translateY(${mediaTranslate}px) scale(${scrollScale})`,
+              transform: `translateY(${mediaTranslate}px)`,
               willChange: "transform, opacity",
             }}
             aria-hidden={!isActive}
@@ -170,7 +149,7 @@ export function HeroLoop({
                 loop
                 muted
                 playsInline
-                className="h-full w-full object-cover opacity-40"
+                className="h-full w-full object-cover opacity-[0.62]"
               />
             ) : slide.mediaType === "image" && slide.image ? (
               <div className={`h-full w-full ${!reducedMotion ? kbClass : ""}`}>
@@ -179,7 +158,7 @@ export function HeroLoop({
                   alt={(slide.image as { alt?: string }).alt ?? "Beercade venue"}
                   fill
                   priority={i === 0}
-                  className="object-cover opacity-40"
+                  className="object-cover opacity-[0.62]"
                   sizes="100vw"
                 />
               </div>
@@ -188,97 +167,36 @@ export function HeroLoop({
         );
       })}
 
-      {/* Depth gradient — darkens toward the bottom so content stays legible */}
+      {/* Single legibility gradient — darkens toward the bottom where the type sits. */}
       <div
         className="absolute inset-0 z-[2]"
         style={{
-          transform: `translateY(${gradientTranslate}px)`,
           background:
-            "linear-gradient(to bottom, rgb(20 16 26 / 0.10), rgb(20 16 26 / 0.35) 42%, rgb(20 16 26 / 0.78) 100%)",
+            "linear-gradient(to bottom, rgb(20 16 26 / 0.15) 0%, rgb(20 16 26 / 0.30) 45%, rgb(20 16 26 / 0.82) 100%)",
         }}
         aria-hidden="true"
       />
 
-      {/* Brand glow accents — Tilt Purple + High Score Orange, parallaxed */}
-      <div
-        className="absolute inset-0 z-[2]"
-        style={{
-          transform: `translateY(${glowTranslate}px) scale(1.06)`,
-          background:
-            "radial-gradient(circle at 72% 28%, rgb(122 60 226 / 0.30), transparent 32%), radial-gradient(circle at 24% 76%, rgb(255 94 31 / 0.20), transparent 30%)",
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Grid + noise texture */}
-      <div className="grid-overlay absolute inset-0 z-[2] opacity-30" aria-hidden="true" />
+      {/* One faint texture for depth. */}
       <div className="hero-noise absolute inset-0 z-[2]" aria-hidden="true" />
-
-      {/* Scanline overlay */}
-      <div
-        className="absolute inset-0 z-[2]"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(0deg, transparent, transparent 3px, rgb(0 0 0 / 0.05) 3px, rgb(0 0 0 / 0.05) 4px)",
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Wordmark — neon sign, parallaxed; powers down on scroll.
-          Sits top-centre on mobile, right-of-headline on desktop. */}
-      <div
-        className="pointer-events-none absolute inset-x-0 top-[6%] z-[3] flex justify-center px-6 md:inset-x-auto md:left-auto md:right-[3%] md:top-1/2 md:-translate-y-1/2 md:justify-end md:px-0"
-        style={{ perspective: "1000px", opacity: logoFade }}
-        aria-hidden="true"
-      >
-        <div
-          style={{
-            transform: `translateY(${-logoLift}px) scale(${logoScale}) rotateX(${logoTilt}deg)`,
-            transformOrigin: "center top",
-            willChange: "transform",
-          }}
-        >
-          <Image
-            src="/images/beercade-wordmark.png"
-            alt=""
-            width={788}
-            height={514}
-            priority
-            sizes="(max-width: 768px) 58vw, 360px"
-            className={`h-auto w-[min(56vw,280px)] md:w-[min(31vw,330px)] ${reducedMotion ? "" : "hero-neon-flicker"}`}
-            style={{
-              filter: `drop-shadow(0 0 ${20 * logoGlow}px rgb(122 60 226 / ${
-                0.55 * logoGlow
-              })) drop-shadow(0 0 ${40 * logoGlow}px rgb(122 60 226 / ${
-                0.3 * logoGlow
-              })) drop-shadow(0 0 ${56 * logoGlow}px rgb(255 94 31 / ${
-                0.22 * logoGlow
-              }))`,
-            }}
-          />
-        </div>
-      </div>
 
       {/* Content */}
       <div
-        className="relative z-[3] w-full pb-16 pt-24"
+        className="relative z-[3] w-full pb-16 pt-28"
         style={{
-          transform: `translateY(${-contentTranslate}px)`,
           opacity: contentOpacity,
-          willChange: "transform, opacity",
+          willChange: "opacity",
         }}
       >
         <div className="mx-auto w-full max-w-layout px-(--grid-gutter-mobile) md:px-(--grid-gutter)">
-          <h1 className="max-w-2xl font-display text-3xl font-bold text-crema sm:text-5xl md:max-w-[56%] md:text-6xl lg:text-7xl">
+          <h1 className="t-display max-w-3xl text-balance text-crema">
             {headline ?? (
               /* PLACEHOLDER */
               "The pub night that actually has something to do."
             )}
           </h1>
           {subline && (
-            <p className="mt-4 max-w-xl font-body text-lg text-crema/80">
-              {subline}
-            </p>
+            <p className="t-lede mt-5 max-w-xl text-crema/80">{subline}</p>
           )}
           <div className="mt-10">
             <CTAButton
@@ -291,7 +209,7 @@ export function HeroLoop({
           </div>
         </div>
 
-        {/* Slide indicators */}
+        {/* Slide indicators — thin squared bars (hard-edge system). */}
         {hasMultiple && (
           <div
             className="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2"
@@ -305,10 +223,8 @@ export function HeroLoop({
                 aria-selected={i === activeIdx}
                 aria-label={`Slide ${i + 1}`}
                 onClick={() => goTo(i)}
-                className={`h-1.5 rounded-full transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-crema ${
-                  i === activeIdx
-                    ? "w-8 bg-crema"
-                    : "w-1.5 bg-crema/40 hover:bg-crema/70"
+                className={`h-1 transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-crema ${
+                  i === activeIdx ? "w-8 bg-crema" : "w-4 bg-crema/40 hover:bg-crema/70"
                 }`}
               />
             ))}

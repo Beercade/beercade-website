@@ -12,11 +12,11 @@ const links = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-tilt-purple/30 bg-last-train-purple py-12">
+    <footer className="border-t border-hairline bg-after-dark py-16">
       <Container>
-        <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
-          <div className="space-y-2">
-            <Link href="/" aria-label="Beercade — home" className="inline-block rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crema">
+        <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+          <div className="space-y-3">
+            <Link href="/" aria-label="Beercade — home" className="inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crema">
               <Image
                 src="/images/beercade-horizontal-crema.png"
                 alt="Beercade"
@@ -33,13 +33,14 @@ export function Footer() {
             </p>
           </div>
 
-          <nav aria-label="Footer navigation">
-            <ul className="flex flex-wrap gap-x-6 gap-y-2" role="list">
+          <nav aria-label="Footer navigation" className="md:text-right">
+            <p className="t-kicker mb-4">Beercade</p>
+            <ul className="flex flex-wrap gap-x-6 gap-y-3 md:flex-col md:items-end" role="list">
               {links.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="font-body text-sm text-crema/60 transition-colors hover:text-crema focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crema"
+                    className="font-body text-sm text-crema/70 transition-colors hover:text-crema focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crema"
                   >
                     {item.label}
                   </Link>
@@ -49,7 +50,7 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-10 border-t border-tilt-purple/20 pt-8">
+        <div className="mt-12 border-t border-hairline pt-8">
           <p className="font-body text-xs text-crema/40">
             © {new Date().getFullYear()} Beercade Australia. Licensed venue.
             Drink responsibly.
