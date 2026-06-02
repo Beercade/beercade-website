@@ -30,7 +30,7 @@ export default async function Standings({
     rows = await getStandings({ id, scope, playerSourceTournamentId });
   } catch {
     return (
-      <p className="text-[var(--color-text-muted)]">
+      <p className="font-body text-crema/60">
         Standings are taking a breather. Refresh in a minute, or check the board at the bar.
       </p>
     );
@@ -38,7 +38,7 @@ export default async function Standings({
 
   if (!rows.length) {
     return (
-      <p className="text-[var(--color-text-muted)]">
+      <p className="font-body text-crema/60">
         No scores in yet. First ball is at 7.
       </p>
     );
@@ -47,16 +47,14 @@ export default async function Standings({
   return (
     <div className="overflow-x-auto">
       {tournamentName && (
-        <h3 className="mb-3 font-[family-name:var(--font-heading)] text-xl">
-          {tournamentName}
-        </h3>
+        <h3 className="t-h3 mb-4 text-crema">{tournamentName}</h3>
       )}
       <table className="w-full border-collapse text-left">
         <thead>
-          <tr className="border-b border-[var(--color-accent)]/40 text-sm uppercase tracking-wide text-[var(--color-text-muted)]">
-            <th className="py-2 pr-4">#</th>
-            <th className="py-2 pr-4">Player</th>
-            <th className="py-2 pr-4 text-right">Pts</th>
+          <tr className="border-b border-hairline">
+            <th className="py-3 pr-4 t-kicker">#</th>
+            <th className="py-3 pr-4 t-kicker">Player</th>
+            <th className="py-3 pr-4 t-kicker text-right">Pts</th>
           </tr>
         </thead>
         <tbody>
@@ -66,20 +64,20 @@ export default async function Standings({
               <tr
                 key={row.playerId}
                 className={
-                  "border-b border-[var(--color-fg)]/10 " +
-                  (inFinals ? "text-[var(--color-action)] font-semibold" : "")
+                  "border-b border-hairline/60 font-body " +
+                  (inFinals ? "text-high-score-orange" : "text-crema/85")
                 }
               >
-                <td className="py-2 pr-4 tabular-nums">{row.position}</td>
-                <td className="py-2 pr-4">{row.name}</td>
-                <td className="py-2 pr-4 text-right tabular-nums">{row.points}</td>
+                <td className="py-3 pr-4 font-display tabular-nums">{row.position}</td>
+                <td className="py-3 pr-4">{row.name}</td>
+                <td className="py-3 pr-4 text-right font-display tabular-nums">{row.points}</td>
               </tr>
             );
           })}
         </tbody>
       </table>
       {highlightCut != null && (
-        <p className="mt-3 text-sm text-[var(--color-text-muted)]">
+        <p className="mt-4 font-body text-sm text-crema/60">
           Top {highlightCut} advance to the finals.
         </p>
       )}

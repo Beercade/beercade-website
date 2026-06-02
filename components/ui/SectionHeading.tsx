@@ -14,17 +14,13 @@ export function SectionHeading({
   kicker,
 }: SectionHeadingProps) {
   return (
-    <div className={cn("space-y-2", className)}>
-      {kicker && (
-        <p className="font-accent text-xs uppercase tracking-widest text-high-score-orange">
-          {kicker}
-        </p>
-      )}
+    <div className={cn("space-y-3", className)}>
+      {kicker && <p className="t-kicker">{kicker}</p>}
       <Tag
         className={cn(
-          // Archivo Black for page titles (h1); Archivo Bold for section headings (h2/h3)
-          Tag === "h1" ? "font-display" : "font-heading",
-          "text-3xl font-bold text-crema md:text-4xl"
+          // Archivo Black display for h1; Archivo Bold for section headings.
+          Tag === "h1" ? "t-display" : "t-h2",
+          "text-crema text-balance"
         )}
       >
         {children}

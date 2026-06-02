@@ -16,15 +16,16 @@ interface CTAButtonProps {
 
 const variantClasses: Record<Variant, string> = {
   primary:
-    "bg-high-score-orange text-crema hover:opacity-90 focus-visible:ring-2 focus-visible:ring-high-score-orange focus-visible:ring-offset-2 focus-visible:ring-offset-last-train-purple",
+    "bg-high-score-orange text-after-dark hover:bg-crema focus-visible:ring-2 focus-visible:ring-high-score-orange focus-visible:ring-offset-2 focus-visible:ring-offset-last-train-purple",
   secondary:
     "border border-crema text-crema hover:bg-crema hover:text-after-dark focus-visible:ring-2 focus-visible:ring-crema focus-visible:ring-offset-2 focus-visible:ring-offset-last-train-purple",
   ghost:
-    "text-crema underline underline-offset-4 hover:text-high-score-orange focus-visible:ring-2 focus-visible:ring-crema",
+    "text-crema underline underline-offset-4 decoration-hairline hover:decoration-high-score-orange hover:text-high-score-orange focus-visible:ring-2 focus-visible:ring-crema",
 };
 
+// Buttons in Archivo Black, all caps, tight tracking (brand §4.4). Hard edges.
 const base =
-  "inline-flex items-center justify-center rounded-sm px-6 py-3 font-heading text-sm font-semibold uppercase tracking-tight transition-all duration-[var(--motion-fast)] focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50";
+  "inline-flex items-center justify-center rounded-none px-6 py-3 font-display text-sm uppercase tracking-[-0.01em] transition-colors duration-[var(--motion-fast)] focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50";
 
 export function CTAButton({
   href,

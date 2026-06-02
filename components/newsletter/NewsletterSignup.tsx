@@ -47,12 +47,12 @@ export function NewsletterSignup({ source }: Props) {
           required
           autoComplete="email"
           disabled={isPending}
-          className="min-w-0 flex-1 rounded-sm border border-tilt-purple/40 bg-last-train-purple px-4 py-2.5 font-body text-sm text-crema placeholder:text-crema/30 focus:border-tilt-purple focus:outline-none focus:ring-1 focus:ring-tilt-purple disabled:opacity-50"
+          className="min-w-0 flex-1 rounded-none border border-hairline bg-after-dark px-4 py-2.5 font-body text-sm text-crema placeholder:text-crema/30 focus:border-high-score-orange focus:outline-none focus:ring-1 focus:ring-high-score-orange disabled:opacity-50"
         />
         <button
           type="submit"
           disabled={isPending}
-          className="shrink-0 rounded-sm bg-high-score-orange px-5 py-2.5 font-body text-sm font-medium text-after-dark transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-high-score-orange disabled:opacity-50"
+          className="shrink-0 rounded-none bg-high-score-orange px-5 py-2.5 font-display text-sm uppercase tracking-[-0.01em] text-after-dark transition-colors hover:bg-crema focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-high-score-orange disabled:opacity-50"
         >
           {isPending ? "Sending…" : "Sign up"}
         </button>

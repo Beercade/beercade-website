@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { sanityClient } from "@/lib/sanity/client";
 import { openingHoursQuery } from "@/lib/sanity/queries";
-import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { Section } from "@/components/ui/Section";
 import { MapEmbed } from "@/components/find-us/MapEmbed";
 import { LocalBusinessJsonLd } from "@/components/seo/LocalBusinessJsonLd";
 
@@ -50,72 +50,50 @@ export default async function FindUsPage() {
   return (
     <>
       <LocalBusinessJsonLd openingHours={hours} />
-      {/* Page header */}
-      <section className="py-16 md:py-24" aria-labelledby="find-us-heading">
-        <Container>
-          <SectionHeading
-            as="h1"
-            kicker="113 Regent Street, Redfern NSW 2016"
-          >
-            <span id="find-us-heading">Find us.</span>
-          </SectionHeading>
-        </Container>
-      </section>
+
+      <PageHeader
+        id="find-us-heading"
+        kicker="113 Regent Street, Redfern NSW 2016"
+        title="Find us."
+      />
 
       {/* Transport + address detail */}
-      <section
-        className="border-t border-tilt-purple/20 py-12"
-        aria-label="Getting here"
-      >
-        <Container>
-          <div className="grid gap-10 md:grid-cols-3">
-            {/* Train */}
-            <div className="space-y-2">
-              <h2 className="font-accent text-xs uppercase tracking-widest text-high-score-orange">
-                Train
-              </h2>
-              <p className="font-body text-base text-crema">
-                Two minutes from Redfern Station. T2, T3, and T8 lines all
-                stop there.
-              </p>
-            </div>
-
-            {/* Bus */}
-            <div className="space-y-2">
-              <h2 className="font-accent text-xs uppercase tracking-widest text-high-score-orange">
-                Bus
-              </h2>
-              <p className="font-body text-base text-crema">
-                Routes on Regent Street and Redfern Street stop within a
-                two-minute walk.
-              </p>
-            </div>
-
-            {/* Parking */}
-            <div className="space-y-2">
-              <h2 className="font-accent text-xs uppercase tracking-widest text-high-score-orange">
-                Parking
-              </h2>
-              <p className="font-body text-base text-crema">
-                Street parking on Regent and surrounding streets. Limited on
-                Friday and Saturday nights. The train is easier.
-              </p>
-            </div>
+      <Section spacing="tight" aria-label="Getting here">
+        <div className="grid gap-10 md:grid-cols-3">
+          {/* Train */}
+          <div className="space-y-2">
+            <h2 className="t-kicker">Train</h2>
+            <p className="font-body text-base text-crema">
+              Two minutes from Redfern Station. T2, T3, and T8 lines all stop
+              there.
+            </p>
           </div>
-        </Container>
-      </section>
+
+          {/* Bus */}
+          <div className="space-y-2">
+            <h2 className="t-kicker">Bus</h2>
+            <p className="font-body text-base text-crema">
+              Routes on Regent Street and Redfern Street stop within a
+              two-minute walk.
+            </p>
+          </div>
+
+          {/* Parking */}
+          <div className="space-y-2">
+            <h2 className="t-kicker">Parking</h2>
+            <p className="font-body text-base text-crema">
+              Street parking on Regent and surrounding streets. Limited on
+              Friday and Saturday nights. The train is easier.
+            </p>
+          </div>
+        </div>
+      </Section>
 
       {/* Opening hours */}
-      <section
-        className="border-t border-tilt-purple/20 py-12"
-        aria-label="Opening hours"
-      >
-        <Container>
-          <h2 className="mb-6 font-heading text-2xl font-bold text-crema">
-            Hours.
-          </h2>
-          {sortedHours ? (
-            <dl className="max-w-sm divide-y divide-tilt-purple/20">
+      <Section spacing="tight" hairline aria-label="Opening hours">
+        <h2 className="t-h2 mb-6 text-crema">Hours.</h2>
+        {sortedHours ? (
+            <dl className="max-w-sm divide-y divide-hairline">
               {sortedHours.map((row) => (
                 <div
                   key={row.day}
@@ -133,7 +111,7 @@ export default async function FindUsPage() {
               ))}
             </dl>
           ) : (
-            <dl className="max-w-sm divide-y divide-tilt-purple/20">
+            <dl className="max-w-sm divide-y divide-hairline">
               {/* FILLME: opening hours — add via Sanity studio once connected */}
               {DAY_ORDER.map((day) => (
                 <div
@@ -146,30 +124,18 @@ export default async function FindUsPage() {
               ))}
             </dl>
           )}
-        </Container>
-      </section>
+      </Section>
 
       {/* Accessibility */}
-      <section
-        className="border-t border-tilt-purple/20 py-12"
-        aria-label="Accessibility"
-      >
-        <Container>
-          <h2 className="mb-3 font-heading text-2xl font-bold text-crema">
-            Access.
-          </h2>
-          <p className="max-w-prose font-body text-base text-crema/70">
-            {/* FILLME: step-free access details — confirm with venue operator before launch */}
-          </p>
-        </Container>
-      </section>
+      <Section spacing="tight" hairline aria-label="Accessibility">
+        <h2 className="t-h2 mb-3 text-crema">Access.</h2>
+        {/* FILLME: step-free access details — confirm with venue operator before launch */}
+      </Section>
 
       {/* Map */}
-      <section className="border-t border-tilt-purple/20 py-12">
-        <Container>
-          <MapEmbed />
-        </Container>
-      </section>
+      <Section spacing="tight" hairline>
+        <MapEmbed />
+      </Section>
     </>
   );
 }

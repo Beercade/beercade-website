@@ -9,8 +9,8 @@ import {
 } from "@/lib/sanity/queries";
 import { FunctionPackageCard } from "@/components/function/FunctionPackageCard";
 import { FunctionEnquiryForm } from "@/components/function/FunctionEnquiryForm";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Container } from "@/components/ui/Container";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { Section } from "@/components/ui/Section";
 
 export const revalidate = 60;
 
@@ -46,97 +46,69 @@ export default async function FunctionsPage() {
   ]);
 
   return (
-    <div className="py-16">
-      {/* Pitch */}
-      <Container>
-        <div className="mb-16 max-w-2xl">
-          <SectionHeading as="h1" kicker="Private hire">
-            {/* FILLME: in-voice functions pitch headline */}
-            Book the room.
-          </SectionHeading>
-          <div className="mt-6 space-y-4 font-body text-lg text-crema/70">
-            {/* FILLME: in-voice functions pitch — 2–3 paragraphs */}
-          </div>
-        </div>
-      </Container>
+    <>
+      {/* FILLME: in-voice functions pitch headline + lede (2–3 sentences) */}
+      <PageHeader kicker="Private hire" title="Book the room." />
 
       {/* Packages */}
       {packages.length > 0 && (
-        <section className="bg-tilt-purple/5 py-16" aria-labelledby="packages-heading">
-          <Container>
-            <h2
-              id="packages-heading"
-              className="mb-8 font-heading text-2xl font-bold text-crema"
-            >
-              {/* FILLME: in-voice packages section heading */}
-              What&rsquo;s included.
-            </h2>
-            <div className="grid gap-6 md:grid-cols-3">
-              {packages.map((pkg) => (
-                <FunctionPackageCard key={pkg._id} {...pkg} />
-              ))}
-            </div>
-          </Container>
-        </section>
+        <Section tone="raised" aria-labelledby="packages-heading">
+          <h2 id="packages-heading" className="t-h2 mb-8 text-crema">
+            {/* FILLME: in-voice packages section heading */}
+            What&rsquo;s included.
+          </h2>
+          <div className="grid gap-6 md:grid-cols-3">
+            {packages.map((pkg) => (
+              <FunctionPackageCard key={pkg._id} {...pkg} />
+            ))}
+          </div>
+        </Section>
       )}
 
       {/* Testimonials */}
       {testimonials.length > 0 && (
-        <section className="py-16" aria-labelledby="testimonials-heading">
-          <Container>
-            <h2
-              id="testimonials-heading"
-              className="mb-8 font-heading text-2xl font-bold text-crema"
-            >
-              What groups say.
-            </h2>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {testimonials.map((t) => (
-                <blockquote
-                  key={t._id}
-                  className="border border-tilt-purple/30 bg-last-train-purple p-6"
-                >
-                  <p className="font-body text-base italic text-crema/80">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
-                  {t.attribution && (
-                    <footer className="mt-3 font-body text-sm text-crema/50">
-                      — {t.attribution}
-                      {t.context && <>, {t.context}</>}
-                    </footer>
-                  )}
-                </blockquote>
-              ))}
-            </div>
-          </Container>
-        </section>
+        <Section hairline aria-labelledby="testimonials-heading">
+          <h2 id="testimonials-heading" className="t-h2 mb-8 text-crema">
+            What groups say.
+          </h2>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {testimonials.map((t) => (
+              <blockquote
+                key={t._id}
+                className="rounded-none border border-hairline bg-surface-raised p-6"
+              >
+                <p className="font-body text-base italic text-crema/80">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                {t.attribution && (
+                  <footer className="mt-3 font-body text-sm text-crema/50">
+                    — {t.attribution}
+                    {t.context && <>, {t.context}</>}
+                  </footer>
+                )}
+              </blockquote>
+            ))}
+          </div>
+        </Section>
       )}
 
       {/* Enquiry form */}
-      <section
-        className="border-t border-tilt-purple/30 py-16"
-        aria-labelledby="enquire-heading"
-      >
-        <Container>
-          <div className="grid gap-12 md:grid-cols-[1fr_560px]">
-            <div className="space-y-4">
-              <h2
-                id="enquire-heading"
-                className="font-heading text-3xl font-bold text-crema"
-              >
-                {/* FILLME: in-voice form intro heading */}
-                Get in touch.
-              </h2>
-              <p className="font-body text-crema/60">
-                {/* FILLME: in-voice form helper text — one sentence */}
-                Fill in the details below and we&rsquo;ll hold the date and come
-                back with a quote within 24 hours.
-              </p>
-            </div>
-            <FunctionEnquiryForm />
+      <Section hairline aria-labelledby="enquire-heading">
+        <div className="grid gap-12 md:grid-cols-[1fr_560px]">
+          <div className="space-y-4">
+            <h2 id="enquire-heading" className="t-h2 text-crema">
+              {/* FILLME: in-voice form intro heading */}
+              Get in touch.
+            </h2>
+            <p className="font-body text-crema/60">
+              {/* FILLME: in-voice form helper text — one sentence */}
+              Fill in the details below and we&rsquo;ll hold the date and come
+              back with a quote within 24 hours.
+            </p>
           </div>
-        </Container>
-      </section>
-    </div>
+          <FunctionEnquiryForm />
+        </div>
+      </Section>
+    </>
   );
 }

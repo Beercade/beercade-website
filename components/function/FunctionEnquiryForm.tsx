@@ -47,7 +47,7 @@ function Label({
 }
 
 const inputBase =
-  "w-full rounded-sm border border-tilt-purple/40 bg-last-train-purple px-4 py-3 font-body text-sm text-crema placeholder:text-crema/30 focus:border-tilt-purple focus:outline-none focus:ring-1 focus:ring-tilt-purple aria-invalid:border-high-score-orange";
+  "w-full rounded-none border border-hairline bg-after-dark px-4 py-3 font-body text-sm text-crema placeholder:text-crema/30 focus:border-high-score-orange focus:outline-none focus:ring-1 focus:ring-high-score-orange aria-invalid:border-high-score-orange";
 
 type ActionResult = { ok: false; errors: Record<string, string[]> } | null;
 
@@ -145,7 +145,7 @@ export function FunctionEnquiryForm() {
       {formError && (
         <div
           role="alert"
-          className="border border-high-score-orange/40 bg-high-score-orange/10 p-4 font-body text-sm text-high-score-orange"
+          className="rounded-none border border-high-score-orange/60 bg-high-score-orange/10 p-4 font-body text-sm text-high-score-orange"
         >
           {formError}
         </div>
@@ -329,7 +329,7 @@ export function FunctionEnquiryForm() {
           id="food"
           type="checkbox"
           {...register("food")}
-          className="h-4 w-4 rounded-sm border-tilt-purple/40 bg-last-train-purple accent-tilt-purple"
+          className="h-4 w-4 rounded-none border-hairline bg-after-dark accent-tilt-purple"
         />
         <label htmlFor="food" className="font-body text-sm text-crema/80">
           Food required
@@ -360,7 +360,7 @@ export function FunctionEnquiryForm() {
             {...register("consent")}
             aria-describedby={errors.consent ? "consent-error" : undefined}
             aria-invalid={!!errors.consent}
-            className="mt-0.5 h-4 w-4 rounded-sm border-tilt-purple/40 bg-last-train-purple accent-tilt-purple"
+            className="mt-0.5 h-4 w-4 rounded-none border-hairline bg-after-dark accent-tilt-purple"
           />
           <label htmlFor="consent" className="font-body text-sm text-crema/70">
             OK to be contacted by Beercade about this enquiry{" "}

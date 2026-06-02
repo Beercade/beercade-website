@@ -14,7 +14,7 @@ interface MapEmbedProps {
  */
 export function MapEmbed({ height = 400, className = "" }: MapEmbedProps) {
   return (
-    <figure className={`overflow-hidden rounded-sm ${className}`}>
+    <figure className={`overflow-hidden rounded-none ${className}`}>
       <iframe
         src={MAP_SRC}
         title="Beercade location — 113 Regent Street, Redfern NSW 2016"

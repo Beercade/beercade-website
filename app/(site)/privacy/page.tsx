@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/ui/Container";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { Section } from "@/components/ui/Section";
 
 export const metadata: Metadata = {
   title: "Privacy",
@@ -7,10 +8,9 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <Container className="py-16">
-      <h1 className="mb-8 font-display text-4xl font-bold text-crema">
-        Privacy
-      </h1>
+    <>
+      <PageHeader title="Privacy." />
+      <Section>
       <div className="max-w-prose space-y-4 font-body text-crema/70">
         {/* FILLME: privacy policy copy — consultant to draft */}
         <p>
@@ -28,13 +28,14 @@ export default function PrivacyPage() {
           To request access to, correction of, or deletion of your data, email{" "}
           <a
             href="mailto:hello@beercade.com.au"
-            className="text-high-score-orange underline underline-offset-4 hover:opacity-80"
+            className="text-high-score-orange underline underline-offset-4 decoration-hairline transition-colors hover:decoration-high-score-orange"
           >
             hello@beercade.com.au
           </a>
           .
         </p>
       </div>
-    </Container>
+      </Section>
+    </>
   );
 }

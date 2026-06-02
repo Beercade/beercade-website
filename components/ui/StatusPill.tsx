@@ -17,16 +17,16 @@ const eventLabels: Record<EventStatus, string> = {
 };
 
 const machineStyles: Record<MachineStatus, string> = {
-  working: "bg-tilt-purple/20 text-crema",
-  maintenance: "bg-high-score-orange/20 text-high-score-orange",
-  down: "bg-after-dark text-crema/50",
+  working: "border border-hairline text-crema/80",
+  maintenance: "border border-high-score-orange/70 text-high-score-orange",
+  down: "border border-hairline text-crema/40",
 };
 
 const eventStyles: Record<EventStatus, string> = {
-  upcoming: "bg-tilt-purple/20 text-crema",
+  upcoming: "border border-hairline text-crema/80",
   live: "bg-high-score-orange text-after-dark",
-  wrapped: "bg-after-dark text-crema/50",
-  cancelled: "bg-after-dark text-crema/50",
+  wrapped: "border border-hairline text-crema/40",
+  cancelled: "border border-hairline text-crema/40",
 };
 
 interface StatusPillProps {
@@ -53,7 +53,7 @@ export function StatusPill({
   return (
     <span
       className={cn(
-        "inline-block rounded-sm px-2 py-0.5 font-body text-xs font-medium",
+        "inline-block rounded-none px-2 py-0.5 font-body text-[0.7rem] font-medium uppercase tracking-wider",
         style,
         className
       )}

@@ -6,8 +6,8 @@ import {
   openingHoursQuery,
 } from "@/lib/sanity/queries";
 import { EventCard } from "@/components/event/EventCard";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Container } from "@/components/ui/Container";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { Section } from "@/components/ui/Section";
 import type { SanityImageSource } from "@sanity/image-url";
 
 export const revalidate = 60;
@@ -53,19 +53,14 @@ export default async function WhatsOnPage() {
   );
 
   return (
-    <div className="py-16">
-      <Container>
-        <SectionHeading as="h1" className="mb-12">
-          What&rsquo;s on.
-        </SectionHeading>
+    <>
+      <PageHeader kicker="Tournaments · league · standing nights" title="What's on." />
 
+      <Section>
         {/* Upcoming events */}
         {events.length > 0 && (
           <section className="mb-20" aria-labelledby="upcoming-heading">
-            <h2
-              id="upcoming-heading"
-              className="mb-6 font-heading text-xl font-semibold text-crema"
-            >
+            <h2 id="upcoming-heading" className="t-kicker mb-6">
               Upcoming
             </h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -79,24 +74,17 @@ export default async function WhatsOnPage() {
         {/* Standing nights */}
         {sorted.length > 0 && (
           <section aria-labelledby="standing-heading">
-            <h2
-              id="standing-heading"
-              className="mb-6 font-heading text-xl font-semibold text-crema"
-            >
+            <h2 id="standing-heading" className="t-kicker mb-6">
               Every week
             </h2>
             <div className="flex flex-wrap gap-4">
               {sorted.map((night) => (
                 <div
                   key={night._id}
-                  className="min-w-50 flex-1 border border-tilt-purple/30 bg-last-train-purple p-5"
+                  className="min-w-50 flex-1 rounded-none border border-hairline bg-surface-raised p-5"
                 >
-                  <p className="font-body text-xs uppercase tracking-widest text-high-score-orange">
-                    {night.dayOfWeek}
-                  </p>
-                  <p className="mt-2 font-heading text-lg font-semibold text-crema">
-                    {night.title}
-                  </p>
+                  <p className="t-kicker">{night.dayOfWeek}</p>
+                  <p className="mt-3 t-h3 text-crema">{night.title}</p>
                   {night.summary && (
                     <p className="mt-2 font-body text-sm text-crema/60">
                       {night.summary}
@@ -114,7 +102,7 @@ export default async function WhatsOnPage() {
             Nothing scheduled yet. Check back soon.
           </p>
         )}
-      </Container>
-    </div>
+      </Section>
+    </>
   );
 }

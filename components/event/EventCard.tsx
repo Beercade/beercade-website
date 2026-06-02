@@ -38,7 +38,7 @@ export function EventCard({
     <Link
       href={`/whats-on/${slug.current}`}
       className={cn(
-        "group flex flex-col overflow-hidden rounded-sm border border-tilt-purple/30 bg-last-train-purple transition-colors hover:border-tilt-purple focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crema",
+        "group flex flex-col overflow-hidden rounded-none border border-hairline bg-surface-raised transition-colors hover:border-tilt-purple focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crema",
         className
       )}
     >
@@ -54,15 +54,9 @@ export function EventCard({
         </div>
       )}
       <div className="flex flex-1 flex-col gap-3 p-5">
-        {kicker && (
-          <p className="font-body text-xs uppercase tracking-widest text-high-score-orange">
-            {kicker}
-          </p>
-        )}
+        {kicker && <p className="t-kicker">{kicker}</p>}
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-heading text-lg font-semibold text-crema">
-            {title}
-          </h3>
+          <h3 className="t-h3 text-crema">{title}</h3>
           <StatusPill status={status} kind="event" className="shrink-0" />
         </div>
         <div className="flex flex-wrap items-center gap-3 text-sm text-crema/60">

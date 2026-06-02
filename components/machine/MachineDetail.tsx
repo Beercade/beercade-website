@@ -63,9 +63,7 @@ export function MachineDetail({
                   </span>
                 )}
               </div>
-              <h1 className="font-display text-5xl font-bold text-crema md:text-6xl">
-                {name}
-              </h1>
+              <h1 className="t-display text-crema text-balance">{name}</h1>
             </div>
 
             {description && (
@@ -76,11 +74,11 @@ export function MachineDetail({
 
             {/* High score callout */}
             {highScore?.value && (
-              <div className="border border-tilt-purple/40 bg-tilt-purple/10 p-6">
+              <div className="rounded-none border border-hairline bg-surface-raised p-6">
                 <p className="font-accent text-xs text-high-score-orange">
                   HI SCORE
                 </p>
-                <p className="mt-2 font-display text-4xl font-bold text-crema">
+                <p className="mt-3 font-display text-4xl text-crema">
                   {highScore.value}
                 </p>
                 {highScore.holder && (
@@ -105,7 +103,7 @@ export function MachineDetail({
 
           {/* Sidebar CTAs */}
           <aside className="space-y-4">
-            <div className="border border-tilt-purple/30 bg-last-train-purple p-6 space-y-4">
+            <div className="rounded-none border border-hairline bg-surface-raised p-6 space-y-4">
               <p className="font-body text-sm text-crema/70">
                 See what&rsquo;s on next, or book the room around this machine.
               </p>

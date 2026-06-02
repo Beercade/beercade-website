@@ -26,14 +26,14 @@ export function FunctionPackageCard({
   return (
     <article
       className={cn(
-        "flex flex-col border border-tilt-purple/40 bg-last-train-purple p-6",
+        "flex flex-col rounded-none border border-hairline bg-surface-raised p-6",
         className
       )}
     >
-      <h3 className="font-heading text-xl font-bold text-crema">{name}</h3>
+      <h3 className="t-h3 text-crema">{name}</h3>
 
       {pricePerHead && (
-        <p className="mt-2 font-display text-3xl font-bold text-high-score-orange">
+        <p className="mt-2 font-display text-4xl text-high-score-orange">
           ${pricePerHead}
           <span className="font-body text-sm font-normal text-crema/50">
             {" "}

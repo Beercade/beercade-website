@@ -26,46 +26,50 @@ export default function FinalsSignupForm({ feeAud }: { feeAud: number }) {
   return (
     <form action={onSubmit} className="flex flex-col gap-4">
       <label className="flex flex-col gap-1">
-        <span className="text-sm text-[var(--color-text-muted)]">Name</span>
+        <span className="font-body text-sm text-crema/70">Name</span>
         <input
           name="playerName"
           required
           autoComplete="name"
-          className="rounded-md border border-[var(--color-fg)]/20 bg-transparent px-3 py-2"
+          className="rounded-none border border-hairline bg-after-dark px-3 py-2 font-body text-sm text-crema placeholder:text-crema/30 focus:border-high-score-orange focus:outline-none focus:ring-1 focus:ring-high-score-orange"
         />
       </label>
 
       <label className="flex flex-col gap-1">
-        <span className="text-sm text-[var(--color-text-muted)]">Email</span>
+        <span className="font-body text-sm text-crema/70">Email</span>
         <input
           name="email"
           type="email"
           required
           autoComplete="email"
-          className="rounded-md border border-[var(--color-fg)]/20 bg-transparent px-3 py-2"
+          className="rounded-none border border-hairline bg-after-dark px-3 py-2 font-body text-sm text-crema placeholder:text-crema/30 focus:border-high-score-orange focus:outline-none focus:ring-1 focus:ring-high-score-orange"
         />
       </label>
 
       <label className="flex flex-col gap-1">
-        <span className="text-sm text-[var(--color-text-muted)]">IFPA number (optional)</span>
+        <span className="font-body text-sm text-crema/70">IFPA number (optional)</span>
         <input
           name="ifpaNumber"
           inputMode="numeric"
-          className="rounded-md border border-[var(--color-fg)]/20 bg-transparent px-3 py-2"
+          className="rounded-none border border-hairline bg-after-dark px-3 py-2 font-body text-sm text-crema placeholder:text-crema/30 focus:border-high-score-orange focus:outline-none focus:ring-1 focus:ring-high-score-orange"
         />
       </label>
 
-      {error && <p className="text-[var(--color-action)]">{error}</p>}
+      {error && (
+        <p role="alert" className="font-body text-sm text-high-score-orange">
+          {error}
+        </p>
+      )}
 
       <button
         type="submit"
         disabled={pending}
-        className="mt-2 rounded-md bg-[var(--color-action)] px-5 py-3 font-semibold text-[var(--color-after-dark)] disabled:opacity-60"
+        className="mt-2 rounded-none bg-high-score-orange px-5 py-3 font-display text-sm uppercase tracking-[-0.01em] text-after-dark transition-colors hover:bg-crema focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-high-score-orange disabled:opacity-60"
       >
         {pending ? "Taking you to checkout…" : `Pay $${feeAud} and lock my spot`}
       </button>
 
-      <p className="text-sm text-[var(--color-text-muted)]">
+      <p className="font-body text-sm text-crema/60">
         18+. Bring ID. Payment is handled by Square; we never see your card details.
       </p>
     </form>

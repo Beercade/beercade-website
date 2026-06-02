@@ -97,15 +97,9 @@ export function EventDetail({
         <div className="grid gap-12 md:grid-cols-[1fr_300px]">
           {/* Main */}
           <div className="space-y-6">
-            {kicker && (
-              <p className="font-body text-xs uppercase tracking-widest text-high-score-orange">
-                {kicker}
-              </p>
-            )}
-            <div className="flex flex-wrap items-center gap-3">
-              <h1 className="font-display text-4xl font-bold text-crema md:text-5xl">
-                {title}
-              </h1>
+            {kicker && <p className="t-kicker">{kicker}</p>}
+            <div className="flex flex-wrap items-center gap-4">
+              <h1 className="t-display text-crema text-balance">{title}</h1>
               <StatusPill status={status} kind="event" />
             </div>
 
@@ -117,15 +111,13 @@ export function EventDetail({
 
             {machines && machines.length > 0 && (
               <div>
-                <h2 className="mb-3 font-heading text-sm font-semibold uppercase tracking-widest text-crema/50">
-                  Machines
-                </h2>
+                <h2 className="t-kicker mb-3 text-crema/50">Machines</h2>
                 <div className="flex flex-wrap gap-2">
                   {machines.map((m) => (
                     <a
                       key={m._id}
                       href={`/machines/${m.slug.current}`}
-                      className="border border-tilt-purple/40 bg-tilt-purple/10 px-3 py-1.5 font-body text-sm text-crema/80 transition-colors hover:border-tilt-purple hover:text-crema focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crema"
+                      className="rounded-none border border-hairline bg-surface-raised px-3 py-1.5 font-body text-sm text-crema/80 transition-colors hover:border-tilt-purple hover:text-crema focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crema"
                     >
                       {m.name}
                     </a>
@@ -137,7 +129,7 @@ export function EventDetail({
 
           {/* Sidebar */}
           <aside className="space-y-6">
-            <div className="border border-tilt-purple/30 bg-last-train-purple p-6 space-y-4">
+            <div className="rounded-none border border-hairline bg-surface-raised p-6 space-y-4">
               <dl className="space-y-3 font-body text-sm">
                 <div>
                   <dt className="text-crema/50">Date</dt>

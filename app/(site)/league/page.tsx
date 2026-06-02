@@ -1,5 +1,7 @@
 import { Suspense } from "react";
 import Standings from "@/components/league/Standings";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { Section } from "@/components/ui/Section";
 
 // /league — the public ladder page (Run of Show §5).
 // Standings come live from Match Play; revalidate every 90s. Match Play is the
@@ -25,24 +27,28 @@ const PLAYER_SOURCE = process.env.MATCHPLAY_TOURNAMENT_ID
 export default function LeaguePage() {
   if (!Number.isFinite(SEASON_ID)) {
     return (
-      <main className="mx-auto max-w-3xl px-4 py-16">
-        <h1 className="font-[family-name:var(--font-display)] text-4xl">Beercade League</h1>
-        <p className="mt-4 text-[var(--color-text-muted)]">
-          The ladder goes live when the season opens. Signup link in our bio.
-        </p>
-      </main>
+      <>
+        <PageHeader kicker="Pinball league" title="Beercade League." />
+        <Section>
+          <p className="t-lede max-w-prose text-crema/70">
+            The ladder goes live when the season opens. Signup link in our bio.
+          </p>
+        </Section>
+      </>
     );
   }
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-16">
-      <h1 className="font-[family-name:var(--font-display)] text-4xl">Beercade League</h1>
-      <p className="mt-2 text-[var(--color-text-muted)]">
-        Best two of three qualifying nights. Top eight play the finals.
-      </p>
-
-      <section className="mt-10">
-        <Suspense fallback={<p className="text-[var(--color-text-muted)]">Loading the ladder…</p>}>
+    <>
+      <PageHeader
+        kicker="Pinball league"
+        title="Beercade League."
+        lede="Best two of three qualifying nights. Top eight play the finals."
+      />
+      <Section aria-label="Standings">
+        <Suspense
+          fallback={<p className="font-body text-crema/60">Loading the ladder…</p>}
+        >
           <Standings
             id={SEASON_ID}
             scope={SEASON_SCOPE}
@@ -50,7 +56,7 @@ export default function LeaguePage() {
             highlightCut={8}
           />
         </Suspense>
-      </section>
-    </main>
+      </Section>
+    </>
   );
 }

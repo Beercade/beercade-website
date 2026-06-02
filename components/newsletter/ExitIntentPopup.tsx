@@ -89,7 +89,7 @@ export function ExitIntentPopup() {
       {/* Panel */}
       <div
         ref={panelRef}
-        className="relative w-full max-w-md rounded-sm border border-tilt-purple/40 bg-last-train-purple p-8 shadow-xl"
+        className="relative w-full max-w-md rounded-none border border-hairline bg-surface-raised p-8"
       >
         <button
           type="button"
@@ -100,12 +100,10 @@ export function ExitIntentPopup() {
           ✕
         </button>
 
-        <p className="mb-1 font-accent text-xs uppercase tracking-widest text-high-score-orange">
-          Before you go
-        </p>
+        <p className="t-kicker mb-2">Before you go</p>
         <h2
           id="exit-popup-heading"
-          className="mb-2 font-heading text-2xl font-bold text-crema"
+          className="t-h2 mb-2 text-crema"
         >
           Thursday nights, tournament dates, new machines.
         </h2>

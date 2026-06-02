@@ -28,7 +28,7 @@ export function MachineCard({
     <Link
       href={`/machines/${slug.current}`}
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-sm border border-tilt-purple/30 bg-last-train-purple transition-colors hover:border-tilt-purple focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crema",
+        "group relative flex flex-col overflow-hidden rounded-none border border-hairline bg-surface-raised transition-colors hover:border-tilt-purple focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crema",
         className
       )}
     >
@@ -43,9 +43,7 @@ export function MachineCard({
       </div>
       <div className="flex flex-1 flex-col gap-2 p-4">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-heading text-base font-semibold text-crema">
-            {name}
-          </h3>
+          <h3 className="t-h3 text-crema">{name}</h3>
           <StatusPill status={status} kind="machine" className="shrink-0" />
         </div>
         <p className="font-body text-xs uppercase tracking-widest text-crema/50">
