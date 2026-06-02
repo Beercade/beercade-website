@@ -15,6 +15,8 @@ import { NewsletterSignup } from "@/components/newsletter/NewsletterSignup";
 import { MapEmbed } from "@/components/find-us/MapEmbed";
 import dynamic from "next/dynamic";
 import { LocalBusinessJsonLd } from "@/components/seo/LocalBusinessJsonLd";
+import { FaqList } from "@/components/faq/Faq";
+import { visiting } from "@/components/faq/data";
 
 const ExitIntentPopup = dynamic(
   () => import("@/components/newsletter/ExitIntentPopup").then((m) => m.ExitIntentPopup),
@@ -144,6 +146,19 @@ export default async function HomePage() {
             </CTAButton>
           </div>
         </div>
+      </Section>
+
+      {/* FAQ teaser — first three questions, link to the full page */}
+      <Section tone="default" hairline aria-labelledby="faq-heading">
+        <div className="mb-10 flex items-end justify-between gap-4">
+          <SectionHeading as="h2">
+            <span id="faq-heading">Good to know.</span>
+          </SectionHeading>
+          <CTAButton href="/faq" variant="ghost" className="shrink-0">
+            All questions
+          </CTAButton>
+        </div>
+        <FaqList items={visiting.slice(0, 3)} />
       </Section>
 
       {/* Newsletter signup */}
