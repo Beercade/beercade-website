@@ -1,82 +1,82 @@
 import { cn } from "@/lib/utils/cn";
 
-interface FunctionPackageCardProps {
+export interface FunctionTier {
   name: string;
-  minHeads?: number | null;
-  maxHeads?: number | null;
-  pricePerHead?: number | null;
-  duration?: number | null;
-  inclusions?: string[] | null;
-  machinesIncluded?: string | null;
-  description?: string | null;
-  className?: string;
+  /** Short "best for" overline. */
+  bestFor: string;
+  /** One-line description, set in italics. */
+  tagline: string;
+  groupSize: string;
+  /** Free text so it can carry "$48 / head" or "From $X,XXX min spend". */
+  price: string;
+  priceNote?: string;
+  youGet: string[];
+  /** Notice + deposit line. */
+  toHold: string;
+  /** One-line pitch, pinned to the bottom. */
+  pitch: string;
+  /** Highlight the recommended middle tier. */
+  featured?: boolean;
 }
 
 export function FunctionPackageCard({
   name,
-  minHeads,
-  maxHeads,
-  pricePerHead,
-  duration,
-  inclusions,
-  machinesIncluded,
-  description,
+  bestFor,
+  tagline,
+  groupSize,
+  price,
+  priceNote,
+  youGet,
+  toHold,
+  pitch,
+  featured = false,
   className,
-}: FunctionPackageCardProps) {
+}: FunctionTier & { className?: string }) {
   return (
     <article
       className={cn(
-        "flex flex-col rounded-none border border-hairline bg-surface-raised p-6",
+        "relative flex flex-col rounded-none bg-surface-raised p-6",
+        featured ? "border-2 border-high-score-orange" : "border border-hairline",
         className
       )}
     >
-      <h3 className="t-h3 text-crema">{name}</h3>
-
-      {pricePerHead && (
-        <p className="mt-2 font-display text-4xl text-high-score-orange">
-          ${pricePerHead}
-          <span className="font-body text-sm font-normal text-crema/50">
-            {" "}
-            / head
-          </span>
-        </p>
+      {featured && (
+        <span className="absolute -top-3 left-6 rounded-none bg-high-score-orange px-2 py-0.5 font-body text-[0.7rem] font-medium uppercase tracking-wider text-after-dark">
+          Most groups book this
+        </span>
       )}
 
-      <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-body text-sm text-crema/60">
-        {minHeads && maxHeads && (
-          <span>
-            {minHeads}&ndash;{maxHeads} people
-          </span>
-        )}
-        {duration && (
-          <span>
-            {duration} hour{duration !== 1 ? "s" : ""}
-          </span>
-        )}
-      </div>
+      <p className="t-kicker">{bestFor}</p>
+      <h3 className="mt-3 font-display text-2xl text-crema">{name}</h3>
+      <p className="mt-2 font-body text-sm italic text-crema/70">{tagline}</p>
 
-      {description && (
-        <p className="mt-4 font-body text-sm text-crema/70">{description}</p>
+      <p className="mt-5 font-display text-3xl text-high-score-orange">
+        {price}
+      </p>
+      {priceNote && (
+        <p className="mt-1 font-body text-xs text-crema/50">{priceNote}</p>
       )}
 
-      {inclusions && inclusions.length > 0 && (
-        <ul className="mt-4 space-y-1" aria-label="Package inclusions">
-          {inclusions.map((item, i) => (
-            <li key={i} className="flex gap-2 font-body text-sm text-crema/80">
-              <span className="mt-0.5 shrink-0 text-tilt-purple" aria-hidden="true">
-                &mdash;
-              </span>
-              {item}
-            </li>
-          ))}
-        </ul>
-      )}
+      <p className="mt-4 font-body text-xs uppercase tracking-widest text-crema/50">
+        {groupSize} people
+      </p>
 
-      {machinesIncluded && (
-        <p className="mt-4 border-t border-tilt-purple/20 pt-4 font-body text-xs text-crema/50">
-          Machines: {machinesIncluded}
-        </p>
-      )}
+      <ul className="mt-4 space-y-2" aria-label={`${name} inclusions`}>
+        {youGet.map((item, i) => (
+          <li key={i} className="flex gap-2 font-body text-sm text-crema/85">
+            <span className="mt-0.5 shrink-0 text-high-score-orange" aria-hidden="true">
+              ›
+            </span>
+            {item}
+          </li>
+        ))}
+      </ul>
+
+      <p className="mt-4 border-t border-hairline pt-4 font-body text-xs text-crema/50">
+        To hold it: {toHold}
+      </p>
+
+      <p className="mt-4 font-body text-sm italic text-crema/70">{pitch}</p>
     </article>
   );
 }
