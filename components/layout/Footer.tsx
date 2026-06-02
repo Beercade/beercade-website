@@ -50,10 +50,21 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-12 border-t border-hairline pt-8">
+        <div className="mt-12 space-y-2 border-t border-hairline pt-8">
+          {/* Liquor licensing — NSW. FILLME: insert the venue's real licensee
+              legal name + NSW liquor licence number before launch (confirm the
+              exact number with Liquor & Gaming NSW). Do not ship a placeholder
+              number live. */}
+          <p className="max-w-prose font-body text-xs text-crema/50">
+            Licensed venue. Licensee:{" "}
+            <span className="text-crema/40">[licensee legal name — FILLME]</span>.
+            Liquor Licence No.{" "}
+            <span className="text-crema/40">[FILLME]</span>. It is against the law
+            to sell or supply alcohol to, or to obtain alcohol on behalf of, a
+            person under the age of 18.
+          </p>
           <p className="font-body text-xs text-crema/40">
-            © {new Date().getFullYear()} Beercade Australia. Licensed venue.
-            Drink responsibly.
+            © {new Date().getFullYear()} Beercade Australia. Drink responsibly.
           </p>
         </div>
       </Container>
