@@ -10,6 +10,9 @@ export default {
         crema: "var(--color-crema)",
         "after-dark": "var(--color-after-dark)",
         "last-train-purple": "var(--color-last-train-purple)",
+        surface: "var(--color-surface)",
+        "surface-raised": "var(--color-surface-raised)",
+        hairline: "var(--color-hairline)",
       },
       fontFamily: {
         display: ["var(--font-display)", "system-ui", "sans-serif"],
