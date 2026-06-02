@@ -30,7 +30,9 @@ export const openingHoursQuery = /* groq */ `*[_type == "openingHours"][0]`;
 
 export const whatsOnQuery = /* groq */ `*[_type == "whatsOn"] | order(order asc, dayOfWeek asc)`;
 
-export const functionPackagesQuery = /* groq */ `*[_type == "functionPackage"] | order(order asc)`;
+export const functionPackagesQuery = /* groq */ `*[_type == "functionPackage"] | order(order asc){
+  _id, name, bestFor, tagline, groupSize, price, priceNote, inclusions, toHold, pitch, featured
+}`;
 
 export const homepageTestimonialsQuery = /* groq */ `*[_type == "testimonial" && "home" in useOn][0..2]`;
 

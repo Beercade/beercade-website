@@ -3,7 +3,10 @@ import type { Metadata } from "next";
 export const dynamic = "force-dynamic";
 
 import { sanityClient } from "@/lib/sanity/client";
-import { functionTestimonialsQuery } from "@/lib/sanity/queries";
+import {
+  functionPackagesQuery,
+  functionTestimonialsQuery,
+} from "@/lib/sanity/queries";
 import {
   FunctionPackageCard,
   type FunctionTier,
@@ -27,74 +30,17 @@ interface Testimonial {
   context?: string | null;
 }
 
-// Three tiers, built so the middle one is the obvious pick. Anything in
-// [square brackets] is unconfirmed (deposits, notice windows, capacity ceiling,
-// whole-venue minimum spend, food specifics) — FILLME: confirm with Roger and
-// replace before launch.
-const PACKAGES: FunctionTier[] = [
-  {
-    name: "The Long Pour",
-    bestFor: "Post-work · small birthdays",
-    tagline:
-      "A reserved corner, a tab, and the machines warmed up. For when it's a handful of you and you can't be bothered organising more than that.",
-    groupSize: "8–15",
-    price: "$35 / head",
-    priceNote: "minimum 8 people",
-    youGet: [
-      "A reserved cluster of tables near the machines, held for your group all night.",
-      "A 3-hour drinks tab to a limit you set up front; when it's reached, the bar reverts to normal service.",
-      "Three machines of your choice on free play.",
-      "One starter platter to share on arrival.",
-    ],
-    toHold: "1 week's notice. Deposit $[XX], applied to your final bill.",
-    pitch:
-      "The walk-in night, but the good table's already yours and the first round's sorted.",
-  },
-  {
-    name: "The Back Room",
-    bestFor: "Birthdays · team nights",
-    tagline:
-      "Four pinball tables and the Daytona twin-seater in one space, so nobody's queuing for one machine while everyone else drinks.",
-    groupSize: "15–30",
-    price: "$48 / head",
-    priceNote: "a group of 18 lands at roughly $864 all in",
-    youGet: [
-      "Exclusive use of the back room (four pinball tables and the Daytona twin-seater) from open.",
-      "A 4-hour drinks tab to a limit you set.",
-      "Every machine in the back room on free play all night.",
-      "A starter platter on arrival, plus a second feed mid-session [confirm menu].",
-      "A held window emailed to you in writing, with the full breakdown, before you commit.",
-    ],
-    toHold: "2–4 weeks' notice. Deposit $[XXX], applied to your final bill.",
-    pitch:
-      "Your own room, your own machines, four hours, one number; and it survives the forward to your boss.",
-    featured: true,
-  },
-  {
-    name: "The Lock-In",
-    bestFor: "Company parties · milestones",
-    tagline:
-      "The whole place, or near enough. A host runs a pinball bracket, the HI SCORE board goes up, and the Godzilla LE gets held for the final.",
-    groupSize: "30 to whole-venue",
-    price: "From $[X,XXX] min spend",
-    priceNote: "lower midweek than Friday or Saturday",
-    youGet: [
-      "Whole-venue hire, or the back room plus the main floor [confirm by night].",
-      "An extended drinks tab or a full beverage package, your call.",
-      "Every machine in the building on free play.",
-      "A full food spread [confirm the spread].",
-      "A Pinball Night host running a knockout tournament, with a printed HI SCORE board and the Godzilla LE held for the final.",
-    ],
-    toHold: "3–4 weeks' notice. Deposit $[XXX].",
-    pitch:
-      "The night people text about the next morning. No costume, no velvet rope.",
-  },
-];
+// Package tiers are authored in Sanity (studio → Function package). The page is
+// just the framework; edit the content there. Fields map 1:1 to the card.
+type PackageDoc = { _id: string } & Partial<FunctionTier> & {
+    inclusions?: string[] | null;
+  };
 
 export default async function FunctionsPage() {
-  const testimonials = await sanityClient
-    .fetch<Testimonial[]>(functionTestimonialsQuery)
-    .catch(() => []);
+  const [packages, testimonials] = await Promise.all([
+    sanityClient.fetch<PackageDoc[]>(functionPackagesQuery).catch(() => []),
+    sanityClient.fetch<Testimonial[]>(functionTestimonialsQuery).catch(() => []),
+  ]);
 
   return (
     <>
@@ -104,7 +50,7 @@ export default async function FunctionsPage() {
         lede="Three packages: one small, one standard, one big. Same spine every time, a held space, a drinks tab, machines on free play, and food, stepping up from there. Two to four weeks out is normal; midweek dates are easier to lock and the room's quieter for it."
       />
 
-      {/* Packages */}
+      {/* Packages — authored in Sanity (studio → Function package) */}
       <Section tone="raised" aria-labelledby="packages-heading">
         <h2 id="packages-heading" className="t-h2 text-crema">
           The packages.
@@ -113,18 +59,50 @@ export default async function FunctionsPage() {
           One small, one standard, one big, stepping up from the same spine.
         </p>
 
-        <div className="mt-10 grid items-start gap-6 md:grid-cols-3">
-          {PACKAGES.map((pkg) => (
-            <FunctionPackageCard key={pkg.name} {...pkg} />
-          ))}
-        </div>
+        {packages.length > 0 ? (
+          <>
+            <div
+              className={`mt-10 grid items-start gap-6 ${
+                packages.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2"
+              }`}
+            >
+              {packages.map((pkg) => (
+                <FunctionPackageCard
+                  key={pkg._id}
+                  name={pkg.name ?? "Package"}
+                  bestFor={pkg.bestFor ?? ""}
+                  tagline={pkg.tagline ?? ""}
+                  groupSize={pkg.groupSize ?? ""}
+                  price={pkg.price ?? ""}
+                  priceNote={pkg.priceNote ?? undefined}
+                  youGet={pkg.inclusions ?? []}
+                  toHold={pkg.toHold ?? ""}
+                  pitch={pkg.pitch ?? ""}
+                  featured={pkg.featured ?? false}
+                />
+              ))}
+            </div>
 
-        {/* The promise that runs the floor */}
-        <p className="mt-10 max-w-2xl border-l-2 border-high-score-orange pl-4 font-body text-sm text-crema/70">
-          Every package carries the same promise that runs the floor: if a
-          machine won&rsquo;t behave on your night, tell the bar. We fix it in
-          five minutes or refund the credit.
-        </p>
+            {/* The promise that runs the floor */}
+            <p className="mt-10 max-w-2xl border-l-2 border-high-score-orange pl-4 font-body text-sm text-crema/70">
+              Every package carries the same promise that runs the floor: if a
+              machine won&rsquo;t behave on your night, tell the bar. We fix it
+              in five minutes or refund the credit.
+            </p>
+          </>
+        ) : (
+          <p className="mt-6 font-body text-crema/50">
+            {/* PLACEHOLDER: shown until Function package docs are added in Sanity */}
+            Packages are being finalised. Email{" "}
+            <a
+              href="mailto:functions@beercade.com.au"
+              className="text-high-score-orange underline underline-offset-4 decoration-hairline transition-colors hover:decoration-high-score-orange"
+            >
+              functions@beercade.com.au
+            </a>{" "}
+            and we&rsquo;ll talk you through the options.
+          </p>
+        )}
       </Section>
 
       {/* Testimonials */}
