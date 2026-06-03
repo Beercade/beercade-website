@@ -32,6 +32,18 @@ export default async function HomePage() {
     sanityClient.fetch(openingHoursQuery).catch(() => null),
   ]);
 
+  const featuredMachines = (homepage?.featuredMachines ?? []).slice(0, 6);
+  // Column count tracks the actual number of machines so a part-filled lineup
+  // (e.g. 3 of a possible 6) fills the row at a readable card size, rather than
+  // cramming into narrow tracks pushed to the left. Capped at 3-up to match the
+  // card's own image `sizes` and the What's-on grid below.
+  const machineColumns =
+    featuredMachines.length <= 1
+      ? "grid-cols-1 max-w-sm"
+      : featuredMachines.length === 2
+        ? "grid-cols-2 max-w-2xl"
+        : "grid-cols-2 sm:grid-cols-3";
+
   return (
     <>
       <LocalBusinessJsonLd openingHours={openingHours} />
@@ -47,8 +59,8 @@ export default async function HomePage() {
         ctaTarget={homepage?.primaryCtaTarget}
       />
 
-      {/* Machines teaser — 6 featured */}
-      {homepage?.featuredMachines?.length > 0 && (
+      {/* Machines teaser — up to 6 featured */}
+      {featuredMachines.length > 0 && (
         <Section tone="default" aria-labelledby="machines-heading">
           <div className="mb-10 flex items-end justify-between gap-4">
             <SectionHeading as="h2">
@@ -61,21 +73,19 @@ export default async function HomePage() {
               See all
             </CTAButton>
           </div>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
-            {homepage.featuredMachines
-              .slice(0, 6)
-              .map(
-                (machine: {
-                  _id: string;
-                  name: string;
-                  slug: { current: string };
-                  type: string;
-                  status: "working" | "maintenance" | "down";
-                  photo: { alt?: string };
-                }) => (
-                  <MachineCard key={machine._id} {...machine} />
-                )
-              )}
+          <div className={`grid gap-4 ${machineColumns}`}>
+            {featuredMachines.map(
+              (machine: {
+                _id: string;
+                name: string;
+                slug: { current: string };
+                type: string;
+                status: "working" | "maintenance" | "down";
+                photo: { alt?: string };
+              }) => (
+                <MachineCard key={machine._id} {...machine} />
+              )
+            )}
           </div>
         </Section>
       )}
