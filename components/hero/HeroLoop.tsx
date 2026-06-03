@@ -182,44 +182,49 @@ export function HeroLoop({
 
       {/* Content */}
       <div
-        className="relative z-[3] w-full pb-16 pt-28"
+        className="relative z-[3] w-full pb-24 pt-28 md:pb-32"
         style={{
           opacity: contentOpacity,
           willChange: "opacity",
         }}
       >
         <div className="mx-auto w-full max-w-layout px-(--grid-gutter-mobile) md:px-(--grid-gutter)">
-          {/* Master logo — neon-tube wordmark + mascot (brand §5). Seated on a
-              flat Tilt Purple chip (brand §235) so the line-art reads cleanly
-              over any hero photo, with generous clear space on all sides; sits
-              above the headline at hero scale, min 96px wide. */}
-          <div className="mb-10 inline-block bg-tilt-purple px-7 py-6 sm:px-10 sm:py-8">
-            <Image
-              src="/images/beercade-wordmark.png"
-              alt="Beercade"
-              width={788}
-              height={514}
-              priority
-              className="h-auto w-52 sm:w-64 md:w-[22rem]"
-            />
-          </div>
-          <h1 className="t-display max-w-3xl text-balance text-crema">
-            {headline ?? (
-              /* PLACEHOLDER */
-              "The pub night that actually has something to do."
-            )}
-          </h1>
-          {subline && (
-            <p className="t-lede mt-5 max-w-xl text-crema/80">{subline}</p>
-          )}
-          <div className="mt-10">
-            <CTAButton
-              href={ctaTarget ?? "/functions"}
-              variant="primary"
-              className="px-8 py-4 text-base"
-            >
-              {ctaLabel ?? "BOOK A FUNCTION"}
-            </CTAButton>
+          {/* Logo and headline sit side by side from md up; stacked on mobile. */}
+          <div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-10 lg:gap-14">
+            {/* Master logo — neon-tube wordmark + mascot (brand §5). Seated on a
+                flat Tilt Purple chip (brand §235) so the line-art reads cleanly
+                over any hero photo, with generous clear space on all sides. */}
+            <div className="shrink-0 self-start bg-tilt-purple px-7 py-6 sm:px-10 sm:py-8 md:self-center">
+              <Image
+                src="/images/beercade-wordmark.png"
+                alt="Beercade"
+                width={788}
+                height={514}
+                priority
+                className="h-auto w-44 sm:w-56 md:w-60 lg:w-72"
+              />
+            </div>
+
+            <div className="min-w-0 md:flex-1">
+              <h1 className="t-display max-w-2xl text-balance text-crema">
+                {headline ?? (
+                  /* PLACEHOLDER */
+                  "The pub night that actually has something to do."
+                )}
+              </h1>
+              {subline && (
+                <p className="t-lede mt-5 max-w-xl text-crema/80">{subline}</p>
+              )}
+              <div className="mt-8">
+                <CTAButton
+                  href={ctaTarget ?? "/functions"}
+                  variant="primary"
+                  className="px-8 py-4 text-base"
+                >
+                  {ctaLabel ?? "BOOK A FUNCTION"}
+                </CTAButton>
+              </div>
+            </div>
           </div>
         </div>
 
