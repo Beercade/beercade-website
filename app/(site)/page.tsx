@@ -167,9 +167,28 @@ export default async function HomePage() {
           <div>
             <p className="t-kicker mb-3">The list</p>
             <h2 id="newsletter-heading" className="t-h2 text-crema text-balance">
-              Thursday nights, tournament dates, new machines.
+              Know what&rsquo;s on before the regulars do.
             </h2>
-            {/* FILLME: in-voice newsletter pitch line */}
+            <p className="mt-3 max-w-prose font-body text-base text-crema">
+              Sign up and grab a free beer on your next visit.
+            </p>
+            <p className="mt-2 max-w-prose font-body text-base text-crema/70">
+              After that, one email when a new machine lands on the floor, a
+              tournament date drops, or a midweek night&rsquo;s worth the train
+              in. No spam; unsubscribe whenever.
+            </p>
+            {/* FILLME: confirm the final promo terms with Liquor &amp; Gaming
+                NSW before launch — validity window, any purchase condition, and
+                which drink qualifies. Keep it RSA-compliant. */}
+            <p className="mt-4 max-w-prose font-body text-xs text-crema/50">
+              One complimentary house beer or non-alcoholic drink per new
+              subscriber, 18+, redeemable on your next visit within{" "}
+              <span className="text-crema/40" title="To confirm before launch">
+                [30 days]
+              </span>{" "}
+              of signing up. One per person. Served responsibly; staff may
+              refuse service.
+            </p>
           </div>
           <div className="w-full">
             <NewsletterSignup source="footer" />

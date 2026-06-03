@@ -189,6 +189,20 @@ export function HeroLoop({
         }}
       >
         <div className="mx-auto w-full max-w-layout px-(--grid-gutter-mobile) md:px-(--grid-gutter)">
+          {/* Master logo — neon-tube wordmark + mascot (brand §5). Seated on a
+              flat Tilt Purple chip (brand §235) so the line-art reads cleanly
+              over any hero photo, with generous clear space on all sides; sits
+              above the headline at hero scale, min 96px wide. */}
+          <div className="mb-10 inline-block bg-tilt-purple px-7 py-6 sm:px-10 sm:py-8">
+            <Image
+              src="/images/beercade-wordmark.png"
+              alt="Beercade"
+              width={788}
+              height={514}
+              priority
+              className="h-auto w-52 sm:w-64 md:w-[22rem]"
+            />
+          </div>
           <h1 className="t-display max-w-3xl text-balance text-crema">
             {headline ?? (
               /* PLACEHOLDER */
