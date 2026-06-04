@@ -51,6 +51,27 @@ export function Footer() {
           </nav>
         </div>
 
+        <div className="mt-12 space-y-4 border-t border-hairline pt-8">
+          <p className="t-kicker">Acknowledgement of Country</p>
+          <p className="max-w-prose font-body text-sm text-crema/70">
+            Beercade pours on the land of the Gadigal people of the Eora Nation,
+            and here in Redfern, a place that has been a heart of Aboriginal
+            Sydney for generations. We acknowledge the Gadigal as the
+            traditional custodians of this land, pay our respects to Elders past
+            and present, and extend that respect to every Aboriginal and Torres
+            Strait Islander person who walks through the door. Sovereignty was
+            never ceded. This always was, and always will be, Aboriginal land.
+          </p>
+          <p className="max-w-prose font-body text-sm text-crema/70">
+            And the welcome&rsquo;s for everyone. Gay, straight, trans,
+            non-binary, however you identify and whoever you walked in with; book
+            with us and you&rsquo;ll get no second look you didn&rsquo;t come
+            for. We take the welcome seriously even if we take almost nothing
+            else seriously. The only crowd we&rsquo;ve got no time for is
+            wankers. That&rsquo;s the whole door policy.
+          </p>
+        </div>
+
         <div className="mt-12 space-y-2 border-t border-hairline pt-8">
           {/* Liquor licensing — NSW. FILLME: insert the venue's real licensee
               legal name + NSW liquor licence number before launch (confirm the
