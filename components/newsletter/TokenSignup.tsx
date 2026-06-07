@@ -28,7 +28,7 @@ export function TokenSignup() {
   }
 
   const inputClass =
-    "w-full rounded-none border border-hairline bg-after-dark px-4 py-3 font-body text-base text-crema placeholder:text-crema/30 focus:border-high-score-orange focus:outline-none focus:ring-1 focus:ring-high-score-orange disabled:opacity-50";
+    "w-full rounded-none border border-tilt-purple bg-crema px-4 py-3 font-body text-base text-last-train-purple placeholder:text-last-train-purple/50 focus:border-high-score-orange focus:outline-none focus:ring-1 focus:ring-high-score-orange disabled:opacity-50";
 
   if (state?.ok) {
     return (
