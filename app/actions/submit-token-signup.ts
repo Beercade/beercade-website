@@ -10,11 +10,45 @@ const schema = z.object({
 
 const KIT_API = "https://api.kit.com/v4";
 
+// Unredeemable-from-guessing, easy-to-read code. Excludes 0/O/1/I/L.
+function generateVoucherCode(): string {
+  const chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+  let code = "";
+  for (let i = 0; i < 6; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return `BC-${code}`;
+}
+
+// Human-readable expiry N days out, in Sydney time, e.g. "15 June 2026".
+function voucherExpiry(days: number): string {
+  const sydney = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "Australia/Sydney" })
+  );
+  sydney.setDate(sydney.getDate() + days);
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  return `${sydney.getDate()} ${months[sydney.getMonth()]} ${sydney.getFullYear()}`;
+}
+
 /**
  * $5-tokens lead-magnet signup. Same shape as submit-newsletter-signup, with a
  * first name (the voucher email greets people by name) and the dedicated tokens
- * sequence + tags. The unique code itself is minted outside Kit (see the
- * lead-magnet setup notes); this action only gets the subscriber into the flow.
+ * sequence + tags. The unique voucher code and its 7-day expiry are minted here
+ * and written to the subscriber's custom fields, so the voucher email's merge
+ * tags resolve without any external automation.
  */
 export async function submitTokenSignup(
   formData: FormData
@@ -38,21 +72,26 @@ export async function submitTokenSignup(
     ? parsed.data.firstName
     : undefined;
 
+  // Mint the voucher up front so the fields exist before the sequence email
+  // ever releases. A re-signup overwrites with a fresh code and a new 7-day
+  // window, which is the behaviour we want.
+  const fields: Record<string, string> = {
+    voucher_code: generateVoucherCode(),
+    voucher_expiry: voucherExpiry(7),
+  };
+  if (firstName) fields.first_name = firstName;
+
   // Kit v4 needs the subscriber to exist before it can join a form or sequence;
   // creating (upserting) them here is the step that actually subscribes them.
-  // first_name is sent as a custom field so the voucher email can greet by name.
+  // Custom fields (voucher code, expiry, first name) are set in the same call.
   const created = await fetch(`${KIT_API}/subscribers`, {
     method: "POST",
     headers,
-    body: JSON.stringify(
-      firstName
-        ? {
-            email_address,
-            first_name: firstName,
-            fields: { first_name: firstName },
-          }
-        : { email_address }
-    ),
+    body: JSON.stringify({
+      email_address,
+      ...(firstName ? { first_name: firstName } : {}),
+      fields,
+    }),
   });
 
   if (!created.ok) {
