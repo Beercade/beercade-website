@@ -53,7 +53,7 @@ export default function TokensPage() {
       <PageHeader
         kicker="The newsletter"
         title="Five bucks in tokens. For an email address."
-        lede="Sign up to the Beercade list and we'll send you $5 in arcade tokens; enough to lose six straight games of Street Fighter II to a stranger and call it a Thursday well spent. The list itself: what's new on the floor, when Pinball Night runs, who is holding the Pac-Man high score, and the odd reason to come in midweek. No daily emails, no filler."
+        lede="Sign up to the Beercade list and we'll send you $5 in arcade tokens; enough to lose a bunch of games of Street Fighter II to a stranger and call it a Thursday well spent. The list itself: what's new on the floor, when Pinball Night runs, who is holding the Pac-Man high score, and the odd reason to come in midweek. No daily emails, no filler."
       />
 
       {/* Signup */}
