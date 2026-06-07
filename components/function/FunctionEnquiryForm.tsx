@@ -16,7 +16,11 @@ const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;
   return (
-    <p id={id} role="alert" className="mt-1 font-body text-xs text-high-score-orange">
+    <p
+      id={id}
+      role="alert"
+      className="font-body text-high-score-orange mt-1 text-xs"
+    >
       {message}
     </p>
   );
@@ -34,11 +38,11 @@ function Label({
   return (
     <label
       htmlFor={htmlFor}
-      className="mb-1 block font-body text-sm font-medium text-crema/80"
+      className="font-body text-crema/80 mb-1 block text-sm font-medium"
     >
       {children}
       {required && (
-        <span className="ml-1 text-high-score-orange" aria-hidden="true">
+        <span className="text-high-score-orange ml-1" aria-hidden="true">
           *
         </span>
       )}
@@ -47,11 +51,20 @@ function Label({
 }
 
 const inputBase =
-  "w-full rounded-none border border-hairline bg-after-dark px-4 py-3 font-body text-sm text-crema placeholder:text-crema/30 focus:border-high-score-orange focus:outline-none focus:ring-1 focus:ring-high-score-orange aria-invalid:border-high-score-orange";
+  "w-full rounded-none border border-tilt-purple bg-crema px-4 py-3 font-body text-sm text-last-train-purple placeholder:text-last-train-purple/50 focus:border-high-score-orange focus:outline-none focus:ring-1 focus:ring-high-score-orange aria-invalid:border-high-score-orange";
 
 type ActionResult = { ok: false; errors: Record<string, string[]> } | null;
 
-export function FunctionEnquiryForm() {
+interface FunctionEnquiryFormProps {
+  /** Pre-fill from the step-1 interest capture. */
+  defaultName?: string;
+  defaultEmail?: string;
+}
+
+export function FunctionEnquiryForm({
+  defaultName,
+  defaultEmail,
+}: FunctionEnquiryFormProps = {}) {
   const [state, setState] = useState<ActionResult>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -64,6 +77,10 @@ export function FunctionEnquiryForm() {
     setError,
   } = useForm<FunctionEnquiryInput>({
     resolver: zodResolver(functionEnquirySchema),
+    defaultValues: {
+      name: defaultName ?? "",
+      email: defaultEmail ?? "",
+    },
   });
 
   // Propagate server-side field errors back into react-hook-form
@@ -89,20 +106,25 @@ export function FunctionEnquiryForm() {
     script.onload = () => {
       if (
         typeof window !== "undefined" &&
-        (window as { turnstile?: { render: (el: HTMLElement, opts: object) => void } }).turnstile &&
+        (
+          window as {
+            turnstile?: { render: (el: HTMLElement, opts: object) => void };
+          }
+        ).turnstile &&
         turnstileRef.current
       ) {
-        (window as { turnstile?: { render: (el: HTMLElement, opts: object) => void } }).turnstile!.render(
-          turnstileRef.current,
-          {
-            sitekey: TURNSTILE_SITE_KEY,
-            callback: (token: string) => {
-              if (turnstileTokenRef.current) {
-                turnstileTokenRef.current.value = token;
-              }
-            },
+        (
+          window as {
+            turnstile?: { render: (el: HTMLElement, opts: object) => void };
           }
-        );
+        ).turnstile!.render(turnstileRef.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+          callback: (token: string) => {
+            if (turnstileTokenRef.current) {
+              turnstileTokenRef.current.value = token;
+            }
+          },
+        });
       }
     };
     document.head.appendChild(script);
@@ -123,7 +145,7 @@ export function FunctionEnquiryForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-6" id="enquire">
+    <form onSubmit={handleSubmit} noValidate className="space-y-6">
       {/* Honeypot — hidden from real users */}
       <input
         type="text"
@@ -145,7 +167,7 @@ export function FunctionEnquiryForm() {
       {formError && (
         <div
           role="alert"
-          className="rounded-none border border-high-score-orange/60 bg-high-score-orange/10 p-4 font-body text-sm text-high-score-orange"
+          className="border-high-score-orange/60 bg-high-score-orange/10 font-body text-high-score-orange rounded-none border p-4 text-sm"
         >
           {formError}
         </div>
@@ -213,8 +235,11 @@ export function FunctionEnquiryForm() {
             aria-invalid={!!errors.groupSize}
             className={inputBase}
           />
-          <FieldError id="groupSize-error" message={errors.groupSize?.message} />
-          <p className="mt-1 font-body text-xs text-crema/40">Minimum 6</p>
+          <FieldError
+            id="groupSize-error"
+            message={errors.groupSize?.message}
+          />
+          <p className="font-body text-crema/40 mt-1 text-xs">Minimum 6</p>
         </div>
         <div>
           <Label htmlFor="preferredDate" required>
@@ -251,7 +276,9 @@ export function FunctionEnquiryForm() {
           id="preferredTime"
           {...register("preferredTime")}
           aria-invalid={!!errors.preferredTime}
-          aria-describedby={errors.preferredTime ? "preferredTime-error" : undefined}
+          aria-describedby={
+            errors.preferredTime ? "preferredTime-error" : undefined
+          }
           className={inputBase}
         >
           <option value="">Select&hellip;</option>
@@ -297,7 +324,9 @@ export function FunctionEnquiryForm() {
           id="drinksStyle"
           {...register("drinksStyle")}
           aria-invalid={!!errors.drinksStyle}
-          aria-describedby={errors.drinksStyle ? "drinksStyle-error" : undefined}
+          aria-describedby={
+            errors.drinksStyle ? "drinksStyle-error" : undefined
+          }
           className={inputBase}
         >
           <option value="">Select&hellip;</option>
@@ -329,9 +358,9 @@ export function FunctionEnquiryForm() {
           id="food"
           type="checkbox"
           {...register("food")}
-          className="h-4 w-4 rounded-none border-hairline bg-after-dark accent-tilt-purple"
+          className="border-hairline bg-after-dark accent-tilt-purple h-4 w-4 rounded-none"
         />
-        <label htmlFor="food" className="font-body text-sm text-crema/80">
+        <label htmlFor="food" className="font-body text-crema/80 text-sm">
           Food required
         </label>
       </div>
@@ -360,9 +389,9 @@ export function FunctionEnquiryForm() {
             {...register("consent")}
             aria-describedby={errors.consent ? "consent-error" : undefined}
             aria-invalid={!!errors.consent}
-            className="mt-0.5 h-4 w-4 rounded-none border-hairline bg-after-dark accent-tilt-purple"
+            className="border-hairline bg-after-dark accent-tilt-purple mt-0.5 h-4 w-4 rounded-none"
           />
-          <label htmlFor="consent" className="font-body text-sm text-crema/70">
+          <label htmlFor="consent" className="font-body text-crema/70 text-sm">
             OK to be contacted by Beercade about this enquiry{" "}
             <span className="text-high-score-orange" aria-hidden="true">
               *

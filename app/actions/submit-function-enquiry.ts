@@ -92,6 +92,26 @@ export async function submitFunctionEnquiry(
     Sentry.captureException(err, { tags: { stage: "customer-autoresponder" } });
   }
 
+  // 7) Tag the Kit subscriber as completed so the "finish your enquiry" nudge
+  // excludes them. They were created at step 1 (interest capture). Best-effort.
+  const submittedTagId = process.env.KIT_TAG_FUNCTIONS_SUBMITTED;
+  const kitApiKey = process.env.KIT_API_KEY;
+  if (submittedTagId && kitApiKey) {
+    try {
+      await fetch(`https://api.kit.com/v4/tags/${submittedTagId}/subscribers`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Kit-Api-Key": kitApiKey,
+        },
+        body: JSON.stringify({ email_address: data.email }),
+      });
+    } catch (err) {
+      console.error("[function-enquiry] kit completion tag failed:", err);
+      Sentry.captureException(err, { tags: { stage: "kit-completion-tag" } });
+    }
+  }
+
   revalidatePath("/studio");
   redirect("/thanks");
 }

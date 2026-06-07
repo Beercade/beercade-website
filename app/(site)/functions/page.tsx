@@ -11,7 +11,7 @@ import {
   FunctionPackageCard,
   type FunctionTier,
 } from "@/components/function/FunctionPackageCard";
-import { FunctionEnquiryForm } from "@/components/function/FunctionEnquiryForm";
+import { FunctionEnquiryFlow } from "@/components/function/FunctionEnquiryFlow";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Section } from "@/components/ui/Section";
 
@@ -39,7 +39,9 @@ type PackageDoc = { _id: string } & Partial<FunctionTier> & {
 export default async function FunctionsPage() {
   const [packages, testimonials] = await Promise.all([
     sanityClient.fetch<PackageDoc[]>(functionPackagesQuery).catch(() => []),
-    sanityClient.fetch<Testimonial[]>(functionTestimonialsQuery).catch(() => []),
+    sanityClient
+      .fetch<Testimonial[]>(functionTestimonialsQuery)
+      .catch(() => []),
   ]);
 
   const linkClass =
@@ -58,7 +60,7 @@ export default async function FunctionsPage() {
         <h2 id="packages-heading" className="t-h2 text-crema">
           The packages.
         </h2>
-        <p className="mt-3 max-w-2xl font-body text-crema/70">
+        <p className="font-body text-crema/70 mt-3 max-w-2xl">
           One small, one standard, one big, stepping up from the same spine.
         </p>
 
@@ -87,19 +89,19 @@ export default async function FunctionsPage() {
             </div>
 
             {/* The promise that runs the floor */}
-            <p className="mt-10 max-w-2xl border-l-2 border-high-score-orange pl-4 font-body text-sm text-crema/70">
+            <p className="border-high-score-orange font-body text-crema/70 mt-10 max-w-2xl border-l-2 pl-4 text-sm">
               Every package carries the same promise that runs the floor: if a
               machine won&rsquo;t behave on your night, tell the bar. We fix it
               in five minutes or refund the credit.
             </p>
           </>
         ) : (
-          <p className="mt-6 font-body text-crema/50">
+          <p className="font-body text-crema/50 mt-6">
             {/* PLACEHOLDER: shown until Function package docs are added in Sanity */}
             Packages are being finalised. Email{" "}
             <a
               href="mailto:functions@beercade.com.au"
-              className="text-high-score-orange underline underline-offset-4 decoration-hairline transition-colors hover:decoration-high-score-orange"
+              className="text-high-score-orange decoration-hairline hover:decoration-high-score-orange underline underline-offset-4 transition-colors"
             >
               functions@beercade.com.au
             </a>{" "}
@@ -113,7 +115,7 @@ export default async function FunctionsPage() {
         <h2 id="tokens-heading" className="t-h2 text-crema">
           Tokens and drinks.
         </h2>
-        <p className="mt-3 max-w-2xl font-body text-crema/70">
+        <p className="font-body text-crema/70 mt-3 max-w-2xl">
           The machines run on tokens; most games are $2, or two tokens a play.
           Every guest gets a bag of tokens and drink tickets. Here are the
           per-head packages, most popular first.
@@ -124,38 +126,38 @@ export default async function FunctionsPage() {
             className="space-y-3"
             aria-label="Per-head token and drink options"
           >
-            <li className="flex flex-col gap-1 border-l-2 border-high-score-orange bg-surface-raised p-4">
-              <span className="font-body text-sm font-semibold text-crema">
+            <li className="border-high-score-orange bg-surface-raised flex flex-col gap-1 border-l-2 p-4">
+              <span className="font-body text-crema text-sm font-semibold">
                 Option 1 · $50pp{" "}
-                <span className="font-normal uppercase tracking-wider text-high-score-orange">
+                <span className="text-high-score-orange font-normal tracking-wider uppercase">
                   Most popular
                 </span>
               </span>
-              <span className="font-body text-sm text-crema/70">
+              <span className="font-body text-crema/70 text-sm">
                 25 tokens and 2 drink tickets.
               </span>
             </li>
-            <li className="flex flex-col gap-1 border border-hairline p-4">
-              <span className="font-body text-sm font-semibold text-crema">
+            <li className="border-hairline flex flex-col gap-1 border p-4">
+              <span className="font-body text-crema text-sm font-semibold">
                 Option 2 · $50pp
               </span>
-              <span className="font-body text-sm text-crema/70">
+              <span className="font-body text-crema/70 text-sm">
                 60 tokens, no drinks; guests buy their own at the bar.
               </span>
             </li>
-            <li className="flex flex-col gap-1 border border-hairline p-4">
-              <span className="font-body text-sm font-semibold text-crema">
+            <li className="border-hairline flex flex-col gap-1 border p-4">
+              <span className="font-body text-crema text-sm font-semibold">
                 Option 3 · $60pp
               </span>
-              <span className="font-body text-sm text-crema/70">
+              <span className="font-body text-crema/70 text-sm">
                 35 tokens and 3 drink tickets.
               </span>
             </li>
-            <li className="flex flex-col gap-1 border border-hairline p-4">
-              <span className="font-body text-sm font-semibold text-crema">
+            <li className="border-hairline flex flex-col gap-1 border p-4">
+              <span className="font-body text-crema text-sm font-semibold">
                 Option 4 · bulk tokens
               </span>
-              <span className="font-body text-sm text-crema/70">
+              <span className="font-body text-crema/70 text-sm">
                 Buy in one lump and let guests help themselves.
               </span>
             </li>
@@ -163,33 +165,33 @@ export default async function FunctionsPage() {
 
           <div>
             <p className="t-kicker mb-3">Buy tokens in bulk</p>
-            <table className="w-full border-collapse font-body text-sm">
+            <table className="font-body w-full border-collapse text-sm">
               <thead>
-                <tr className="border-b border-hairline text-crema/50">
+                <tr className="border-hairline text-crema/50 border-b">
                   <th
                     scope="col"
-                    className="py-2 text-left text-xs font-medium uppercase tracking-widest"
+                    className="py-2 text-left text-xs font-medium tracking-widest uppercase"
                   >
                     Spend
                   </th>
                   <th
                     scope="col"
-                    className="py-2 text-right text-xs font-medium uppercase tracking-widest"
+                    className="py-2 text-right text-xs font-medium tracking-widest uppercase"
                   >
                     Tokens
                   </th>
                 </tr>
               </thead>
               <tbody className="text-crema/85">
-                <tr className="border-b border-hairline/60">
+                <tr className="border-hairline/60 border-b">
                   <td className="py-2">$100</td>
                   <td className="py-2 text-right">125</td>
                 </tr>
-                <tr className="border-b border-hairline/60">
+                <tr className="border-hairline/60 border-b">
                   <td className="py-2">$200</td>
                   <td className="py-2 text-right">260</td>
                 </tr>
-                <tr className="border-b border-hairline/60">
+                <tr className="border-hairline/60 border-b">
                   <td className="py-2">$300</td>
                   <td className="py-2 text-right">450</td>
                 </tr>
@@ -199,7 +201,7 @@ export default async function FunctionsPage() {
                 </tr>
               </tbody>
             </table>
-            <p className="mt-3 font-body text-xs text-crema/50">
+            <p className="font-body text-crema/50 mt-3 text-xs">
               Buying in bulk on the day saves more again, and whatever’s left
               over is yours to keep.
             </p>
@@ -207,16 +209,16 @@ export default async function FunctionsPage() {
         </div>
 
         <div className="mt-8 grid max-w-3xl gap-4 sm:grid-cols-2">
-          <p className="font-body text-sm text-crema/70">
-            <span className="font-semibold text-crema">
+          <p className="font-body text-crema/70 text-sm">
+            <span className="text-crema font-semibold">
               Tokens never expire.
             </span>{" "}
             Don’t burn them all on the night; take the leftovers home and use
             them whenever. They can’t be cashed out or swapped for drinks, but
             they keep forever.
           </p>
-          <p className="font-body text-sm text-crema/70">
-            <span className="font-semibold text-crema">
+          <p className="font-body text-crema/70 text-sm">
+            <span className="text-crema font-semibold">
               Drink tickets are spent on the night.
             </span>{" "}
             One ticket gets any drink except cocktails, which are two. They
@@ -225,7 +227,7 @@ export default async function FunctionsPage() {
           </p>
         </div>
 
-        <p className="mt-6 max-w-2xl font-body text-sm text-crema/60">
+        <p className="font-body text-crema/60 mt-6 max-w-2xl text-sm">
           We’re fully licensed. Under-18s are welcome as long as they’re with a
           responsible adult, family or guardian.
         </p>
@@ -239,13 +241,13 @@ export default async function FunctionsPage() {
         <div className="grid gap-12 md:grid-cols-2">
           <div>
             <p className="t-kicker mb-3">Food</p>
-            <p className="max-w-prose font-body text-crema/70">
+            <p className="font-body text-crema/70 max-w-prose">
               The bar does small snacks; toasties and a range of chips. For
               anything more, bring your own or order in. Plenty of our
               neighbours deliver straight to us, and we’ll pass on their details
               so you can place the order yourself for the day.
             </p>
-            <ul className="mt-4 space-y-2 font-body text-sm text-crema/80">
+            <ul className="font-body text-crema/80 mt-4 space-y-2 text-sm">
               <li>
                 <a
                   href="https://www.lacoppola.com.au"
@@ -295,21 +297,25 @@ export default async function FunctionsPage() {
           </div>
           <div>
             <p className="t-kicker mb-3">Hours</p>
-            <dl className="space-y-4 font-body text-crema/80">
+            <dl className="font-body text-crema/80 space-y-4">
               <div>
-                <dt className="text-xs uppercase tracking-widest text-crema/50">
+                <dt className="text-crema/50 text-xs tracking-widest uppercase">
                   Normally open
                 </dt>
-                <dd className="mt-1">Wed to Sat, 3pm to midnight. Sun, 3pm to 10pm.</dd>
+                <dd className="mt-1">
+                  Wed to Sat, 3pm to midnight. Sun, 3pm to 10pm.
+                </dd>
               </div>
               <div>
-                <dt className="text-xs uppercase tracking-widest text-crema/50">
+                <dt className="text-crema/50 text-xs tracking-widest uppercase">
                   Available for functions
                 </dt>
-                <dd className="mt-1">Mon to Sat, 10am to midnight. Sun, 10am to 10pm.</dd>
+                <dd className="mt-1">
+                  Mon to Sat, 10am to midnight. Sun, 10am to 10pm.
+                </dd>
               </div>
             </dl>
-            <p className="mt-4 max-w-prose font-body text-sm text-crema/60">
+            <p className="font-body text-crema/60 mt-4 max-w-prose text-sm">
               The gap between those two is where the free hire lives. A weekday
               daytime, a Monday or Tuesday, costs nothing to hold.
             </p>
@@ -320,20 +326,20 @@ export default async function FunctionsPage() {
       {/* Testimonials */}
       {testimonials.length > 0 && (
         <Section hairline aria-labelledby="testimonials-heading">
-          <h2 id="testimonials-heading" className="t-h2 mb-8 text-crema">
+          <h2 id="testimonials-heading" className="t-h2 text-crema mb-8">
             What groups say.
           </h2>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {testimonials.map((t) => (
               <blockquote
                 key={t._id}
-                className="rounded-none border border-hairline bg-surface-raised p-6"
+                className="border-hairline bg-surface-raised rounded-none border p-6"
               >
-                <p className="font-body text-base italic text-crema/80">
+                <p className="font-body text-crema/80 text-base italic">
                   &ldquo;{t.quote}&rdquo;
                 </p>
                 {t.attribution && (
-                  <footer className="mt-3 font-body text-sm text-crema/50">
+                  <footer className="font-body text-crema/50 mt-3 text-sm">
                     — {t.attribution}
                     {t.context && <>, {t.context}</>}
                   </footer>
@@ -345,7 +351,7 @@ export default async function FunctionsPage() {
       )}
 
       {/* Enquiry */}
-      <Section hairline aria-labelledby="enquire-heading">
+      <Section id="enquire" hairline aria-labelledby="enquire-heading">
         <div className="grid gap-12 md:grid-cols-[1fr_560px]">
           <div className="space-y-4">
             <h2 id="enquire-heading" className="t-h2 text-crema">
@@ -356,14 +362,14 @@ export default async function FunctionsPage() {
               get a real reply with a held window and the full breakdown, not a
               form letter; normally within 24 hours.
             </p>
-            <p className="font-body text-sm text-crema/60">
+            <p className="font-body text-crema/60 text-sm">
               Prefer email? Reach us at{" "}
               <a href="mailto:functions@beercade.com.au" className={linkClass}>
                 functions@beercade.com.au
               </a>
               .
             </p>
-            <p className="font-body text-sm text-crema/60">
+            <p className="font-body text-crema/60 text-sm">
               Prefer to talk? Call Roger on{" "}
               <a href="tel:+61400112445" className={linkClass}>
                 0400 112 445
@@ -371,7 +377,7 @@ export default async function FunctionsPage() {
               .
             </p>
           </div>
-          <FunctionEnquiryForm />
+          <FunctionEnquiryFlow />
         </div>
       </Section>
     </>
