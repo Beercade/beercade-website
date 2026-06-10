@@ -43,7 +43,9 @@ export function HeroLoop({
   const [activeIdx, setActiveIdx] = useState(0);
   const [fadingIdx, setFadingIdx] = useState<number | null>(null);
   const [offsetY, setOffsetY] = useState(0);
+  const [paused, setPaused] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const normalisedSlides: HeroSlide[] = slides?.length
     ? slides
@@ -65,7 +67,7 @@ export function HeroLoop({
 
   // Auto-advance
   useEffect(() => {
-    if (reducedMotion || !hasMultiple) return;
+    if (reducedMotion || !hasMultiple || paused) return;
 
     timerRef.current = setTimeout(() => {
       const next = (activeIdx + 1) % normalisedSlides.length;
@@ -77,7 +79,19 @@ export function HeroLoop({
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [activeIdx, reducedMotion, hasMultiple, normalisedSlides.length]);
+  }, [activeIdx, reducedMotion, hasMultiple, paused, normalisedSlides.length]);
+
+  // The pause control also stops any playing slide video (WCAG 2.2.2 — the
+  // whole surface stops moving, not just the carousel).
+  useEffect(() => {
+    sectionRef.current?.querySelectorAll("video").forEach((video) => {
+      if (paused) {
+        video.pause();
+      } else {
+        video.play().catch(() => {});
+      }
+    });
+  }, [paused, activeIdx]);
 
   // One gentle scroll layer: the media drifts and the content fades as you
   // descend. No differential multi-layer parallax — restraint reads as confidence.
@@ -116,8 +130,10 @@ export function HeroLoop({
 
   return (
     <section
+      ref={sectionRef}
       className="relative flex min-h-[88svh] items-end overflow-hidden bg-tilt-purple"
       aria-label="Hero"
+      data-paused={paused || undefined}
     >
       {/* Slide stack — photography carries the hero (brand §7). */}
       {normalisedSlides.map((slide, i) => {
@@ -143,14 +159,21 @@ export function HeroLoop({
             {slide.mediaType === "video" &&
             (slide.videoFileUrl || slide.videoUrl) &&
             !reducedMotion ? (
-              <video
-                src={slide.videoFileUrl ?? slide.videoUrl ?? undefined}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="h-full w-full object-cover opacity-[0.62]"
-              />
+              <>
+                <video
+                  src={slide.videoFileUrl ?? slide.videoUrl ?? undefined}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="h-full w-full object-cover opacity-[0.62]"
+                />
+                {/* Scanline overlay — brand §8 device for video backgrounds. */}
+                <div
+                  className="scanlines pointer-events-none absolute inset-0"
+                  aria-hidden="true"
+                />
+              </>
             ) : slide.mediaType === "image" && slide.image ? (
               <div className={`h-full w-full ${!reducedMotion ? kbClass : ""}`}>
                 <Image
@@ -206,7 +229,7 @@ export function HeroLoop({
             </div>
 
             <div className="min-w-0 md:flex-1">
-              <h1 className="t-display max-w-2xl text-balance text-crema">
+              <h1 className="t-display-xl max-w-3xl text-balance text-crema">
                 {headline ?? (
                   /* PLACEHOLDER */
                   "The pub night that actually has something to do."
@@ -227,6 +250,31 @@ export function HeroLoop({
             </div>
           </div>
         </div>
+
+        {/* Pause/play — auto-advancing content needs a stop control (WCAG 2.2.2).
+            Hidden under reduced motion, where nothing auto-advances anyway. */}
+        {!reducedMotion &&
+          (hasMultiple ||
+            normalisedSlides.some((s) => s.mediaType === "video")) && (
+            <button
+              type="button"
+              onClick={() => setPaused((p) => !p)}
+              aria-pressed={paused}
+              aria-label={paused ? "Play slideshow" : "Pause slideshow"}
+              className="absolute bottom-4 right-4 z-[4] flex h-9 w-9 items-center justify-center border border-crema/40 bg-after-dark/60 text-crema transition-colors hover:border-crema focus-visible:outline focus-visible:outline-2 focus-visible:outline-crema md:bottom-6 md:right-6"
+            >
+              {paused ? (
+                <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                  <path d="M2 1l9 5-9 5z" fill="currentColor" />
+                </svg>
+              ) : (
+                <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                  <rect x="2" y="1" width="3" height="10" fill="currentColor" />
+                  <rect x="7" y="1" width="3" height="10" fill="currentColor" />
+                </svg>
+              )}
+            </button>
+          )}
 
         {/* Slide indicators — thin squared bars (hard-edge system). */}
         {hasMultiple && (

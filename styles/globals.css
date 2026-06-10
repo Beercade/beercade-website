@@ -96,6 +96,14 @@ body {
   .kb-1, .kb-2, .kb-3, .kb-4 { animation: none; }
 }
 
+/* The hero's pause control freezes the Ken Burns drift too. */
+[data-paused] .kb-1,
+[data-paused] .kb-2,
+[data-paused] .kb-3,
+[data-paused] .kb-4 {
+  animation-play-state: paused;
+}
+
 /* Hero texture overlays — faint grid + film grain for depth behind the carousel */
 .grid-overlay {
   background-image:
