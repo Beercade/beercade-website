@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
+import { ViewTransitions } from "next-view-transitions";
 import "@/styles/globals.css";
 
 // Fonts are self-hosted (next/font/local) rather than next/font/google so the
@@ -53,17 +54,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en-AU"
-      className={`${archivo.variable} ${archivoBlack.variable} ${pressStart.variable}`}
-    >
-      <head>
-        <link rel="preconnect" href="https://cdn.sanity.io" />
-      </head>
-      <body>
-        {children}
-        <Analytics />
-      </body>
-    </html>
+    <ViewTransitions>
+      <html
+        lang="en-AU"
+        className={`${archivo.variable} ${archivoBlack.variable} ${pressStart.variable}`}
+      >
+        <head>
+          <link rel="preconnect" href="https://cdn.sanity.io" />
+        </head>
+        <body>
+          {children}
+          <Analytics />
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

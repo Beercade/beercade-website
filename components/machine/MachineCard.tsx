@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import Image from "next/image";
 import { urlFor } from "@/lib/sanity/image";
 import { StatusPill } from "@/components/ui/StatusPill";
@@ -33,8 +33,12 @@ export function MachineCard({
       )}
     >
       {/* photo-grade keeps CMS uploads on the late-night palette (brand §7);
-          the cast lifts to full colour on hover. */}
-      <div className="photo-grade relative aspect-[4/3] overflow-hidden bg-after-dark">
+          the cast lifts to full colour on hover. The view-transition name lets
+          the card image morph into the detail hero on navigation. */}
+      <div
+        className="photo-grade relative aspect-[4/3] overflow-hidden bg-after-dark"
+        style={{ viewTransitionName: `machine-${slug.current}` }}
+      >
         <Image
           src={urlFor(photo).width(600).height(450).auto("format").url()}
           alt={photo.alt ?? name}

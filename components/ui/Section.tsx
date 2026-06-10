@@ -26,6 +26,8 @@ interface SectionProps {
   spacing?: "default" | "tight";
   /** Skip the inner Container (for full-bleed content). */
   bleed?: boolean;
+  /** Scroll-driven entrance reveal (native CSS, reduced-motion safe). */
+  reveal?: boolean;
   className?: string;
   containerClassName?: string;
   id?: string;
@@ -39,6 +41,7 @@ export function Section({
   hairline = false,
   spacing = "default",
   bleed = false,
+  reveal = true,
   className,
   containerClassName,
   id,
@@ -57,7 +60,13 @@ export function Section({
         className
       )}
     >
-      {bleed ? children : <Container className={containerClassName}>{children}</Container>}
+      {bleed ? (
+        children
+      ) : (
+        <Container className={cn(reveal && "reveal", containerClassName)}>
+          {children}
+        </Container>
+      )}
     </section>
   );
 }
