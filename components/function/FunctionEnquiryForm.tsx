@@ -59,11 +59,14 @@ interface FunctionEnquiryFormProps {
   /** Pre-fill from the step-1 interest capture. */
   defaultName?: string;
   defaultEmail?: string;
+  /** Pre-fill from a package-card selection. */
+  defaultNotes?: string;
 }
 
 export function FunctionEnquiryForm({
   defaultName,
   defaultEmail,
+  defaultNotes,
 }: FunctionEnquiryFormProps = {}) {
   const [state, setState] = useState<ActionResult>(null);
   const [isPending, startTransition] = useTransition();
@@ -80,6 +83,7 @@ export function FunctionEnquiryForm({
     defaultValues: {
       name: defaultName ?? "",
       email: defaultEmail ?? "",
+      notes: defaultNotes ?? "",
     },
   });
 

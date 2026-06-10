@@ -41,7 +41,7 @@ export function CTAButton({
 
   if (href) {
     return (
-      <Link href={href} className={classes} aria-label={ariaLabel}>
+      <Link href={href} onClick={onClick} className={classes} aria-label={ariaLabel}>
         {children}
       </Link>
     );

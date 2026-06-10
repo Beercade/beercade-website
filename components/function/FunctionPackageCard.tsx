@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils/cn";
+import { PackageEnquireButton } from "@/components/function/PackageEnquireButton";
 
 export interface FunctionTier {
   name: string;
@@ -76,7 +77,9 @@ export function FunctionPackageCard({
         To hold it: {toHold}
       </p>
 
-      <p className="mt-4 font-body text-sm italic text-crema/70">{pitch}</p>
+      <p className="mt-4 flex-1 font-body text-sm italic text-crema/70">{pitch}</p>
+
+      <PackageEnquireButton packageName={name} />
     </article>
   );
 }
