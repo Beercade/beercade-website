@@ -10,6 +10,8 @@ export const homepageQuery = /* groq */ `*[_type == "homepage"][0]{
   "featuredEvents": featuredEvents[]->{ _id, title, slug, kicker, kind, startDate, status, hero }
 }`;
 
+export const machineCountQuery = /* groq */ `count(*[_type == "machine"])`;
+
 export const allMachinesQuery = /* groq */ `*[_type == "machine"] | order(order asc, name asc){
   _id, name, slug, type, manufacturer, year, status, photo, description
 }`;
