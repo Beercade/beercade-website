@@ -32,7 +32,9 @@ export function MachineCard({
         className
       )}
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-after-dark">
+      {/* photo-grade keeps CMS uploads on the late-night palette (brand §7);
+          the cast lifts to full colour on hover. */}
+      <div className="photo-grade relative aspect-[4/3] overflow-hidden bg-after-dark">
         <Image
           src={urlFor(photo).width(600).height(450).auto("format").url()}
           alt={photo.alt ?? name}
