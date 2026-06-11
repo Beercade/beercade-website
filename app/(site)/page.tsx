@@ -66,7 +66,7 @@ export default async function HomePage() {
       {/* Stat strip — hierarchy through scale, not decoration (brand §6).
           All three are established facts: the live machine count, the $2 play
           price from the functions page, the station walk from find-us.
-          FILLME: confirm these are the three stats worth shouting. */}
+          Stats signed off by John 11 Jun 2026. */}
       <Section tone="raised" spacing="tight" aria-label="The numbers">
         <dl className="grid grid-cols-3 gap-6 text-center md:gap-10">
           {machineCount > 0 && (
@@ -254,8 +254,8 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* Deadpan ticker — lines from the brand vocabulary list (§9.3).
-          FILLME: confirm or swap the one-liners. */}
+      {/* Deadpan ticker — lines from the brand vocabulary list (§9.3),
+          signed off by John 11 Jun 2026. */}
       <Marquee
         lines={[
           "You’ll lose. That’s fine.",
