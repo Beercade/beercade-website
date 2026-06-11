@@ -56,6 +56,11 @@ export function HeroLoop({
     : [];
 
   const hasMultiple = normalisedSlides.length > 1;
+  // Eager-load the first image slide even when a video leads the deck — it
+  // paints first (video poster gap) and is the likely LCP element.
+  const firstImageIdx = normalisedSlides.findIndex(
+    (s) => s.mediaType === "image"
+  );
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -175,12 +180,12 @@ export function HeroLoop({
                 />
               </>
             ) : slide.mediaType === "image" && slide.image ? (
-              <div className={`h-full w-full ${!reducedMotion ? kbClass : ""}`}>
+              <div className={`relative h-full w-full ${!reducedMotion ? kbClass : ""}`}>
                 <Image
                   src={urlFor(slide.image).width(1920).height(1080).auto("format").url()}
                   alt={(slide.image as { alt?: string }).alt ?? "Beercade venue"}
                   fill
-                  priority={i === 0}
+                  priority={i === firstImageIdx}
                   className="object-cover opacity-[0.62]"
                   sizes="100vw"
                 />
