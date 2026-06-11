@@ -118,7 +118,7 @@ export default async function HomePage() {
       )}
 
       {/* Establishing venue shot — used once (brand §7) */}
-      <FeatureImage src="/images/254BC9ED-D70C-44A4-B7AE-7CC00C58E59B.png" />
+      <FeatureImage src="/images/venue-floor-pinball-row.jpg" />
 
       {/* What's on — 3 upcoming events */}
       {homepage?.featuredEvents?.length > 0 && (
