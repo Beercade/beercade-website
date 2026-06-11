@@ -8,6 +8,7 @@ const STATIC_ROUTES: MetadataRoute.Sitemap = [
   { url: BASE, changeFrequency: "daily", priority: 1 },
   { url: `${BASE}/machines`, changeFrequency: "weekly", priority: 0.9 },
   { url: `${BASE}/whats-on`, changeFrequency: "daily", priority: 0.8 },
+  { url: `${BASE}/menu`, changeFrequency: "weekly", priority: 0.8 },
   { url: `${BASE}/functions`, changeFrequency: "monthly", priority: 0.9 },
   { url: `${BASE}/find-us`, changeFrequency: "monthly", priority: 0.7 },
 ];

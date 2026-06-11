@@ -7,6 +7,7 @@ import homepage from "./homepage";
 import functionEnquiry from "./functionEnquiry";
 import testimonial from "./testimonial";
 import leagueRegistration from "./leagueRegistration";
+import menuSection from "./menuSection";
 
 const schemaTypes = [
   machine,
@@ -18,6 +19,7 @@ const schemaTypes = [
   functionEnquiry,
   testimonial,
   leagueRegistration,
+  menuSection,
 ];
 
 export default schemaTypes;

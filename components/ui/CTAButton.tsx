@@ -11,6 +11,12 @@ interface CTAButtonProps {
   children: React.ReactNode;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
+  /**
+   * Render a plain anchor with the download attribute instead of next/link.
+   * Use for file responses (e.g. /api/menu-pdf) — Link would prefetch the
+   * route and trigger the file generation before anyone clicks.
+   */
+  download?: boolean;
   "aria-label"?: string;
 }
 
@@ -35,9 +41,18 @@ export function CTAButton({
   children,
   type = "button",
   disabled,
+  download,
   "aria-label": ariaLabel,
 }: CTAButtonProps) {
   const classes = cn(base, variantClasses[variant], className);
+
+  if (href && download) {
+    return (
+      <a href={href} download className={classes} aria-label={ariaLabel}>
+        {children}
+      </a>
+    );
+  }
 
   if (href) {
     return (
