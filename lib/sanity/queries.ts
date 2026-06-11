@@ -34,6 +34,11 @@ export const functionPackagesQuery = /* groq */ `*[_type == "functionPackage"] |
   _id, name, bestFor, tagline, groupSize, price, priceNote, inclusions, toHold, pitch, featured
 }`;
 
+export const menuSectionsQuery = /* groq */ `*[_type == "menuSection"] | order(order asc, title asc){
+  _id, title, side, note, footnotes,
+  "groups": groups[]{ _key, heading, "items": items[]{ _key, name, description, price } }
+}`;
+
 export const homepageTestimonialsQuery = /* groq */ `*[_type == "testimonial" && "home" in useOn][0..2]`;
 
 export const functionTestimonialsQuery = /* groq */ `*[_type == "testimonial" && "functions" in useOn][0..5]`;

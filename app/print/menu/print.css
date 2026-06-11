@@ -1,0 +1,28 @@
+/* A3 print geometry for /print/menu. Everything else is Tailwind.
+   The PDF route prints with preferCSSPageSize, so @page is the source of
+   truth for the sheet size. */
+
+@page {
+  size: A3 portrait;
+  margin: 0;
+}
+
+.print-sheet {
+  width: 297mm;
+  height: 420mm;
+  overflow: hidden;
+  break-after: page;
+  page-break-after: always;
+}
+
+.print-sheet:last-child {
+  break-after: auto;
+  page-break-after: auto;
+}
+
+/* On screen (proofing in a browser), separate the two sheets visually. */
+@media screen {
+  .print-sheet {
+    margin: 0 auto 24px;
+  }
+}
