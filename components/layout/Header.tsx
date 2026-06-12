@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { CTAButton } from "@/components/ui/CTAButton";
+import { OpenNowBadge, type DayHours } from "@/components/layout/OpenNowBadge";
 
 const nav = [
   { label: "Machines", href: "/machines" },
@@ -15,7 +16,7 @@ const nav = [
   { label: "Find us", href: "/find-us" },
 ];
 
-export function Header() {
+export function Header({ weeklyHours }: { weeklyHours?: DayHours[] | null }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -65,7 +66,8 @@ export function Header() {
             ))}
           </ul>
 
-          <div className="hidden md:block">
+          <div className="hidden items-center gap-6 md:flex">
+            <OpenNowBadge weeklyHours={weeklyHours} className="hidden lg:flex" />
             <CTAButton href="/functions" variant="primary" className="shrink-0 text-xs">
               Book a function
             </CTAButton>
@@ -126,7 +128,8 @@ export function Header() {
                 </li>
               ))}
             </ul>
-            <div className="pb-6 pt-2">
+            <div className="space-y-4 pb-6 pt-2">
+              <OpenNowBadge weeklyHours={weeklyHours} />
               <CTAButton href="/functions" variant="primary" className="w-full">
                 Book a function
               </CTAButton>

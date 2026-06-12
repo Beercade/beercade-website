@@ -182,22 +182,32 @@ export default async function FunctionsPage() {
                   </th>
                 </tr>
               </thead>
+              {/* Token counts in the Press Start accent — the brand §8
+                  HI-SCORE numeral device, used for numerals only. */}
               <tbody className="text-crema/85">
                 <tr className="border-hairline/60 border-b">
-                  <td className="py-2">$100</td>
-                  <td className="py-2 text-right">125</td>
+                  <td className="py-2.5">$100</td>
+                  <td className="font-accent text-high-score-orange py-2.5 text-right text-xs">
+                    125
+                  </td>
                 </tr>
                 <tr className="border-hairline/60 border-b">
-                  <td className="py-2">$200</td>
-                  <td className="py-2 text-right">260</td>
+                  <td className="py-2.5">$200</td>
+                  <td className="font-accent text-high-score-orange py-2.5 text-right text-xs">
+                    260
+                  </td>
                 </tr>
                 <tr className="border-hairline/60 border-b">
-                  <td className="py-2">$300</td>
-                  <td className="py-2 text-right">450</td>
+                  <td className="py-2.5">$300</td>
+                  <td className="font-accent text-high-score-orange py-2.5 text-right text-xs">
+                    450
+                  </td>
                 </tr>
                 <tr>
-                  <td className="py-2">$500</td>
-                  <td className="py-2 text-right">850</td>
+                  <td className="py-2.5">$500</td>
+                  <td className="font-accent text-high-score-orange py-2.5 text-right text-xs">
+                    850
+                  </td>
                 </tr>
               </tbody>
             </table>

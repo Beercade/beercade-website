@@ -96,6 +96,14 @@ body {
   .kb-1, .kb-2, .kb-3, .kb-4 { animation: none; }
 }
 
+/* The hero's pause control freezes the Ken Burns drift too. */
+[data-paused] .kb-1,
+[data-paused] .kb-2,
+[data-paused] .kb-3,
+[data-paused] .kb-4 {
+  animation-play-state: paused;
+}
+
 /* Hero texture overlays — faint grid + film grain for depth behind the carousel */
 .grid-overlay {
   background-image:
@@ -108,6 +116,49 @@ body {
   background-image: radial-gradient(rgb(247 239 227 / 0.05) 0.5px, transparent 0.5px);
   background-size: 8px 8px;
   opacity: 0.07;
+}
+
+/* Scanline overlay — brand §8 permitted device for video-still backgrounds.
+   4px repeat at 5% opacity Crema. */
+.scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgb(247 239 227 / 0.05) 0px,
+    rgb(247 239 227 / 0.05) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+/* Late-night photo grade — enforces the brand §7 purple-cast palette on
+   CMS-uploaded photography at the component level. Apply to the image's
+   positioned wrapper; the cast lifts to full colour on .group hover. */
+.photo-grade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--color-last-train-purple);
+  mix-blend-mode: color;
+  opacity: 0.38;
+  transition: opacity var(--motion-base) ease;
+}
+.photo-grade::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: var(--color-tilt-purple);
+  mix-blend-mode: multiply;
+  opacity: 0.18;
+  transition: opacity var(--motion-base) ease;
+}
+.group:hover .photo-grade::after,
+.group:hover .photo-grade::before,
+.group:focus-visible .photo-grade::after,
+.group:focus-visible .photo-grade::before {
+  opacity: 0;
 }
 
 /* Hero wordmark neon flicker — opacity only, so it never fights the
@@ -169,4 +220,81 @@ body {
   font-family: var(--font-body);
   font-size: clamp(1.125rem, 1.5vw, 1.375rem);
   line-height: 1.55;
+}
+/* Hero-only poster scale — pushes toward the brand §6 "hero word at 180pt"
+   register on wide screens without touching interior-page H1s. */
+.t-display-xl {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.75rem, 8vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+/* Arcade accent — Press Start 2P, brand §4.3. Overlines for HI-SCORE-style
+   callouts only; pair with a big Archivo Black numeral, never body copy. */
+.t-arcade {
+  font-family: var(--font-accent);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+/* Poster-scale stat numeral — hierarchy through scale, not decoration (§6). */
+.t-numeral {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Scroll-driven reveal — native CSS only (animation-timeline: view()), so it
+   degrades to nothing where unsupported and stays off under reduced motion.
+   ──────────────────────────────────────────────────────────────────────── */
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: revealUp 1ms linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 45%;
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Marquee ticker — gig-poster trope, CSS only. Content must be duplicated
+   twice inside .marquee-track for a seamless loop.
+   ──────────────────────────────────────────────────────────────────────── */
+@keyframes marqueeScroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  overflow: hidden;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 48s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
 }

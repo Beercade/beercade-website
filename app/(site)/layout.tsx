@@ -1,11 +1,22 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { StickyMobileCTA } from "@/components/layout/StickyMobileCTA";
+import { sanityClient } from "@/lib/sanity/client";
+import { openingHoursQuery } from "@/lib/sanity/queries";
+import type { DayHours } from "@/components/layout/OpenNowBadge";
 
-export default function SiteLayout({
+export const revalidate = 60;
+
+export default async function SiteLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const hours: { weeklyHours?: DayHours[] } | null = await sanityClient
+    .fetch(openingHoursQuery)
+    .catch(() => null);
+  const weeklyHours = hours?.weeklyHours ?? null;
+
   return (
     <>
       <a
@@ -14,9 +25,10 @@ export default function SiteLayout({
       >
         Skip to content
       </a>
-      <Header />
+      <Header weeklyHours={weeklyHours} />
       <main id="main">{children}</main>
       <Footer />
+      <StickyMobileCTA weeklyHours={weeklyHours} />
     </>
   );
 }

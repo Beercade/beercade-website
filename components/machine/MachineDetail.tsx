@@ -14,6 +14,7 @@ interface HighScore {
 interface MachineDetailProps {
   name: string;
   type: string;
+  slug?: { current: string } | null;
   manufacturer?: string | null;
   year?: number | null;
   status: "working" | "maintenance" | "down";
@@ -25,6 +26,7 @@ interface MachineDetailProps {
 export function MachineDetail({
   name,
   type,
+  slug,
   manufacturer,
   year,
   status,
@@ -34,8 +36,14 @@ export function MachineDetail({
 }: MachineDetailProps) {
   return (
     <article>
-      {/* Hero image */}
-      <div className="relative aspect-[16/7] w-full overflow-hidden bg-after-dark">
+      {/* Hero image — shares a view-transition name with the machine card so
+          the card morphs into this hero on navigation. */}
+      <div
+        className="relative aspect-[16/7] w-full overflow-hidden bg-after-dark"
+        style={
+          slug ? { viewTransitionName: `machine-${slug.current}` } : undefined
+        }
+      >
         <Image
           src={urlFor(photo).width(1280).height(560).auto("format").url()}
           alt={photo.alt ?? name}

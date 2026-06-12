@@ -2,8 +2,10 @@ import { sanityClient } from "@/lib/sanity/client";
 import {
   homepageQuery,
   homepageTestimonialsQuery,
+  machineCountQuery,
   openingHoursQuery,
 } from "@/lib/sanity/queries";
+import { Marquee } from "@/components/ui/Marquee";
 import { HeroLoop } from "@/components/hero/HeroLoop";
 import { MachineCard } from "@/components/machine/MachineCard";
 import { EventCard } from "@/components/event/EventCard";
@@ -26,11 +28,13 @@ const ExitIntentPopup = dynamic(
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const [homepage, testimonials, openingHours] = await Promise.all([
-    sanityClient.fetch(homepageQuery).catch(() => null),
-    sanityClient.fetch(homepageTestimonialsQuery).catch(() => []),
-    sanityClient.fetch(openingHoursQuery).catch(() => null),
-  ]);
+  const [homepage, testimonials, openingHours, machineCount] =
+    await Promise.all([
+      sanityClient.fetch(homepageQuery).catch(() => null),
+      sanityClient.fetch(homepageTestimonialsQuery).catch(() => []),
+      sanityClient.fetch(openingHoursQuery).catch(() => null),
+      sanityClient.fetch<number>(machineCountQuery).catch(() => 0),
+    ]);
 
   const featuredMachines = (homepage?.featuredMachines ?? []).slice(0, 6);
   // Column count tracks the actual number of machines so a part-filled lineup
@@ -58,6 +62,29 @@ export default async function HomePage() {
         ctaLabel={homepage?.primaryCtaLabel}
         ctaTarget={homepage?.primaryCtaTarget}
       />
+
+      {/* Stat strip — hierarchy through scale, not decoration (brand §6).
+          All three are established facts: the live machine count, the $2 play
+          price from the functions page, the station walk from find-us.
+          Stats signed off by John 11 Jun 2026. */}
+      <Section tone="raised" spacing="tight" aria-label="The numbers">
+        <dl className="grid grid-cols-3 gap-6 text-center md:gap-10">
+          {machineCount > 0 && (
+            <div className="flex flex-col-reverse gap-3">
+              <dt className="t-arcade text-crema/50">machines</dt>
+              <dd className="t-numeral text-crema">{machineCount}</dd>
+            </div>
+          )}
+          <div className="flex flex-col-reverse gap-3">
+            <dt className="t-arcade text-crema/50">a play</dt>
+            <dd className="t-numeral text-crema">$2</dd>
+          </div>
+          <div className="flex flex-col-reverse gap-3">
+            <dt className="t-arcade text-crema/50">from the train</dt>
+            <dd className="t-numeral text-crema">2 min</dd>
+          </div>
+        </dl>
+      </Section>
 
       {/* Machines teaser — up to 6 featured */}
       {featuredMachines.length > 0 && (
@@ -91,7 +118,7 @@ export default async function HomePage() {
       )}
 
       {/* Establishing venue shot — used once (brand §7) */}
-      <FeatureImage src="/images/254BC9ED-D70C-44A4-B7AE-7CC00C58E59B.png" />
+      <FeatureImage src="/images/venue-floor-pinball-row.jpg" />
 
       {/* What's on — 3 upcoming events */}
       {homepage?.featuredEvents?.length > 0 && (
@@ -226,6 +253,17 @@ export default async function HomePage() {
           <MapEmbed height={320} className="border border-hairline" />
         </div>
       </Section>
+
+      {/* Deadpan ticker — lines from the brand vocabulary list (§9.3),
+          signed off by John 11 Jun 2026. */}
+      <Marquee
+        lines={[
+          "You’ll lose. That’s fine.",
+          "Real pinball.",
+          "Two minutes from the train.",
+          "Midweek’s worth the train in.",
+        ]}
+      />
 
       <ExitIntentPopup />
     </>

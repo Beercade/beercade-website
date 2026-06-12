@@ -129,7 +129,12 @@ export default async function FindUsPage() {
       {/* Accessibility */}
       <Section spacing="tight" hairline aria-label="Accessibility">
         <h2 className="t-h2 mb-3 text-crema">Access.</h2>
-        {/* FILLME: step-free access details — confirm with venue operator before launch */}
+        {/* FILLME: step-free access details — confirm with venue operator
+            before launch. Visible token so an empty section can't ship
+            unnoticed. */}
+        <p className="font-body text-sm text-crema/40">
+          [step-free access details — FILLME]
+        </p>
       </Section>
 
       {/* Map */}

@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { sanityClient } from "@/lib/sanity/client";
 import { allMachinesQuery } from "@/lib/sanity/queries";
-import { MachineCard } from "@/components/machine/MachineCard";
+import { MachineGrid, type MachineListItem } from "@/components/machine/MachineGrid";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Section } from "@/components/ui/Section";
 import dynamic from "next/dynamic";
-import type { SanityImageSource } from "@sanity/image-url";
 
 const ExitIntentPopup = dynamic(
   () => import("@/components/newsletter/ExitIntentPopup").then((m) => m.ExitIntentPopup),
@@ -20,18 +19,10 @@ export const metadata: Metadata = {
     "Every machine on the floor — pinball, arcade, racing. 113 Regent Street, Redfern.",
 };
 
-interface Machine {
-  _id: string;
-  name: string;
-  slug: { current: string };
-  type: string;
-  status: "working" | "maintenance" | "down";
-  photo: SanityImageSource & { alt?: string };
-  description?: string | null;
-}
-
 export default async function MachinesPage() {
-  const machines: Machine[] = await sanityClient.fetch(allMachinesQuery).catch(() => []);
+  const machines: MachineListItem[] = await sanityClient
+    .fetch(allMachinesQuery)
+    .catch(() => []);
 
   return (
     <>
@@ -40,11 +31,16 @@ export default async function MachinesPage() {
 
       <Section aria-labelledby="machines-heading">
         {machines.length > 0 ? (
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {machines.map((machine) => (
-              <MachineCard key={machine._id} {...machine} />
-            ))}
-          </div>
+          <>
+            {/* The count is the brag — hierarchy through scale (brand §6). */}
+            <div className="mb-10 flex items-baseline gap-4">
+              <span className="t-numeral text-high-score-orange">
+                {machines.length}
+              </span>
+              <span className="t-arcade text-crema/60">on the floor</span>
+            </div>
+            <MachineGrid machines={machines} />
+          </>
         ) : (
           <p className="font-body text-crema/50">
             {/* PLACEHOLDER: shown before content is entered in Sanity */}

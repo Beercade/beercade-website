@@ -43,7 +43,7 @@ export function EventCard({
       )}
     >
       {hero && (
-        <div className="relative aspect-video overflow-hidden bg-after-dark">
+        <div className="photo-grade relative aspect-video overflow-hidden bg-after-dark">
           <Image
             src={urlFor(hero).width(800).height(450).auto("format").url()}
             alt={hero.alt ?? title}
