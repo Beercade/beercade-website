@@ -27,10 +27,7 @@ export default async function MenuPage() {
       <PageHeader
         kicker="Drinks · shots · tokens"
         title="The menu."
-        lede={
-          /* FILLME: in-voice lede for the menu page — current line is a working draft */
-          "What's behind the bar, what a game costs, and when the schooners drop to $7."
-        }
+        lede="What's behind the bar, what a game costs, and when the schooners drop to $7."
       />
 
       {/* Drinks — side 1 of the printed sheet */}
