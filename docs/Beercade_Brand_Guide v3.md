@@ -197,7 +197,7 @@ The brand voice is the single highest-leverage element in this guide. It runs ac
 *Thursday night, the Godzilla LE, two minutes from the station, the high score, the long pour, midweek, sticky-floor, you'll lose, that's fine, real pinball, machines, regulars, table, function, Redfern, the train.*
 
 **Banned on sight:**
-*Experience, ultimate, premier, level up, game on, epic, immerse, immersive, gamer, gaming destination, your friends will thank you, unleash, unforgettable, hidden gem, foodie, vibes only, where memories are made, we're excited to announce, we are thrilled, our community, family-friendly* (Beercade is licensed; the brand should not pretend otherwise).
+*Experience, ultimate, premier, level up, game on, epic, immerse, immersive, gaming destination, your friends will thank you, unleash, unforgettable, hidden gem, foodie, vibes only, where memories are made, we're excited to announce, we are thrilled, our community, family-friendly* (Beercade is licensed; the brand should not pretend otherwise).
 
 ### 9.4 Sample copy — same offer, three surfaces
 
