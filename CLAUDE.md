@@ -115,7 +115,7 @@ Most placeholder copy you need to write during scaffolding falls under "structur
 *Thursday night, the Godzilla LE, two minutes from the station, the high score, the long pour, midweek, sticky-floor, you'll lose, that's fine, real pinball, machines, regulars, table, function, Redfern, the train.*
 
 **Banned on sight (will be flagged in review):**
-*experience, ultimate, premier, level up, game on, epic, immerse, immersive, gamer, gaming destination, your friends will thank you, unleash, unforgettable, hidden gem, foodie, vibes only, where memories are made, we're excited to announce, we are thrilled, our community, family-friendly.*
+*experience, ultimate, premier, level up, game on, epic, immerse, immersive, gaming destination, your friends will thank you, unleash, unforgettable, hidden gem, foodie, vibes only, where memories are made, we're excited to announce, we are thrilled, our community, family-friendly.*
 
 **AI-writing tells to avoid even in transactional copy** (e.g. form helper text, error messages):
 - No "delve," "tapestry," "landscape" (as abstract noun), "elevate," "showcase" (as verb), "underscore," "vibrant," "robust."

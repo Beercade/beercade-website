@@ -4,6 +4,10 @@ import { withSentryConfig } from "@sentry/nextjs";
 const nextConfig = {
   experimental: {
     instrumentationHook: true,
+    // Keep the headless-Chromium pair out of the webpack bundle; the binary
+    // ships compressed inside @sparticuz/chromium and must be loaded from
+    // node_modules at runtime (used by /api/menu-pdf).
+    serverComponentsExternalPackages: ["@sparticuz/chromium", "puppeteer-core"],
   },
   images: {
     remotePatterns: [
