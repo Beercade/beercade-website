@@ -8,6 +8,21 @@ const nextConfig = {
     // ships compressed inside @sparticuz/chromium and must be loaded from
     // node_modules at runtime (used by /api/menu-pdf).
     serverComponentsExternalPackages: ["@sparticuz/chromium", "puppeteer-core"],
+    // Marking the package external stops webpack bundling it, but Next's file
+    // tracer never sees the 64 MB Chromium binary (it's read from disk at
+    // runtime, not `require`d) so it gets left out of the serverless function.
+    // Force it in, or chromium.executablePath() points at a file that isn't
+    // there and the PDF route 500s on Vercel.
+    //
+    // Point at the real .pnpm store path, not node_modules/@sparticuz/chromium
+    // (a pnpm symlink) — tracing through the symlink makes Vercel reject the
+    // function as "an invalid deployment package ... files in symlinked
+    // directories". The @* keeps this working across version bumps.
+    outputFileTracingIncludes: {
+      "/api/menu-pdf": [
+        "./node_modules/.pnpm/@sparticuz+chromium@*/node_modules/@sparticuz/chromium/**",
+      ],
+    },
   },
   images: {
     remotePatterns: [

@@ -4,6 +4,10 @@ import { Redis } from "@upstash/redis";
 import puppeteer, { type Browser } from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
 
+// A PDF needs no WebGL/GPU; skipping the graphics stack trims launch time and
+// memory on the serverless function.
+chromium.setGraphicsMode = false;
+
 // Renders /print/menu in headless Chromium and returns it as a two-page A3
 // PDF. Chromium is heavy, so the route is rate-limited per IP and capped at
 // 60s. Content always reflects the studio as it stands (the print route is

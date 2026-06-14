@@ -4,7 +4,7 @@ import { sanityClient } from "@/lib/sanity/client";
 import { menuSectionsQuery } from "@/lib/sanity/queries";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Section } from "@/components/ui/Section";
-import { CTAButton } from "@/components/ui/CTAButton";
+import { MenuPdfButton } from "@/components/menu/MenuPdfButton";
 import { MenuSectionBlock } from "@/components/menu/MenuSectionBlock";
 import { bySide, type MenuSection } from "@/components/menu/types";
 
@@ -66,9 +66,7 @@ export default async function MenuPage() {
               this page right now.
             </p>
           </div>
-          <CTAButton href="/api/menu-pdf" variant="secondary" download>
-            Download the A3 menu (PDF)
-          </CTAButton>
+          <MenuPdfButton />
         </div>
       </Section>
     </>
