@@ -10,7 +10,6 @@ import { OpenNowBadge, type DayHours } from "@/components/layout/OpenNowBadge";
 
 const nav = [
   { label: "Machines", href: "/machines" },
-  { label: "What's on", href: "/whats-on" },
   { label: "Menu", href: "/menu" },
   { label: "Functions", href: "/functions" },
   { label: "Find us", href: "/find-us" },

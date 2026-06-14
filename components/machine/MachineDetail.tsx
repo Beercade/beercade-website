@@ -132,11 +132,8 @@ export function MachineDetail({
           <aside className="space-y-4">
             <div className="rounded-none border border-hairline bg-surface-raised p-6 space-y-4">
               <p className="font-body text-sm text-crema/70">
-                See what&rsquo;s on next, or book the room around this machine.
+                Book the room around this machine.
               </p>
-              <CTAButton href="/whats-on" variant="secondary" className="w-full">
-                See what&rsquo;s on
-              </CTAButton>
               <CTAButton href="/functions" variant="primary" className="w-full">
                 Book a function
               </CTAButton>
