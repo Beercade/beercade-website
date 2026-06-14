@@ -30,7 +30,7 @@ export default async function Image() {
         <img
           src={wordmark as unknown as string}
           width={760}
-          height={362}
+          height={311}
           alt=""
         />
         <div

@@ -133,10 +133,10 @@ function SheetHeader({ subtitle }: { subtitle: string }) {
   return (
     <header className="flex items-end justify-between border-b-2 border-tilt-purple pb-[6mm]">
       <Image
-        src="/images/beercade-horizontal-crema.png"
+        src="/images/beercade-horizontal-crema.svg"
         alt="Beercade"
-        width={271}
-        height={129}
+        width={1000}
+        height={409}
         priority
         unoptimized
         className="h-[22mm] w-auto"

@@ -19,10 +19,11 @@ export function Footer() {
           <div className="space-y-3">
             <Link href="/" aria-label="Beercade — home" className="inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crema">
               <Image
-                src="/images/beercade-horizontal-crema.png"
+                src="/images/beercade-horizontal-crema.svg"
                 alt="Beercade"
-                width={271}
-                height={129}
+                width={1000}
+                height={409}
+                unoptimized
                 className="h-10 w-auto"
               />
             </Link>

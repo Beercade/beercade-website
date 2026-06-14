@@ -224,11 +224,12 @@ export function HeroLoop({
                 over any hero photo, with generous clear space on all sides. */}
             <div className="shrink-0 self-start bg-tilt-purple px-7 py-6 sm:px-10 sm:py-8 md:self-center">
               <Image
-                src="/images/beercade-wordmark.png"
+                src="/images/beercade-stacked-white.svg"
                 alt="Beercade"
-                width={788}
-                height={514}
+                width={1000}
+                height={806}
                 priority
+                unoptimized
                 className="h-auto w-44 sm:w-56 md:w-60 lg:w-72"
               />
             </div>
