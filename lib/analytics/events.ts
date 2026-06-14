@@ -7,7 +7,8 @@ export type AnalyticsEvent =
   | "function-enquiry-submitted"
   | "newsletter-signup"
   | "cta-click-functions"
-  | "cta-click-event";
+  | "cta-click-event"
+  | "menu-pdf-download";
 
 export function trackEvent(
   name: AnalyticsEvent,
