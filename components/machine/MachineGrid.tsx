@@ -13,6 +13,7 @@ export interface MachineListItem {
   status: "working" | "maintenance" | "down";
   photo: SanityImageSource & { alt?: string };
   description?: string | null;
+  logoBackground?: "light" | "dark" | null;
 }
 
 const TYPE_LABELS: Record<string, string> = {

@@ -109,6 +109,7 @@ export default async function HomePage() {
                 type: string;
                 status: "working" | "maintenance" | "down";
                 photo: { alt?: string };
+                logoBackground?: "light" | "dark" | null;
               }) => (
                 <MachineCard key={machine._id} {...machine} />
               )

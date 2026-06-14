@@ -3,6 +3,7 @@ import { urlFor } from "@/lib/sanity/image";
 import { StatusPill } from "@/components/ui/StatusPill";
 import { CTAButton } from "@/components/ui/CTAButton";
 import { Container } from "@/components/ui/Container";
+import { cn } from "@/lib/utils/cn";
 import type { SanityImageSource } from "@sanity/image-url";
 
 interface HighScore {
@@ -21,6 +22,7 @@ interface MachineDetailProps {
   photo: SanityImageSource & { alt?: string };
   description?: string | null;
   highScore?: HighScore | null;
+  logoBackground?: "light" | "dark" | null;
 }
 
 export function MachineDetail({
@@ -33,23 +35,36 @@ export function MachineDetail({
   photo,
   description,
   highScore,
+  logoBackground,
 }: MachineDetailProps) {
+  // Match the card: dark logos on a cream band (uncropped), pale/gold logos on
+  // the dark ground (cover-cropped, dimmed) where they read better.
+  const lightTile = logoBackground !== "dark";
   return (
     <article>
       {/* Hero image — shares a view-transition name with the machine card so
           the card morphs into this hero on navigation. */}
       <div
-        className="relative aspect-[16/7] w-full overflow-hidden bg-after-dark"
+        className={cn(
+          "relative aspect-[16/7] w-full overflow-hidden",
+          lightTile ? "bg-crema" : "bg-after-dark"
+        )}
         style={
           slug ? { viewTransitionName: `machine-${slug.current}` } : undefined
         }
       >
         <Image
-          src={urlFor(photo).width(1280).height(560).auto("format").url()}
+          src={
+            lightTile
+              ? urlFor(photo).width(1280).fit("max").auto("format").url()
+              : urlFor(photo).width(1280).height(560).auto("format").url()
+          }
           alt={photo.alt ?? name}
           fill
           priority
-          className="object-cover opacity-80"
+          className={cn(
+            lightTile ? "object-contain p-[3%]" : "object-cover opacity-80"
+          )}
           sizes="100vw"
         />
       </div>
