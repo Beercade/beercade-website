@@ -85,6 +85,21 @@ export default defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: "logoBackground",
+      title: "Logo background",
+      type: "string",
+      initialValue: "light",
+      options: {
+        list: [
+          { title: "Cream tile (for dark logos)", value: "light" },
+          { title: "Dark (for pale or gold logos)", value: "dark" },
+        ],
+        layout: "radio",
+      },
+      description:
+        "Most logos are dark and disappear on the dark page, so they sit on a cream tile by default. Switch to dark for pale or gold logos that wash out on cream — e.g. The Addams Family, KISS, AC/DC, Metallica.",
+    }),
+    defineField({
       name: "description",
       title: "Short description (web)",
       type: "text",

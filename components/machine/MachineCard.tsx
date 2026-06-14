@@ -12,6 +12,8 @@ interface MachineCardProps {
   status: "working" | "maintenance" | "down";
   photo: SanityImageSource & { alt?: string };
   description?: string | null;
+  /** Cream tile (default, suits dark logos) or the dark page ground (pale/gold logos). */
+  logoBackground?: "light" | "dark" | null;
   className?: string;
 }
 
@@ -22,8 +24,12 @@ export function MachineCard({
   status,
   photo,
   description,
+  logoBackground,
   className,
 }: MachineCardProps) {
+  // Most logos are dark and vanish on the dark page, so the cream tile is the
+  // default; pale/gold logos opt into the dark ground where they read better.
+  const lightTile = logoBackground !== "dark";
   return (
     <Link
       href={`/machines/${slug.current}`}
@@ -32,20 +38,23 @@ export function MachineCard({
         className
       )}
     >
-      {/* The photo floats in a uniform 4:3 frame on a transparent ground, sized
-          with object-contain so the whole machine shows uncropped (the Sanity
-          URL no longer forces a 4:3 crop). photo-grade keeps CMS uploads on the
-          late-night palette (brand §7); the cast lifts on hover. The
-          view-transition name morphs the card image into the detail hero. */}
+      {/* The logo floats in a uniform 4:3 frame, object-contain so it shows
+          uncropped. Dark logos sit on a cream tile (padded so they breathe);
+          pale/gold logos keep the dark page ground with the photo-grade cast
+          (brand §7) that lifts on hover. The view-transition name morphs the
+          card image into the detail hero. */}
       <div
-        className="photo-grade relative aspect-[4/3] overflow-hidden rounded-none transition-transform duration-[var(--motion-slow)] group-hover:scale-[1.02] group-focus-visible:ring-2 group-focus-visible:ring-crema"
+        className={cn(
+          "relative aspect-[4/3] overflow-hidden rounded-none transition-transform duration-[var(--motion-slow)] group-hover:scale-[1.02] group-focus-visible:ring-2 group-focus-visible:ring-crema",
+          lightTile ? "bg-crema" : "photo-grade"
+        )}
         style={{ viewTransitionName: `machine-${slug.current}` }}
       >
         <Image
           src={urlFor(photo).width(800).fit("max").auto("format").url()}
           alt={photo.alt ?? name}
           fill
-          className="object-contain"
+          className={cn("object-contain", lightTile && "p-[10%]")}
           sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
         />
       </div>

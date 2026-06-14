@@ -6,14 +6,14 @@ export const homepageQuery = /* groq */ `*[_type == "homepage"][0]{
     "image": image{ ..., "alt": alt, asset->{ _id, url, metadata{ lqip, dimensions } } }
   },
   heroVideoUrl, heroPoster,
-  "featuredMachines": featuredMachines[]->{ _id, name, slug, type, photo, status },
+  "featuredMachines": featuredMachines[]->{ _id, name, slug, type, photo, status, logoBackground },
   "featuredEvents": featuredEvents[]->{ _id, title, slug, kicker, kind, startDate, status, hero }
 }`;
 
 export const machineCountQuery = /* groq */ `count(*[_type == "machine"])`;
 
 export const allMachinesQuery = /* groq */ `*[_type == "machine"] | order(order asc, name asc){
-  _id, name, slug, type, manufacturer, year, status, photo, description
+  _id, name, slug, type, manufacturer, year, status, photo, description, logoBackground
 }`;
 
 export const machineBySlugQuery = /* groq */ `*[_type == "machine" && slug.current == $slug][0]{
