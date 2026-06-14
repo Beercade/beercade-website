@@ -3,14 +3,7 @@ import type { Metadata } from "next";
 export const dynamic = "force-dynamic";
 
 import { sanityClient } from "@/lib/sanity/client";
-import {
-  functionPackagesQuery,
-  functionTestimonialsQuery,
-} from "@/lib/sanity/queries";
-import {
-  FunctionPackageCard,
-  type FunctionTier,
-} from "@/components/function/FunctionPackageCard";
+import { functionTestimonialsQuery } from "@/lib/sanity/queries";
 import { FunctionEnquiryFlow } from "@/components/function/FunctionEnquiryFlow";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Section } from "@/components/ui/Section";
@@ -30,19 +23,10 @@ interface Testimonial {
   context?: string | null;
 }
 
-// Package tiers are authored in Sanity (studio → Function package). The page is
-// just the framework; edit the content there. Fields map 1:1 to the card.
-type PackageDoc = { _id: string } & Partial<FunctionTier> & {
-    inclusions?: string[] | null;
-  };
-
 export default async function FunctionsPage() {
-  const [packages, testimonials] = await Promise.all([
-    sanityClient.fetch<PackageDoc[]>(functionPackagesQuery).catch(() => []),
-    sanityClient
-      .fetch<Testimonial[]>(functionTestimonialsQuery)
-      .catch(() => []),
-  ]);
+  const testimonials = await sanityClient
+    .fetch<Testimonial[]>(functionTestimonialsQuery)
+    .catch(() => []);
 
   const linkClass =
     "text-high-score-orange underline underline-offset-4 decoration-hairline transition-colors hover:decoration-high-score-orange";
@@ -55,59 +39,35 @@ export default async function FunctionsPage() {
         lede="Three ways to do it, one spine: a held room, a bag of tokens per guest, drinks sorted, and food ordered in. Holding the room is usually free; a weekday daytime, or any slot outside our normal trading, costs nothing. The only time you pay to hire is closing a trading night to your group, at $750 an hour. Tokens you don't burn go home with you; drink tickets are spent on the night."
       />
 
-      {/* Packages — authored in Sanity (studio → Function package) */}
-      <Section tone="raised" aria-labelledby="packages-heading">
-        <h2 id="packages-heading" className="t-h2 text-crema">
-          The packages.
-        </h2>
-        <p className="font-body text-crema/70 mt-3 max-w-2xl">
-          One small, one standard, one big, stepping up from the same spine.
-        </p>
-
-        {packages.length > 0 ? (
-          <>
-            <div
-              className={`mt-10 grid items-start gap-6 ${
-                packages.length >= 3 ? "md:grid-cols-3" : "md:grid-cols-2"
-              }`}
-            >
-              {packages.map((pkg) => (
-                <FunctionPackageCard
-                  key={pkg._id}
-                  name={pkg.name ?? "Package"}
-                  bestFor={pkg.bestFor ?? ""}
-                  tagline={pkg.tagline ?? ""}
-                  groupSize={pkg.groupSize ?? ""}
-                  price={pkg.price ?? ""}
-                  priceNote={pkg.priceNote ?? undefined}
-                  youGet={pkg.inclusions ?? []}
-                  toHold={pkg.toHold ?? ""}
-                  pitch={pkg.pitch ?? ""}
-                  featured={pkg.featured ?? false}
-                />
-              ))}
-            </div>
-
-            {/* The promise that runs the floor */}
-            <p className="border-high-score-orange font-body text-crema/70 mt-10 max-w-2xl border-l-2 pl-4 text-sm">
-              Every package carries the same promise that runs the floor: if a
-              machine won&rsquo;t behave on your night, tell the bar. We fix it
-              in five minutes or refund the credit.
+      {/* Enquiry — first thing under the heading */}
+      <Section id="enquire" hairline aria-labelledby="enquire-heading">
+        <div className="grid gap-12 md:grid-cols-[1fr_560px]">
+          <div className="space-y-4">
+            <h2 id="enquire-heading" className="t-h2 text-crema">
+              Get in touch.
+            </h2>
+            <p className="font-body text-crema/70">
+              Tell us your date, rough headcount, and the occasion. You&rsquo;ll
+              get a real reply with a held window and the full breakdown, not a
+              form letter; normally within 24 hours.
             </p>
-          </>
-        ) : (
-          <p className="font-body text-crema/50 mt-6">
-            {/* PLACEHOLDER: shown until Function package docs are added in Sanity */}
-            Packages are being finalised. Email{" "}
-            <a
-              href="mailto:functions@beercade.com.au"
-              className="text-high-score-orange decoration-hairline hover:decoration-high-score-orange underline underline-offset-4 transition-colors"
-            >
-              functions@beercade.com.au
-            </a>{" "}
-            and we&rsquo;ll talk you through the options.
-          </p>
-        )}
+            <p className="font-body text-crema/60 text-sm">
+              Prefer email? Reach us at{" "}
+              <a href="mailto:functions@beercade.com.au" className={linkClass}>
+                functions@beercade.com.au
+              </a>
+              .
+            </p>
+            <p className="font-body text-crema/60 text-sm">
+              Prefer to talk? Call Roger on{" "}
+              <a href="tel:+61400112445" className={linkClass}>
+                0400 112 445
+              </a>
+              .
+            </p>
+          </div>
+          <FunctionEnquiryFlow />
+        </div>
       </Section>
 
       {/* Tokens and drinks — the mechanics behind every package */}
@@ -359,37 +319,6 @@ export default async function FunctionsPage() {
           </div>
         </Section>
       )}
-
-      {/* Enquiry */}
-      <Section id="enquire" hairline aria-labelledby="enquire-heading">
-        <div className="grid gap-12 md:grid-cols-[1fr_560px]">
-          <div className="space-y-4">
-            <h2 id="enquire-heading" className="t-h2 text-crema">
-              Get in touch.
-            </h2>
-            <p className="font-body text-crema/70">
-              Tell us your date, rough headcount, and the occasion. You&rsquo;ll
-              get a real reply with a held window and the full breakdown, not a
-              form letter; normally within 24 hours.
-            </p>
-            <p className="font-body text-crema/60 text-sm">
-              Prefer email? Reach us at{" "}
-              <a href="mailto:functions@beercade.com.au" className={linkClass}>
-                functions@beercade.com.au
-              </a>
-              .
-            </p>
-            <p className="font-body text-crema/60 text-sm">
-              Prefer to talk? Call Roger on{" "}
-              <a href="tel:+61400112445" className={linkClass}>
-                0400 112 445
-              </a>
-              .
-            </p>
-          </div>
-          <FunctionEnquiryFlow />
-        </div>
-      </Section>
     </>
   );
 }
