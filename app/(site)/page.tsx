@@ -8,7 +8,6 @@ import {
 import { Marquee } from "@/components/ui/Marquee";
 import { HeroLoop } from "@/components/hero/HeroLoop";
 import { MachineCard } from "@/components/machine/MachineCard";
-import { EventCard } from "@/components/event/EventCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CTAButton } from "@/components/ui/CTAButton";
 import { Section } from "@/components/ui/Section";
@@ -121,40 +120,8 @@ export default async function HomePage() {
       {/* Establishing venue shot — used once (brand §7) */}
       <FeatureImage src="/images/venue-floor-pinball-row.jpg" />
 
-      {/* What's on — 3 upcoming events */}
-      {homepage?.featuredEvents?.length > 0 && (
-        <Section tone="raised" hairline aria-labelledby="events-heading">
-          <div className="mb-10 flex items-end justify-between gap-4">
-            <SectionHeading as="h2">
-              <span id="events-heading">
-                {/* FILLME: in-voice events section heading */}
-                What&rsquo;s on.
-              </span>
-            </SectionHeading>
-            <CTAButton href="/whats-on" variant="ghost" className="shrink-0">
-              Full calendar
-            </CTAButton>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {homepage.featuredEvents
-              .slice(0, 3)
-              .map(
-                (event: {
-                  _id: string;
-                  title: string;
-                  slug: { current: string };
-                  kicker?: string;
-                  kind: string;
-                  startDate: string;
-                  status: "upcoming" | "live" | "wrapped" | "cancelled";
-                  hero?: { alt?: string } | null;
-                }) => (
-                  <EventCard key={event._id} {...event} />
-                )
-              )}
-          </div>
-        </Section>
-      )}
+      {/* What's on is hidden for now — section, page, and nav removed together
+          (revert this change to bring it back). */}
 
       {/* Functions — High Score Orange feature block (Combination B) for contrast/energy */}
       <Section tone="feature-orange" aria-labelledby="functions-heading">

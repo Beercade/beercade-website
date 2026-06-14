@@ -22,9 +22,6 @@ export default function ThanksPage() {
         <CTAButton href="/machines" variant="primary">
           See the machines
         </CTAButton>
-        <CTAButton href="/whats-on" variant="secondary">
-          What&rsquo;s on
-        </CTAButton>
       </div>
     </Container>
   );
