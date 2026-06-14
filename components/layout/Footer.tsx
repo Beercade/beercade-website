@@ -28,7 +28,7 @@ export function Footer() {
               />
             </Link>
             <p className="font-body text-sm text-crema/60">
-              113 Regent Street, Redfern NSW 2016
+              113-115 Regent Street, Redfern NSW 2016
             </p>
             <p className="font-body text-sm text-crema/60">
               Two minutes from Redfern Station.

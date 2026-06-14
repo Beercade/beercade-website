@@ -239,7 +239,7 @@ export default async function HomePage() {
           <div>
             <p className="t-kicker mb-4">Redfern</p>
             <h2 id="find-us-heading" className="t-h2 text-crema text-balance">
-              113 Regent Street, Redfern.
+              113-115 Regent Street, Redfern.
             </h2>
             <p className="mt-3 font-body text-base text-crema/70">
               Two minutes from Redfern Station. T2, T3 and T8 all stop there.

@@ -1,5 +1,5 @@
 const MAP_SRC =
-  "https://maps.google.com/maps?q=113+Regent+Street,+Redfern+NSW+2016&output=embed";
+  "https://maps.google.com/maps?q=113-115+Regent+Street,+Redfern+NSW+2016&output=embed";
 
 interface MapEmbedProps {
   /** Map height in px. Defaults to 400. */
@@ -17,7 +17,7 @@ export function MapEmbed({ height = 400, className = "" }: MapEmbedProps) {
     <figure className={`overflow-hidden rounded-none ${className}`}>
       <iframe
         src={MAP_SRC}
-        title="Beercade location — 113 Regent Street, Redfern NSW 2016"
+        title="Beercade location — 113-115 Regent Street, Redfern NSW 2016"
         width="100%"
         height={height}
         loading="lazy"
@@ -25,7 +25,7 @@ export function MapEmbed({ height = 400, className = "" }: MapEmbedProps) {
         className="block w-full border-0"
       />
       <figcaption className="sr-only">
-        Map of Beercade — 113 Regent Street, Redfern NSW 2016. Served by Google
+        Map of Beercade — 113-115 Regent Street, Redfern NSW 2016. Served by Google
         Maps.
       </figcaption>
     </figure>

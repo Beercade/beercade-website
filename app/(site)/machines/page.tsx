@@ -16,7 +16,7 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: "Machines",
   description:
-    "Every machine on the floor — pinball, arcade, racing. 113 Regent Street, Redfern.",
+    "Every machine on the floor — pinball, arcade, racing. 113-115 Regent Street, Redfern.",
 };
 
 export default async function MachinesPage() {

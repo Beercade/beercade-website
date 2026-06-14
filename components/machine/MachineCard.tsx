@@ -28,29 +28,37 @@ export function MachineCard({
     <Link
       href={`/machines/${slug.current}`}
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-none border border-hairline bg-surface-raised transition-colors hover:border-tilt-purple focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crema",
+        "group flex flex-col rounded-none focus-visible:outline-none",
         className
       )}
     >
-      {/* photo-grade keeps CMS uploads on the late-night palette (brand §7);
-          the cast lifts to full colour on hover. The view-transition name lets
-          the card image morph into the detail hero on navigation. */}
+      {/* The photo floats in a uniform 4:3 frame on a transparent ground, sized
+          with object-contain so the whole machine shows uncropped (the Sanity
+          URL no longer forces a 4:3 crop). photo-grade keeps CMS uploads on the
+          late-night palette (brand §7); the cast lifts on hover. The
+          view-transition name morphs the card image into the detail hero. */}
       <div
-        className="photo-grade relative aspect-[4/3] overflow-hidden bg-after-dark"
+        className="photo-grade relative aspect-[4/3] overflow-hidden rounded-none transition-transform duration-[var(--motion-slow)] group-hover:scale-[1.02] group-focus-visible:ring-2 group-focus-visible:ring-crema"
         style={{ viewTransitionName: `machine-${slug.current}` }}
       >
         <Image
-          src={urlFor(photo).width(600).height(450).auto("format").url()}
+          src={urlFor(photo).width(800).fit("max").auto("format").url()}
           alt={photo.alt ?? name}
           fill
-          className="object-cover transition-transform duration-[var(--motion-slow)] group-hover:scale-105"
+          className="object-contain"
           sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
         />
       </div>
-      <div className="flex flex-1 flex-col gap-2 p-4">
+      <div className="flex flex-1 flex-col gap-2 pt-3">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="t-h3 text-crema">{name}</h3>
-          <StatusPill status={status} kind="machine" className="shrink-0" />
+          <h3 className="t-h3 text-crema transition-colors group-hover:text-high-score-orange">
+            {name}
+          </h3>
+          {/* "Working" is the default, so it's just noise on every card; only a
+              machine that's down or in maintenance earns a pill. */}
+          {status !== "working" && (
+            <StatusPill status={status} kind="machine" className="shrink-0" />
+          )}
         </div>
         <p className="font-body text-xs uppercase tracking-widest text-crema/50">
           {type}

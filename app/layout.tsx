@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     template: "%s — Beercade Redfern",
   },
   description:
-    "Arcade bar at 113 Regent Street, Redfern. Pinball, arcade, cold beer. Two minutes from the station.",
+    "Arcade bar at 113-115 Regent Street, Redfern. Pinball, arcade, cold beer. Two minutes from the station.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://beercade.com.au"
   ),

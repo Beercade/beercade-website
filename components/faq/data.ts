@@ -66,7 +66,7 @@ export const visiting: FaqItem[] = [
 export const functions: FaqItem[] = [
   {
     q: "How do I enquire?",
-    a: "Email hello@beercade.com.au with your date, rough headcount, and the occasion. You'll get a real reply with a held window and a full breakdown, not a form letter. [Or call [phone].]",
+    a: "Email hello@beercade.com.au with your date, rough headcount, and the occasion. You'll get a real reply with a held window and a full breakdown, not a form letter. Or call 0400 112 445.",
   },
   {
     q: "How big a group can you take?",
