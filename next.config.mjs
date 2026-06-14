@@ -13,8 +13,15 @@ const nextConfig = {
     // runtime, not `require`d) so it gets left out of the serverless function.
     // Force it in, or chromium.executablePath() points at a file that isn't
     // there and the PDF route 500s on Vercel.
+    //
+    // Point at the real .pnpm store path, not node_modules/@sparticuz/chromium
+    // (a pnpm symlink) — tracing through the symlink makes Vercel reject the
+    // function as "an invalid deployment package ... files in symlinked
+    // directories". The @* keeps this working across version bumps.
     outputFileTracingIncludes: {
-      "/api/menu-pdf": ["./node_modules/@sparticuz/chromium/**"],
+      "/api/menu-pdf": [
+        "./node_modules/.pnpm/@sparticuz+chromium@*/node_modules/@sparticuz/chromium/**",
+      ],
     },
   },
   images: {
