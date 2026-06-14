@@ -41,16 +41,16 @@ export function LocalBusinessJsonLd({ openingHours }: Props) {
     name: "Beercade",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "113 Regent Street",
+      streetAddress: "113-115 Regent Street",
       addressLocality: "Redfern",
       addressRegion: "NSW",
       postalCode: "2016",
       addressCountry: "AU",
     },
     url: "https://beercade.com.au",
-    telephone: "",
+    telephone: "+61400112445",
     priceRange: "$$",
-    // Coordinates for 113 Regent Street, Redfern, confirmed against the venue's
+    // Coordinates for 113-115 Regent Street, Redfern, confirmed against the venue's
     // OpenStreetMap entry (id "Beercade, 113-115 Regent Street").
     geo: {
       "@type": "GeoCoordinates",

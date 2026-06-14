@@ -41,7 +41,7 @@ export default async function Image() {
             fontFamily: "sans-serif",
           }}
         >
-          113 Regent Street, Redfern · Pinball, arcade, cold beer
+          113-115 Regent Street, Redfern · Pinball, arcade, cold beer
         </div>
       </div>
     ),

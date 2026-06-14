@@ -11,7 +11,7 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: "Find us",
   description:
-    "113 Regent Street, Redfern NSW 2016. Two minutes from Redfern Station.",
+    "113-115 Regent Street, Redfern NSW 2016. Two minutes from Redfern Station.",
 };
 
 interface DayHours {
@@ -53,7 +53,7 @@ export default async function FindUsPage() {
 
       <PageHeader
         id="find-us-heading"
-        kicker="113 Regent Street, Redfern NSW 2016"
+        kicker="113-115 Regent Street, Redfern NSW 2016"
         title="Find us."
       />
 

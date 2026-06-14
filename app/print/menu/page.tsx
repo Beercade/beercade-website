@@ -152,7 +152,7 @@ function SheetFooter() {
   return (
     <footer className="mt-auto border-t border-crema/20 pt-[4mm]">
       <p className="font-body text-[8.5pt] text-crema/65">
-        113 Regent Street, Redfern — two minutes from the station.
+        113-115 Regent Street, Redfern — two minutes from the station.
       </p>
     </footer>
   );
