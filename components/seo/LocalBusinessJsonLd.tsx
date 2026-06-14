@@ -50,11 +50,12 @@ export function LocalBusinessJsonLd({ openingHours }: Props) {
     url: "https://beercade.com.au",
     telephone: "",
     priceRange: "$$",
-    // FILLME: confirm exact coordinates against venue address before launch
+    // Coordinates for 113 Regent Street, Redfern, confirmed against the venue's
+    // OpenStreetMap entry (id "Beercade, 113-115 Regent Street").
     geo: {
       "@type": "GeoCoordinates",
-      latitude: -33.8923,
-      longitude: 151.2046,
+      latitude: -33.892226,
+      longitude: 151.20079,
     },
     ...(hoursSpec?.length ? { openingHoursSpecification: hoursSpec } : {}),
   };
