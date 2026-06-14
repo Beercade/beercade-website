@@ -45,28 +45,32 @@ export function MachineDetail({
       {/* Hero image — shares a view-transition name with the machine card so
           the card morphs into this hero on navigation. */}
       <div
-        className={cn(
-          "relative aspect-[16/7] w-full overflow-hidden",
-          lightTile ? "bg-crema" : "bg-after-dark"
-        )}
+        className="relative aspect-[16/7] w-full overflow-hidden bg-after-dark"
         style={
           slug ? { viewTransitionName: `machine-${slug.current}` } : undefined
         }
       >
-        <Image
-          src={
-            lightTile
-              ? urlFor(photo).width(1280).fit("max").auto("format").url()
-              : urlFor(photo).width(1280).height(560).auto("format").url()
-          }
-          alt={photo.alt ?? name}
-          fill
-          priority
-          className={cn(
-            lightTile ? "object-contain p-[3%]" : "object-cover opacity-80"
-          )}
-          sizes="100vw"
-        />
+        {lightTile ? (
+          <div className="absolute left-1/2 top-1/2 aspect-[16/9] h-[78%] -translate-x-1/2 -translate-y-1/2 bg-crema">
+            <Image
+              src={urlFor(photo).width(800).fit("max").auto("format").url()}
+              alt={photo.alt ?? name}
+              fill
+              priority
+              className="object-contain p-[5%]"
+              sizes="(min-width: 768px) 40vw, 70vw"
+            />
+          </div>
+        ) : (
+          <Image
+            src={urlFor(photo).width(1280).height(560).auto("format").url()}
+            alt={photo.alt ?? name}
+            fill
+            priority
+            className="object-cover opacity-80"
+            sizes="100vw"
+          />
+        )}
       </div>
 
       <Container className="py-12">

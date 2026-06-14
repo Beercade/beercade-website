@@ -27,9 +27,10 @@ export function MachineCard({
   logoBackground,
   className,
 }: MachineCardProps) {
-  // Most logos are dark and vanish on the dark page, so the cream tile is the
+  // Most logos are dark and vanish on the dark page, so the cream plaque is the
   // default; pale/gold logos opt into the dark ground where they read better.
   const lightTile = logoBackground !== "dark";
+  const photoUrl = urlFor(photo).width(800).fit("max").auto("format").url();
   return (
     <Link
       href={`/machines/${slug.current}`}
@@ -38,25 +39,37 @@ export function MachineCard({
         className
       )}
     >
-      {/* The logo floats in a uniform 4:3 frame, object-contain so it shows
-          uncropped. Dark logos sit on a cream tile (padded so they breathe);
-          pale/gold logos keep the dark page ground with the photo-grade cast
+      {/* Logo in a uniform 4:3 frame on the dark page ground. Dark logos get a
+          cream plaque sized to sit behind the logo (not the whole box); pale/
+          gold logos sit straight on the ground with the photo-grade cast
           (brand §7) that lifts on hover. The view-transition name morphs the
           card image into the detail hero. */}
       <div
         className={cn(
           "relative aspect-[4/3] overflow-hidden rounded-none transition-transform duration-[var(--motion-slow)] group-hover:scale-[1.02] group-focus-visible:ring-2 group-focus-visible:ring-crema",
-          lightTile ? "bg-crema" : "photo-grade"
+          !lightTile && "photo-grade"
         )}
         style={{ viewTransitionName: `machine-${slug.current}` }}
       >
-        <Image
-          src={urlFor(photo).width(800).fit("max").auto("format").url()}
-          alt={photo.alt ?? name}
-          fill
-          className={cn("object-contain", lightTile && "p-[10%]")}
-          sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
-        />
+        {lightTile ? (
+          <div className="absolute left-1/2 top-1/2 aspect-[16/9] w-[82%] -translate-x-1/2 -translate-y-1/2 bg-crema">
+            <Image
+              src={photoUrl}
+              alt={photo.alt ?? name}
+              fill
+              className="object-contain p-[6%]"
+              sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
+            />
+          </div>
+        ) : (
+          <Image
+            src={photoUrl}
+            alt={photo.alt ?? name}
+            fill
+            className="object-contain"
+            sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
+          />
+        )}
       </div>
       <div className="flex flex-1 flex-col gap-2 pt-3">
         <div className="flex items-start justify-between gap-2">
