@@ -54,7 +54,11 @@ export function MachineCard({
           <h3 className="t-h3 text-crema transition-colors group-hover:text-high-score-orange">
             {name}
           </h3>
-          <StatusPill status={status} kind="machine" className="shrink-0" />
+          {/* "Working" is the default, so it's just noise on every card; only a
+              machine that's down or in maintenance earns a pill. */}
+          {status !== "working" && (
+            <StatusPill status={status} kind="machine" className="shrink-0" />
+          )}
         </div>
         <p className="font-body text-xs uppercase tracking-widest text-crema/50">
           {type}
