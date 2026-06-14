@@ -112,18 +112,6 @@ export async function GET(req: NextRequest) {
     });
   } catch (error) {
     console.error("menu-pdf generation failed", error);
-    // TEMP(verify): surface the real error on preview so we can confirm the
-    // Chromium fix landed. Remove before marking the PR ready.
-    if (req.nextUrl.searchParams.get("debug") === "1") {
-      return NextResponse.json(
-        {
-          error: "The PDF didn't generate. Try again in a minute.",
-          debug: error instanceof Error ? error.message : String(error),
-          stack: error instanceof Error ? error.stack : undefined,
-        },
-        { status: 500 }
-      );
-    }
     return NextResponse.json(
       { error: "The PDF didn't generate. Try again in a minute." },
       { status: 500 }
