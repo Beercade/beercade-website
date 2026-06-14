@@ -42,11 +42,12 @@ export function Header({ weeklyHours }: { weeklyHours?: DayHours[] | null }) {
             aria-label="Beercade — home"
           >
             <Image
-              src="/images/beercade-horizontal-crema.png"
+              src="/images/beercade-horizontal-crema.svg"
               alt="Beercade"
-              width={271}
-              height={129}
+              width={1000}
+              height={409}
               priority
+              unoptimized
               className="h-8 w-auto md:h-9"
             />
           </Link>

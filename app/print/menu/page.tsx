@@ -129,21 +129,23 @@ function PrintSection({
   );
 }
 
-function SheetHeader({ subtitle }: { subtitle: string }) {
+function SheetHeader({ subtitle }: { subtitle?: string }) {
   return (
     <header className="flex items-end justify-between border-b-2 border-tilt-purple pb-[6mm]">
       <Image
-        src="/images/beercade-horizontal-crema.png"
+        src="/images/beercade-horizontal-crema.svg"
         alt="Beercade"
-        width={271}
-        height={129}
+        width={1000}
+        height={409}
         priority
         unoptimized
         className="h-[22mm] w-auto"
       />
-      <p className="font-display text-[18pt] uppercase tracking-[-0.01em] text-crema">
-        {subtitle}
-      </p>
+      {subtitle && (
+        <p className="font-display text-[18pt] uppercase tracking-[-0.01em] text-crema">
+          {subtitle}
+        </p>
+      )}
     </header>
   );
 }
@@ -179,9 +181,10 @@ export default async function MenuPrintPage() {
         <SheetFooter />
       </div>
 
-      {/* Side 2 — how to play, jugs, happy hour */}
+      {/* Side 2 — how to play, jugs, happy hour. No subtitle: the logo + rule
+          carry the masthead, the page-2 title was redundant. */}
       <div className="print-sheet flex flex-col bg-last-train-purple p-[14mm]">
-        <SheetHeader subtitle="How to play" />
+        <SheetHeader />
         <div className="mt-[10mm] grid grid-cols-2 gap-x-[14mm]">
           {/* First section fills the left column; the rest stack on the right. */}
           <div>
