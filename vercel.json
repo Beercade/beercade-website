@@ -1,5 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "app/api/menu-pdf/route.ts": {
+      "memory": 1769,
+      "maxDuration": 60
+    }
+  },
   "crons": [
     {
       "path": "/api/cron/opdb-sync",

@@ -8,6 +8,14 @@ const nextConfig = {
     // ships compressed inside @sparticuz/chromium and must be loaded from
     // node_modules at runtime (used by /api/menu-pdf).
     serverComponentsExternalPackages: ["@sparticuz/chromium", "puppeteer-core"],
+    // Marking the package external stops webpack bundling it, but Next's file
+    // tracer never sees the 64 MB Chromium binary (it's read from disk at
+    // runtime, not `require`d) so it gets left out of the serverless function.
+    // Force it in, or chromium.executablePath() points at a file that isn't
+    // there and the PDF route 500s on Vercel.
+    outputFileTracingIncludes: {
+      "/api/menu-pdf": ["./node_modules/@sparticuz/chromium/**"],
+    },
   },
   images: {
     remotePatterns: [
