@@ -98,7 +98,10 @@ export function MachineGrid({ machines }: { machines: MachineListItem[] }) {
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4" aria-live="polite">
+      <div
+        className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4 md:gap-x-8 md:gap-y-12"
+        aria-live="polite"
+      >
         {visible.map((machine) => (
           <MachineCard key={machine._id} {...machine} />
         ))}
