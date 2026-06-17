@@ -19,6 +19,8 @@ import.env
 .DS_Store
 *.pem
 Thumbs.db
+# Office lock/temp files
+~$*
 
 # claude code — local tooling config
 .claude/
