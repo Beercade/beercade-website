@@ -220,7 +220,6 @@ export default async function HomePage() {
           signed off by John 11 Jun 2026. */}
       <Marquee
         lines={[
-          "You’ll lose. That’s fine.",
           "Real pinball.",
           "Two minutes from the train.",
           "Midweek’s worth the train in.",
