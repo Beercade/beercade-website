@@ -32,6 +32,29 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      // Old Squarespace domain → the new site. The old URL structure doesn't
+      // map onto the new routes, so every old path lands on the new homepage
+      // rather than 404ing. Add specific path mappings here later if analytics
+      // show meaningful inbound traffic to a particular old URL.
+      //
+      // Requires beercadeaustralia.com.au (apex + www) to be attached to this
+      // Vercel project as a domain alias so these requests reach the app.
+      // WWW → apex for the live domain is handled in Vercel's domain settings.
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "(www\\.)?beercadeaustralia\\.com\\.au",
+          },
+        ],
+        destination: "https://beercade.com.au/",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default withSentryConfig(nextConfig, {
