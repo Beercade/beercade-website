@@ -23,7 +23,23 @@ export async function submitFunctionEnquiry(
   // 0) Rate limit — 5 submissions per IP per hour
   const ip =
     headers().get("x-forwarded-for")?.split(",")[0]?.trim() ?? "anonymous";
-  const limit = await rateLimit(ip);
+  let limit: Awaited<ReturnType<typeof rateLimit>>;
+  try {
+    limit = await rateLimit(ip);
+  } catch (err) {
+    // Upstash unreachable. Fail closed with a friendly message rather than
+    // 500-ing; nothing has been written yet.
+    console.error("[function-enquiry] rate-limit check failed:", err);
+    Sentry.captureException(err, { tags: { stage: "rate-limit" } });
+    return {
+      ok: false,
+      errors: {
+        _form: [
+          "Something went wrong on our end. Try again in a moment, or email functions@beercade.com.au.",
+        ],
+      },
+    };
+  }
   if (!limit.success) {
     return {
       ok: false,
@@ -48,7 +64,15 @@ export async function submitFunctionEnquiry(
   const data = parsed.data;
 
   // 2) Turnstile verification
-  const turnstileOk = await verifyTurnstile(data.turnstileToken, ip);
+  let turnstileOk = false;
+  try {
+    turnstileOk = await verifyTurnstile(data.turnstileToken, ip);
+  } catch (err) {
+    // Cloudflare siteverify unreachable. Same friendly failure; nothing written.
+    console.error("[function-enquiry] turnstile verification failed:", err);
+    Sentry.captureException(err, { tags: { stage: "turnstile" } });
+    turnstileOk = false;
+  }
   if (!turnstileOk) {
     return {
       ok: false,
