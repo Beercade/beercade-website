@@ -100,6 +100,7 @@ NEXT_PUBLIC_SANITY_DATASET=production
 NEXT_PUBLIC_SANITY_API_VERSION=2026-05-01
 SANITY_API_READ_TOKEN=          # viewer token; safe in server contexts only
 SANITY_REVALIDATE_SECRET=       # POST /api/revalidate webhook secret
+SANITY_FUNCTION_WEBHOOK_SECRET= # POST /api/sanity/function-confirmed webhook secret (enquiry status -> Bookings calendar sync; see §8.6)
 
 # Site
 NEXT_PUBLIC_SITE_URL=https://beercade.com.au
@@ -1147,10 +1148,10 @@ The day-to-day loop:
 1. Customer submits the form. Tentative event lands on Bookings; team email lands in the group inbox; Sanity enquiry created with status `new`.
 2. First available team member opens the conversation in the group inbox, clicks Reply, and replies as `functions@`. They update the Sanity enquiry status to `replied` and assign themselves on the group inbox.
 3. When the conversation produces a quote, status moves to `quoted`. The Bookings calendar event is left tentative.
-4. On confirmation, the team member edits the Bookings calendar event: remove `[TENTATIVE]`, set status to `confirmed`, add the package name. Sanity status moves to `confirmed`.
-5. If the booking is lost or abandoned, Sanity status moves to `lost`, the Bookings event is deleted, and the group inbox thread is resolved.
+4. On confirmation, the team member moves the Sanity status to `confirmed`. A Sanity webhook (`/api/sanity/function-confirmed`) promotes the matching Bookings event automatically: it strips the `[TENTATIVE]` prefix from the summary and sets the event status to `confirmed`. The package name is still added by hand on the calendar event if wanted (it isn't held in Sanity).
+5. If the booking is lost or abandoned, the team member moves the Sanity status to `lost`; the same webhook deletes the Bookings event. The group inbox thread is resolved by hand.
 
-The training doc at `08_Sanity_Training_Doc.md` will include screenshots of the studio status field and the Bookings calendar event status toggle, so staff don't need to ask twice.
+**v1.3 — calendar sync automated.** Steps 4 and 5 were manual two-step actions in v1.2 (edit the calendar event *and* the Sanity status). The webhook now drives the calendar from the Sanity status, so staff only touch the studio. Auth is a URL `?secret=` matching `SANITY_FUNCTION_WEBHOOK_SECRET`, mirroring the `/api/revalidate` gate; the handler is idempotent under Sanity retries (re-confirming is a no-op, deleting an already-gone event returns 200). Calendar writes use the existing keyless service account (§8.5). The training doc at `08_Sanity_Training_Doc.md` documents the studio status field; the calendar toggle no longer needs a manual step.
 
 ---
 
@@ -1313,6 +1314,7 @@ Add an `alt` field to the machine schema if not present and require it. (Not in 
 - Set all environment variables in Vercel project settings (Production, Preview, Development).
 - Preview deployments on every PR.
 - Add a Sanity webhook to `https://beercade.com.au/api/revalidate` with the `SANITY_REVALIDATE_SECRET` so content updates revalidate the public site within seconds.
+- Add a second Sanity webhook to `https://beercade.com.au/api/sanity/function-confirmed?secret=<SANITY_FUNCTION_WEBHOOK_SECRET>`, filtered to `_type == "functionEnquiry"` on create/update, with the GROQ projection `{_type, status, calendarEventId}`. It promotes (confirmed) or removes (lost) the matching Bookings calendar event automatically — see §8.6.
 
 ### 13.2 Domain and DNS
 

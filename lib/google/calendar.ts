@@ -80,3 +80,34 @@ export async function createTentativeCalendarEvent(
     htmlLink: event.data.htmlLink ?? undefined,
   };
 }
+
+// Promote a tentative event to confirmed. Called when an enquiry's status flips
+// to "confirmed" in the studio (via the Sanity webhook at
+// /api/sanity/function-confirmed). Mirrors the manual step in build-spec §8.6:
+// drop the "[TENTATIVE]" prefix from the summary and set the event status to
+// "confirmed". Re-running on an already-confirmed event is a harmless no-op,
+// which keeps the webhook idempotent under Sanity's retries.
+export async function confirmCalendarEvent(eventId: string): Promise<void> {
+  const calendar = getCalendarClient();
+  const calendarId = process.env.GOOGLE_BOOKINGS_CALENDAR_ID!;
+
+  const existing = await calendar.events.get({ calendarId, eventId });
+  const summary = (existing.data.summary ?? "").replace(/^\[TENTATIVE\]\s*/i, "");
+
+  await calendar.events.patch({
+    calendarId,
+    eventId,
+    requestBody: { status: "confirmed", summary },
+  });
+}
+
+// Remove an event from the Bookings calendar. Called when an enquiry's status
+// flips to "lost" (build-spec §8.6 step 5). The caller treats a 404/410 (event
+// already gone) as success so the webhook stays idempotent.
+export async function deleteCalendarEvent(eventId: string): Promise<void> {
+  const calendar = getCalendarClient();
+  await calendar.events.delete({
+    calendarId: process.env.GOOGLE_BOOKINGS_CALENDAR_ID!,
+    eventId,
+  });
+}
