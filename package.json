@@ -18,7 +18,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@react-email/components": "^1.0.12",
-    "@sanity/client": "^7.22.0",
+    "@sanity/client": "^7.23.0",
     "@sanity/image-url": "^2.1.1",
     "@sentry/nextjs": "^10.55.0",
     "@sparticuz/chromium": "^149.0.0",
@@ -44,8 +44,8 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.49.1",
-    "@sanity/cli": "^3.65.0",
-    "@sanity/vision": "^3.65.0",
+    "@sanity/cli": "^7.3.0",
+    "@sanity/vision": "^6.1.0",
     "@tailwindcss/postcss": "latest",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
@@ -58,7 +58,7 @@
     "postcss": "^8.4.49",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.9",
-    "sanity": "^3.65.0",
+    "sanity": "^6.1.0",
     "tailwindcss": "latest",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
