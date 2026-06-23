@@ -22,7 +22,7 @@ export default async function Icon() {
           background: "#7A3CE2",
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
+        { }
         <img
           src={mascot as unknown as string}
           width={150}
