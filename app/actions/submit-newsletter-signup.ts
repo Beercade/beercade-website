@@ -1,6 +1,7 @@
 "use server";
 
 import { z } from "zod";
+import { generateVoucherCode, voucherExpiry } from "@/lib/kit/voucher";
 
 const schema = z.object({
   email: z.string().email(),
@@ -27,14 +28,23 @@ export async function submitNewsletterSignup(
   const email_address = parsed.data.email;
   const body = JSON.stringify({ email_address });
 
+  // Signing up earns $5 in tokens. Mint the voucher up front so the fields exist
+  // before the welcome sequence's first email releases; its merge tags render
+  // {{ subscriber.voucher_code }} / {{ subscriber.voucher_expiry }} from these.
+  // A re-signup overwrites with a fresh code and a new 7-day window.
+  const fields = {
+    voucher_code: generateVoucherCode(),
+    voucher_expiry: voucherExpiry(7),
+  };
+
   // Kit v4 requires the subscriber to exist before it can be added to a form or
   // sequence — posting a brand-new email straight to a form returns 404. So we
-  // create (or upsert) the subscriber first; this is the step that actually
-  // subscribes them.
+  // create (or upsert) the subscriber first, setting the voucher custom fields
+  // in the same call; this is the step that actually subscribes them.
   const created = await fetch(`${KIT_API}/subscribers`, {
     method: "POST",
     headers,
-    body,
+    body: JSON.stringify({ email_address, fields }),
   });
 
   if (!created.ok) {
@@ -51,10 +61,11 @@ export async function submitNewsletterSignup(
       ? process.env.KIT_FORM_ID_POPUP || process.env.KIT_FORM_ID_FOOTER
       : process.env.KIT_FORM_ID_FOOTER;
 
-  // Enrol in the welcome sequence so it actually fires. Both calls are
-  // best-effort: the subscriber already exists, so a hiccup here must not fail
-  // the signup (form attribution / welcome can be re-synced from Kit).
+  // Enrol in the welcome sequence (which carries the voucher) and tag the offer.
+  // All best-effort: the subscriber already exists, so a hiccup here must not
+  // fail the signup. Each only fires when its id is configured.
   const sequenceId = process.env.KIT_SEQUENCE_ID_NEWSLETTER;
+  const offerTagId = process.env.KIT_TAG_TOKENS_OFFER;
 
   await Promise.allSettled([
     formId
@@ -66,6 +77,13 @@ export async function submitNewsletterSignup(
       : Promise.resolve(),
     sequenceId
       ? fetch(`${KIT_API}/sequences/${sequenceId}/subscribers`, {
+          method: "POST",
+          headers,
+          body,
+        })
+      : Promise.resolve(),
+    offerTagId
+      ? fetch(`${KIT_API}/tags/${offerTagId}/subscribers`, {
           method: "POST",
           headers,
           body,

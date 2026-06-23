@@ -1,6 +1,7 @@
 "use server";
 
 import { z } from "zod";
+import { generateVoucherCode, voucherExpiry } from "@/lib/kit/voucher";
 
 const schema = z.object({
   email: z.string().email(),
@@ -10,45 +11,13 @@ const schema = z.object({
 
 const KIT_API = "https://api.kit.com/v4";
 
-// Unredeemable-from-guessing, easy-to-read code. Excludes 0/O/1/I/L.
-function generateVoucherCode(): string {
-  const chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
-  let code = "";
-  for (let i = 0; i < 6; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return `BC-${code}`;
-}
-
-// Human-readable expiry N days out, in Sydney time, e.g. "15 June 2026".
-function voucherExpiry(days: number): string {
-  const sydney = new Date(
-    new Date().toLocaleString("en-US", { timeZone: "Australia/Sydney" })
-  );
-  sydney.setDate(sydney.getDate() + days);
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  return `${sydney.getDate()} ${months[sydney.getMonth()]} ${sydney.getFullYear()}`;
-}
-
 /**
  * $5-tokens lead-magnet signup. Same shape as submit-newsletter-signup, with a
- * first name (the voucher email greets people by name) and the dedicated tokens
- * sequence + tags. The unique voucher code and its 7-day expiry are minted here
- * and written to the subscriber's custom fields, so the voucher email's merge
- * tags resolve without any external automation.
+ * first name (the welcome email greets people by name) and the lead-magnet
+ * source tag. The unique voucher code and its 7-day expiry are minted here and
+ * written to the subscriber's custom fields, so the welcome email's merge tags
+ * resolve without any external automation. It feeds the same welcome sequence
+ * as the newsletter signup, so the voucher lives in one email everywhere.
  */
 export async function submitTokenSignup(
   formData: FormData
@@ -105,9 +74,11 @@ export async function submitTokenSignup(
 
   // Form attribution, sequence enrolment, and the two tracking tags are all
   // best-effort: the subscriber already exists, so a hiccup on any of these must
-  // not fail the signup. Each only fires when its id is configured.
+  // not fail the signup. Each only fires when its id is configured. Enrols into
+  // the shared welcome sequence (same as the newsletter signup) so the voucher
+  // is delivered from one email everywhere.
   const formId = process.env.KIT_FORM_ID_TOKENS;
-  const sequenceId = process.env.KIT_SEQUENCE_ID_TOKENS;
+  const sequenceId = process.env.KIT_SEQUENCE_ID_NEWSLETTER;
   const tagIds = [
     process.env.KIT_TAG_TOKENS_OFFER,
     process.env.KIT_TAG_TOKENS_SOURCE,

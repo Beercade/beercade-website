@@ -170,7 +170,7 @@ export default async function HomePage() {
               Know what&rsquo;s on before the regulars do.
             </h2>
             <p className="mt-3 max-w-prose font-body text-base text-crema">
-              Sign up and grab a free beer on your next visit.
+              Sign up and we&rsquo;ll send you $5 in arcade tokens.
             </p>
             <p className="mt-2 max-w-prose font-body text-base text-crema/70">
               After that, one email when a new machine lands on the floor, a
@@ -178,10 +178,8 @@ export default async function HomePage() {
               in. No spam; unsubscribe whenever.
             </p>
             <p className="mt-4 max-w-prose font-body text-xs text-crema/50">
-              One complimentary house beer or non-alcoholic drink per new
-              subscriber, 18+, redeemable on your next visit within 7 days of
-              signing up. One per person. Served responsibly; staff may refuse
-              service.
+              A unique $5 token code, emailed when you sign up and good for 7
+              days. 18+, redeemed at the bar. One per person.
             </p>
           </div>
           <div className="w-full">

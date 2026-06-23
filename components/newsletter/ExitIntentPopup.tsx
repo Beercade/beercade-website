@@ -105,10 +105,11 @@ export function ExitIntentPopup() {
           id="exit-popup-heading"
           className="t-h2 mb-2 text-crema"
         >
-          Thursday nights, tournament dates, new machines.
+          Five bucks in tokens. For an email address.
         </h2>
         <p className="mb-6 font-body text-sm text-crema/60">
-          No noise. Just the good stuff, when it happens.
+          Sign up and we&rsquo;ll send a $5 token code, good for 7 days. After
+          that, just what&rsquo;s on; no noise.
         </p>
 
         <NewsletterSignup source="popup" />
