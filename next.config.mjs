@@ -2,27 +2,29 @@ import { withSentryConfig } from "@sentry/nextjs";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    instrumentationHook: true,
-    // Keep the headless-Chromium pair out of the webpack bundle; the binary
-    // ships compressed inside @sparticuz/chromium and must be loaded from
-    // node_modules at runtime (used by /api/menu-pdf).
-    serverComponentsExternalPackages: ["@sparticuz/chromium", "puppeteer-core"],
-    // Marking the package external stops webpack bundling it, but Next's file
-    // tracer never sees the 64 MB Chromium binary (it's read from disk at
-    // runtime, not `require`d) so it gets left out of the serverless function.
-    // Force it in, or chromium.executablePath() points at a file that isn't
-    // there and the PDF route 500s on Vercel.
-    //
-    // Point at the real .pnpm store path, not node_modules/@sparticuz/chromium
-    // (a pnpm symlink) — tracing through the symlink makes Vercel reject the
-    // function as "an invalid deployment package ... files in symlinked
-    // directories". The @* keeps this working across version bumps.
-    outputFileTracingIncludes: {
-      "/api/menu-pdf": [
-        "./node_modules/.pnpm/@sparticuz+chromium@*/node_modules/@sparticuz/chromium/**",
-      ],
-    },
+  // instrumentation.ts is stable since Next 15; the experimental
+  // instrumentationHook flag was removed.
+
+  // Keep the headless-Chromium pair out of the webpack bundle; the binary
+  // ships compressed inside @sparticuz/chromium and must be loaded from
+  // node_modules at runtime (used by /api/menu-pdf). Moved out of
+  // `experimental` (was serverComponentsExternalPackages) in Next 15.
+  serverExternalPackages: ["@sparticuz/chromium", "puppeteer-core"],
+  // Marking the package external stops webpack bundling it, but Next's file
+  // tracer never sees the 64 MB Chromium binary (it's read from disk at
+  // runtime, not `require`d) so it gets left out of the serverless function.
+  // Force it in, or chromium.executablePath() points at a file that isn't
+  // there and the PDF route 500s on Vercel.
+  //
+  // Point at the real .pnpm store path, not node_modules/@sparticuz/chromium
+  // (a pnpm symlink) — tracing through the symlink makes Vercel reject the
+  // function as "an invalid deployment package ... files in symlinked
+  // directories". The @* keeps this working across version bumps.
+  // Moved out of `experimental` in Next 15.
+  outputFileTracingIncludes: {
+    "/api/menu-pdf": [
+      "./node_modules/.pnpm/@sparticuz+chromium@*/node_modules/@sparticuz/chromium/**",
+    ],
   },
   images: {
     remotePatterns: [

@@ -14,15 +14,10 @@ import { Section } from "@/components/ui/Section";
 import { FeatureImage } from "@/components/ui/FeatureImage";
 import { NewsletterSignup } from "@/components/newsletter/NewsletterSignup";
 import { MapEmbed } from "@/components/find-us/MapEmbed";
-import dynamic from "next/dynamic";
+import { ExitIntentPopupLazy as ExitIntentPopup } from "@/components/newsletter/ExitIntentPopupLazy";
 import { LocalBusinessJsonLd } from "@/components/seo/LocalBusinessJsonLd";
 import { FaqList } from "@/components/faq/Faq";
 import { visiting } from "@/components/faq/data";
-
-const ExitIntentPopup = dynamic(
-  () => import("@/components/newsletter/ExitIntentPopup").then((m) => m.ExitIntentPopup),
-  { ssr: false }
-);
 
 export const revalidate = 60;
 
