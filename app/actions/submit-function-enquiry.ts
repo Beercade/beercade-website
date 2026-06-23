@@ -22,7 +22,8 @@ export async function submitFunctionEnquiry(
 ): Promise<ActionResult> {
   // 0) Rate limit — 5 submissions per IP per hour
   const ip =
-    headers().get("x-forwarded-for")?.split(",")[0]?.trim() ?? "anonymous";
+    (await headers()).get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    "anonymous";
   let limit: Awaited<ReturnType<typeof rateLimit>>;
   try {
     limit = await rateLimit(ip);

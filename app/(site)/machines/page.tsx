@@ -4,12 +4,7 @@ import { allMachinesQuery } from "@/lib/sanity/queries";
 import { MachineGrid, type MachineListItem } from "@/components/machine/MachineGrid";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Section } from "@/components/ui/Section";
-import dynamic from "next/dynamic";
-
-const ExitIntentPopup = dynamic(
-  () => import("@/components/newsletter/ExitIntentPopup").then((m) => m.ExitIntentPopup),
-  { ssr: false }
-);
+import { ExitIntentPopupLazy as ExitIntentPopup } from "@/components/newsletter/ExitIntentPopupLazy";
 
 export const revalidate = 60;
 

@@ -26,7 +26,7 @@ export default async function Image() {
             "radial-gradient(circle at 72% 26%, rgba(122,60,226,0.55), transparent 46%), radial-gradient(circle at 24% 80%, rgba(255,94,31,0.28), transparent 44%)",
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
+        { }
         <img
           src={wordmark as unknown as string}
           width={760}

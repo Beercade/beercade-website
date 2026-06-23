@@ -6,8 +6,10 @@ import { test, expect } from "@playwright/test";
 test("home page loads with primary navigation", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveTitle(/Beercade/i);
+  // Scope to the header: the "Beercade — home" logo link exists in both the
+  // header (banner) and footer (contentinfo), so an unscoped match is ambiguous.
   await expect(
-    page.getByRole("link", { name: "Beercade — home" }),
+    page.getByRole("banner").getByRole("link", { name: "Beercade — home" }),
   ).toBeVisible();
   await expect(
     page.getByRole("navigation", { name: "Main navigation" }),

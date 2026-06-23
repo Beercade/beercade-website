@@ -8,7 +8,7 @@ import { MachineDetail } from "@/components/machine/MachineDetail";
 export const revalidate = 60;
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
@@ -21,8 +21,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
   const machine = await sanityClient.fetch(machineBySlugQuery, {
-    slug: params.slug,
+    slug,
   });
   if (!machine) return {};
 
@@ -40,8 +41,9 @@ export async function generateMetadata({
 }
 
 export default async function MachineDetailPage({ params }: PageProps) {
+  const { slug } = await params;
   const machine = await sanityClient.fetch(machineBySlugQuery, {
-    slug: params.slug,
+    slug,
   });
 
   if (!machine) notFound();
