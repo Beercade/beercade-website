@@ -21,6 +21,17 @@ export function FunctionEnquiryFlow() {
   const [lead, setLead] = useState<Lead | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
 
+  // A returning nudge-email click can deep-link straight to the full form with
+  // details pre-filled (?email=…&name=…), skipping step 1. They were already
+  // banked in Kit on their first visit, so there's no lead to lose by skipping.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const email = (params.get("email") ?? "").trim();
+    if (!email) return;
+    const firstName = (params.get("name") ?? "").trim();
+    setLead({ firstName, email });
+  }, []);
+
   // Package cards up the page broadcast a selection when their CTA is clicked;
   // carry it into the enquiry so the team knows which tier prompted it.
   useEffect(() => {
