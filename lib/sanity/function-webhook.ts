@@ -12,6 +12,8 @@ export type FunctionEnquiryWebhookPayload = {
 
 export type CalendarAction = "confirm" | "delete" | "ignore";
 
+export type SecretCheck = "ok" | "not-configured" | "mismatch";
+
 // Decide what the calendar should do for an incoming enquiry change.
 // Only functionEnquiry docs that carry a stored calendarEventId can act:
 //   confirmed → promote the tentative event (build-spec §8.6 step 4)
@@ -30,17 +32,37 @@ export function decideCalendarAction(
 
 // Constant-time comparison of the URL `?secret=` against the configured webhook
 // secret. Mirrors the gate on /api/revalidate but uses its own secret so the
-// enquiry webhook can be rotated independently. Returns false when either side
-// is missing rather than throwing, so a misconfigured webhook fails closed.
+// enquiry webhook can be rotated independently.
+//
+// Both sides are trimmed before comparing. A trailing newline or space pasted
+// into the Vercel env var or the Sanity webhook URL is invisible but otherwise
+// causes a permanent 401; the rest of the Sanity config (client.ts) already
+// trims its env vars for exactly this reason. Secrets are random hex/base64
+// with no meaningful leading/trailing whitespace, so trimming is safe.
+//
+// Returns a discriminated result so the caller can log *why* a 401 happened
+// (env var absent vs. value mismatch) without ever logging the secret itself.
+export function checkWebhookSecret(
+  provided: string | null,
+  expected: string | undefined = process.env.SANITY_FUNCTION_WEBHOOK_SECRET,
+): SecretCheck {
+  const exp = expected?.trim();
+  const got = provided?.trim();
+
+  if (!exp) return "not-configured";
+  if (!got) return "mismatch";
+
+  const a = Buffer.from(got);
+  const b = Buffer.from(exp);
+  if (a.length !== b.length) return "mismatch";
+
+  return timingSafeEqual(a, b) ? "ok" : "mismatch";
+}
+
+// Boolean convenience wrapper.
 export function verifyWebhookSecret(
   provided: string | null,
   expected: string | undefined = process.env.SANITY_FUNCTION_WEBHOOK_SECRET,
 ): boolean {
-  if (!expected || !provided) return false;
-
-  const a = Buffer.from(provided);
-  const b = Buffer.from(expected);
-  if (a.length !== b.length) return false;
-
-  return timingSafeEqual(a, b);
+  return checkWebhookSecret(provided, expected) === "ok";
 }

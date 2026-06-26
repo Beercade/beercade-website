@@ -6,7 +6,7 @@ import {
 } from "@/lib/google/calendar";
 import {
   decideCalendarAction,
-  verifyWebhookSecret,
+  checkWebhookSecret,
   type FunctionEnquiryWebhookPayload,
 } from "@/lib/sanity/function-webhook";
 
@@ -37,7 +37,12 @@ function errorStatus(err: unknown): number | undefined {
 
 export async function POST(req: NextRequest) {
   const secret = req.nextUrl.searchParams.get("secret");
-  if (!verifyWebhookSecret(secret)) {
+  const secretCheck = checkWebhookSecret(secret);
+  if (secretCheck !== "ok") {
+    // Log the reason (never the value): "not-configured" means the env var is
+    // missing on this deployment; "mismatch" means the URL's ?secret= doesn't
+    // match. Both return the same opaque 401 to the caller.
+    console.warn(`[function-confirmed] auth rejected: ${secretCheck}`);
     return NextResponse.json({ error: "invalid secret" }, { status: 401 });
   }
 

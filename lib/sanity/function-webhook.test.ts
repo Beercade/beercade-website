@@ -1,5 +1,9 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { decideCalendarAction, verifyWebhookSecret } from "./function-webhook";
+import {
+  decideCalendarAction,
+  verifyWebhookSecret,
+  checkWebhookSecret,
+} from "./function-webhook";
 
 describe("decideCalendarAction", () => {
   const eventId = "evt_123";
@@ -83,5 +87,46 @@ describe("verifyWebhookSecret", () => {
   it("rejects when the secret is not configured", () => {
     delete process.env.SANITY_FUNCTION_WEBHOOK_SECRET;
     expect(verifyWebhookSecret(KEY)).toBe(false);
+  });
+
+  it("accepts a secret with trailing whitespace/newline on the provided value", () => {
+    // Reproduces the real failure: a newline pasted onto the Sanity URL's
+    // ?secret=. Trimming must make this match.
+    expect(verifyWebhookSecret(`${KEY}\n`)).toBe(true);
+    expect(verifyWebhookSecret(`${KEY} `)).toBe(true);
+  });
+
+  it("accepts when the configured secret itself has trailing whitespace", () => {
+    process.env.SANITY_FUNCTION_WEBHOOK_SECRET = `${KEY}\n`;
+    expect(verifyWebhookSecret(KEY)).toBe(true);
+  });
+});
+
+describe("checkWebhookSecret", () => {
+  const KEY = "test-webhook-secret";
+  const original = process.env.SANITY_FUNCTION_WEBHOOK_SECRET;
+
+  beforeEach(() => {
+    process.env.SANITY_FUNCTION_WEBHOOK_SECRET = KEY;
+  });
+  afterEach(() => {
+    process.env.SANITY_FUNCTION_WEBHOOK_SECRET = original;
+  });
+
+  it("returns ok for a matching secret", () => {
+    expect(checkWebhookSecret(KEY)).toBe("ok");
+  });
+
+  it("returns mismatch for a wrong secret", () => {
+    expect(checkWebhookSecret("nope")).toBe("mismatch");
+  });
+
+  it("returns mismatch for a missing provided secret", () => {
+    expect(checkWebhookSecret(null)).toBe("mismatch");
+  });
+
+  it("returns not-configured when the env var is absent", () => {
+    delete process.env.SANITY_FUNCTION_WEBHOOK_SECRET;
+    expect(checkWebhookSecret(KEY)).toBe("not-configured");
   });
 });
