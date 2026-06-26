@@ -3,6 +3,7 @@ import {
   decideCalendarAction,
   verifyWebhookSecret,
   checkWebhookSecret,
+  confirmedSummary,
 } from "./function-webhook";
 
 describe("decideCalendarAction", () => {
@@ -99,6 +100,30 @@ describe("verifyWebhookSecret", () => {
   it("accepts when the configured secret itself has trailing whitespace", () => {
     process.env.SANITY_FUNCTION_WEBHOOK_SECRET = `${KEY}\n`;
     expect(verifyWebhookSecret(KEY)).toBe(true);
+  });
+});
+
+describe("confirmedSummary", () => {
+  it("replaces the [TENTATIVE] tag with [CONFIRMED]", () => {
+    expect(confirmedSummary("[TENTATIVE] Dana · 8 pax · birthday")).toBe(
+      "[CONFIRMED] Dana · 8 pax · birthday",
+    );
+  });
+
+  it("is idempotent when already confirmed", () => {
+    expect(confirmedSummary("[CONFIRMED] Dana · 8 pax · birthday")).toBe(
+      "[CONFIRMED] Dana · 8 pax · birthday",
+    );
+  });
+
+  it("adds the tag when there is no existing prefix", () => {
+    expect(confirmedSummary("Dana · 8 pax · birthday")).toBe(
+      "[CONFIRMED] Dana · 8 pax · birthday",
+    );
+  });
+
+  it("matches the tag case-insensitively", () => {
+    expect(confirmedSummary("[tentative] Dana")).toBe("[CONFIRMED] Dana");
   });
 });
 

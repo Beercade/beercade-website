@@ -2,6 +2,7 @@ import { google } from "googleapis";
 import { ExternalAccountClient } from "google-auth-library";
 import { getVercelOidcToken } from "@vercel/oidc";
 import type { FunctionEnquiryInput } from "@/lib/validation/function-enquiry";
+import { confirmedSummary } from "@/lib/sanity/function-webhook";
 
 // Keyless auth via Workload Identity Federation.
 // The beercade.com.au org enforces iam.disableServiceAccountKeyCreation, so we
@@ -84,15 +85,16 @@ export async function createTentativeCalendarEvent(
 // Promote a tentative event to confirmed. Called when an enquiry's status flips
 // to "confirmed" in the studio (via the Sanity webhook at
 // /api/sanity/function-confirmed). Mirrors the manual step in build-spec §8.6:
-// drop the "[TENTATIVE]" prefix from the summary and set the event status to
-// "confirmed". Re-running on an already-confirmed event is a harmless no-op,
-// which keeps the webhook idempotent under Sanity's retries.
+// retag the summary "[TENTATIVE]" -> "[CONFIRMED]" so the booking reads as
+// confirmed at a glance, and set the Google event status to "confirmed".
+// Re-running on an already-confirmed event is a harmless no-op, which keeps the
+// webhook idempotent under Sanity's retries.
 export async function confirmCalendarEvent(eventId: string): Promise<void> {
   const calendar = getCalendarClient();
   const calendarId = process.env.GOOGLE_BOOKINGS_CALENDAR_ID!;
 
   const existing = await calendar.events.get({ calendarId, eventId });
-  const summary = (existing.data.summary ?? "").replace(/^\[TENTATIVE\]\s*/i, "");
+  const summary = confirmedSummary(existing.data.summary ?? "");
 
   await calendar.events.patch({
     calendarId,

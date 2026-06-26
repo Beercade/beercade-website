@@ -14,6 +14,15 @@ export type CalendarAction = "confirm" | "delete" | "ignore";
 
 export type SecretCheck = "ok" | "not-configured" | "mismatch";
 
+// Build the confirmed event title from the current one. Strips an existing
+// status tag ("[TENTATIVE]" from submission, or "[CONFIRMED]" if this runs
+// again) and prepends "[CONFIRMED] " so the booking reads as confirmed at a
+// glance in the calendar. Idempotent under Sanity webhook retries.
+export function confirmedSummary(current: string): string {
+  const base = current.replace(/^\s*\[(TENTATIVE|CONFIRMED)\]\s*/i, "").trim();
+  return `[CONFIRMED] ${base}`;
+}
+
 // Decide what the calendar should do for an incoming enquiry change.
 // Only functionEnquiry docs that carry a stored calendarEventId can act:
 //   confirmed → promote the tentative event (build-spec §8.6 step 4)
