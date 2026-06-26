@@ -70,10 +70,10 @@ export default async function ContactUsPage() {
                 Get in touch.
               </h2>
               <p className="font-body text-crema/70">
-                Functions, the machines, a lost jacket; whatever it is, the form
-                reaches us and we reply for real. Planning something for a group?
-                Tell us the date, rough headcount, and the occasion and you&rsquo;ll
-                get a held window and the full breakdown, normally within 24 hours.
+                The form is for function enquiries only. Tell us the date, rough
+                headcount, and the occasion and you&rsquo;ll get a held window and
+                the full breakdown, normally within 24 hours. For anything else,
+                email or call us and we&rsquo;ll sort it.
               </p>
             </div>
 
@@ -87,7 +87,6 @@ export default async function ContactUsPage() {
               <div>
                 <dt className="t-kicker">Phone</dt>
                 <dd className="font-body text-base text-crema mt-1">
-                  Call Roger on{" "}
                   <a href="tel:+61400112445" className={linkClass}>
                     0400 112 445
                   </a>
