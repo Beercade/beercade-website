@@ -12,7 +12,7 @@ const nav = [
   { label: "Machines", href: "/machines" },
   { label: "Menu", href: "/menu" },
   { label: "Functions", href: "/functions" },
-  { label: "Find us", href: "/find-us" },
+  { label: "Contact us", href: "/contact-us" },
 ];
 
 export function Header({ weeklyHours }: { weeklyHours?: DayHours[] | null }) {

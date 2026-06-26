@@ -6,8 +6,9 @@ const links = [
   { label: "Machines", href: "/machines" },
   { label: "Menu", href: "/menu" },
   { label: "Functions", href: "/functions" },
-  { label: "Find us", href: "/find-us" },
+  { label: "Contact us", href: "/contact-us" },
   { label: "FAQ", href: "/faq" },
+  { label: "Careers", href: "/careers" },
   { label: "Privacy", href: "/privacy" },
 ];
 

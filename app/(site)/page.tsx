@@ -200,7 +200,7 @@ export default async function HomePage() {
               Two minutes from Redfern Station. T2, T3 and T8 all stop there.
             </p>
             <div className="mt-6">
-              <CTAButton href="/find-us" variant="secondary">
+              <CTAButton href="/contact-us" variant="secondary">
                 Find us
               </CTAButton>
             </div>

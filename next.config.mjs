@@ -36,6 +36,13 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // The location page was renamed Find us → Contact us. Keep the old path
+      // alive so existing links, bookmarks, and indexed URLs land on the new one.
+      {
+        source: "/find-us",
+        destination: "/contact-us",
+        permanent: true,
+      },
       // Old Squarespace domain → the new site. The old URL structure doesn't
       // map onto the new routes, so every old path lands on the new homepage
       // rather than 404ing. Add specific path mappings here later if analytics

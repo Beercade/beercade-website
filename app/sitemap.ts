@@ -11,7 +11,8 @@ const STATIC_ROUTES: MetadataRoute.Sitemap = [
   { url: `${BASE}/machines`, changeFrequency: "weekly", priority: 0.9 },
   { url: `${BASE}/menu`, changeFrequency: "weekly", priority: 0.8 },
   { url: `${BASE}/functions`, changeFrequency: "monthly", priority: 0.9 },
-  { url: `${BASE}/find-us`, changeFrequency: "monthly", priority: 0.7 },
+  { url: `${BASE}/contact-us`, changeFrequency: "monthly", priority: 0.7 },
+  { url: `${BASE}/careers`, changeFrequency: "monthly", priority: 0.4 },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

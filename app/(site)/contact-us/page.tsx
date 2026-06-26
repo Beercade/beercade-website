@@ -4,14 +4,15 @@ import { openingHoursQuery } from "@/lib/sanity/queries";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Section } from "@/components/ui/Section";
 import { MapEmbed } from "@/components/find-us/MapEmbed";
+import { FunctionEnquiryFlow } from "@/components/function/FunctionEnquiryFlow";
 import { LocalBusinessJsonLd } from "@/components/seo/LocalBusinessJsonLd";
 
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Find us",
+  title: "Contact us",
   description:
-    "113-115 Regent Street, Redfern NSW 2016. Two minutes from Redfern Station.",
+    "113-115 Regent Street, Redfern NSW 2016. Call 0400 112 445, email hello@beercade.com.au, or send an enquiry. Two minutes from Redfern Station.",
 };
 
 interface DayHours {
@@ -36,7 +37,7 @@ function formatTime(t: string): string {
 
 const DAY_ORDER = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-export default async function FindUsPage() {
+export default async function ContactUsPage() {
   const hours: OpeningHours | null = await sanityClient
     .fetch(openingHoursQuery)
     .catch(() => null);
@@ -47,18 +48,68 @@ export default async function FindUsPage() {
       )
     : null;
 
+  const linkClass =
+    "text-high-score-orange underline underline-offset-4 decoration-hairline transition-colors hover:decoration-high-score-orange";
+
   return (
     <>
       <LocalBusinessJsonLd openingHours={hours} />
 
       <PageHeader
-        id="find-us-heading"
+        id="contact-us-heading"
         kicker="113-115 Regent Street, Redfern NSW 2016"
-        title="Find us."
+        title="Contact us."
       />
 
+      {/* Get in touch — contact details + the function enquiry form */}
+      <Section id="enquire" spacing="tight" aria-labelledby="enquire-heading">
+        <div className="grid gap-12 md:grid-cols-[1fr_560px]">
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <h2 id="enquire-heading" className="t-h2 text-crema">
+                Get in touch.
+              </h2>
+              <p className="font-body text-crema/70">
+                Functions, the machines, a lost jacket; whatever it is, the form
+                reaches us and we reply for real. Planning something for a group?
+                Tell us the date, rough headcount, and the occasion and you&rsquo;ll
+                get a held window and the full breakdown, normally within 24 hours.
+              </p>
+            </div>
+
+            <dl className="space-y-4">
+              <div>
+                <dt className="t-kicker">Address</dt>
+                <dd className="font-body text-base text-crema mt-1">
+                  113-115 Regent Street, Redfern NSW 2016
+                </dd>
+              </div>
+              <div>
+                <dt className="t-kicker">Phone</dt>
+                <dd className="font-body text-base text-crema mt-1">
+                  Call Roger on{" "}
+                  <a href="tel:+61400112445" className={linkClass}>
+                    0400 112 445
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="t-kicker">Email</dt>
+                <dd className="font-body text-base text-crema mt-1">
+                  <a href="mailto:hello@beercade.com.au" className={linkClass}>
+                    hello@beercade.com.au
+                  </a>
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          <FunctionEnquiryFlow />
+        </div>
+      </Section>
+
       {/* Transport + address detail */}
-      <Section spacing="tight" aria-label="Getting here">
+      <Section spacing="tight" hairline aria-label="Getting here">
         <div className="grid gap-10 md:grid-cols-3">
           {/* Train */}
           <div className="space-y-2">
