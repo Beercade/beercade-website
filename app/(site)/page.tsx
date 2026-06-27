@@ -66,16 +66,16 @@ export default async function HomePage() {
           {machineCount > 0 && (
             <div className="flex flex-col-reverse gap-3">
               <dt className="t-arcade text-crema/50">machines</dt>
-              <dd className="t-numeral text-crema">{machineCount}</dd>
+              <dd className="t-numeral-stat text-crema">{machineCount}</dd>
             </div>
           )}
           <div className="flex flex-col-reverse gap-3">
             <dt className="t-arcade text-crema/50">a play</dt>
-            <dd className="t-numeral text-crema">$2</dd>
+            <dd className="t-numeral-stat text-crema">$2</dd>
           </div>
           <div className="flex flex-col-reverse gap-3">
             <dt className="t-arcade text-crema/50">from the train</dt>
-            <dd className="t-numeral text-crema">2 min</dd>
+            <dd className="t-numeral-stat text-crema">2 min</dd>
           </div>
         </dl>
       </Section>

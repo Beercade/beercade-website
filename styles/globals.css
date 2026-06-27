@@ -69,6 +69,17 @@ body {
   outline-offset: 2px;
 }
 
+/* Form controls never render below 16px. iOS Safari auto-zooms the viewport
+   when a focused field's text is under 16px, which on the enquiry and newsletter
+   forms (text-sm = 15.75px) jolted the page and scrolled the field off-centre.
+   Unlayered so it wins over the Tailwind `text-sm` utility; checkboxes/radios
+   are exempt as they carry no text. */
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  font-size: 16px;
+}
+
 /* Ken Burns variants — slow zoom/pan for hero carousel still images */
 @keyframes kenBurns1 {
   from { transform: scale(1)    translate(0%, 0%); }
@@ -247,6 +258,25 @@ body {
   line-height: 1;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
+}
+/* Stat-strip numeral — identical to .t-numeral from the `sm` breakpoint up, but
+   below it the size is tied to the viewport so a multi-word stat ("2 min") stays
+   on one line inside the 3-up grid on narrow phones. The flat 2.5rem floor of
+   .t-numeral was 45px regardless of width, which forced "2 min" to wrap and clip
+   at ≤430px. Desktop scale is unchanged. */
+.t-numeral-stat {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.375rem, 8vw, 2.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+@media (min-width: 640px) {
+  .t-numeral-stat {
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
