@@ -1,6 +1,6 @@
 import machine from "./machine";
 import event from "./event";
-import functionPackage from "./functionPackage";
+import functionsPage from "./functionsPage";
 import openingHours from "./openingHours";
 import whatsOn from "./whatsOn";
 import homepage from "./homepage";
@@ -12,7 +12,7 @@ import menuSection from "./menuSection";
 const schemaTypes = [
   machine,
   event,
-  functionPackage,
+  functionsPage,
   openingHours,
   whatsOn,
   homepage,

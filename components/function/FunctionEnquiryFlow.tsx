@@ -3,7 +3,6 @@
 import { useEffect, useState, useTransition } from "react";
 import { submitFunctionInterest } from "@/app/actions/submit-function-interest";
 import { FunctionEnquiryForm } from "@/components/function/FunctionEnquiryForm";
-import { PACKAGE_SELECT_EVENT } from "@/components/function/PackageEnquireButton";
 import { trackEvent } from "@/lib/analytics/events";
 
 type Lead = { firstName: string; email: string };
@@ -19,7 +18,6 @@ const inputClass =
  */
 export function FunctionEnquiryFlow() {
   const [lead, setLead] = useState<Lead | null>(null);
-  const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
 
   // A returning nudge-email click can deep-link straight to the full form with
   // details pre-filled (?email=…&name=…), skipping step 1. They were already
@@ -32,22 +30,6 @@ export function FunctionEnquiryFlow() {
     setLead({ firstName, email });
   }, []);
 
-  // Package cards up the page broadcast a selection when their CTA is clicked;
-  // carry it into the enquiry so the team knows which tier prompted it.
-  useEffect(() => {
-    const handler = (e: Event) => {
-      setSelectedPackage((e as CustomEvent<string>).detail || null);
-    };
-    window.addEventListener(PACKAGE_SELECT_EVENT, handler);
-    return () => window.removeEventListener(PACKAGE_SELECT_EVENT, handler);
-  }, []);
-
-  const packageChip = selectedPackage && (
-    <p className="border-high-score-orange font-body text-crema/80 border-l-2 pl-3 text-sm">
-      Asking about: <span className="text-crema font-semibold">{selectedPackage}</span>
-    </p>
-  );
-
   if (lead) {
     return (
       <div className="space-y-5">
@@ -55,13 +37,9 @@ export function FunctionEnquiryFlow() {
           Got it{lead.firstName ? `, ${lead.firstName}` : ""}. We&rsquo;ve got
           your details. Last bit so we can hold a date and send a real quote.
         </p>
-        {packageChip}
         <FunctionEnquiryForm
           defaultName={lead.firstName}
           defaultEmail={lead.email}
-          defaultNotes={
-            selectedPackage ? `Asking about the ${selectedPackage} package.` : undefined
-          }
         />
       </div>
     );
@@ -69,7 +47,6 @@ export function FunctionEnquiryFlow() {
 
   return (
     <div className="space-y-5">
-      {packageChip}
       <InterestCapture onCaptured={setLead} />
     </div>
   );

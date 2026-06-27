@@ -32,8 +32,19 @@ export const openingHoursQuery = /* groq */ `*[_type == "openingHours"][0]`;
 
 export const whatsOnQuery = /* groq */ `*[_type == "whatsOn"] | order(order asc, dayOfWeek asc)`;
 
-export const functionPackagesQuery = /* groq */ `*[_type == "functionPackage"] | order(order asc){
-  _id, name, bestFor, tagline, groupSize, price, priceNote, inclusions, toHold, pitch, featured
+export const functionsPageQuery = /* groq */ `*[_type == "functionsPage"][0]{
+  kicker, title, lede,
+  contactHeading, contactIntro, contactEmail, contactPhoneName, contactPhoneDisplay, contactPhoneHref,
+  tokensHeading, tokensIntro,
+  "tokenOptions": tokenOptions[]{ _key, heading, description, mostPopular },
+  bulkHeading,
+  "bulkRows": bulkRows[]{ _key, spend, tokens },
+  bulkNote,
+  "rules": rules[]{ _key, label, body },
+  licensedNote,
+  foodIntro,
+  "deliveryPlaces": deliveryPlaces[]{ _key, name, url, note },
+  hoursNormallyOpen, hoursAvailableForFunctions, freeHireNote
 }`;
 
 export const menuSectionsQuery = /* groq */ `*[_type == "menuSection"] | order(order asc, title asc){

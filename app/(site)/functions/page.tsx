@@ -3,7 +3,10 @@ import type { Metadata } from "next";
 export const dynamic = "force-dynamic";
 
 import { sanityClient } from "@/lib/sanity/client";
-import { functionTestimonialsQuery } from "@/lib/sanity/queries";
+import {
+  functionsPageQuery,
+  functionTestimonialsQuery,
+} from "@/lib/sanity/queries";
 import { FunctionEnquiryFlow } from "@/components/function/FunctionEnquiryFlow";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Section } from "@/components/ui/Section";
@@ -23,20 +26,75 @@ interface Testimonial {
   context?: string | null;
 }
 
+interface TokenOption {
+  _key: string;
+  heading: string;
+  description?: string | null;
+  mostPopular?: boolean | null;
+}
+interface BulkRow {
+  _key: string;
+  spend: string;
+  tokens: string;
+}
+interface Rule {
+  _key: string;
+  label: string;
+  body?: string | null;
+}
+interface DeliveryPlace {
+  _key: string;
+  name: string;
+  url?: string | null;
+  note?: string | null;
+}
+interface FunctionsPage {
+  kicker?: string | null;
+  title?: string | null;
+  lede?: string | null;
+  contactHeading?: string | null;
+  contactIntro?: string | null;
+  contactEmail?: string | null;
+  contactPhoneName?: string | null;
+  contactPhoneDisplay?: string | null;
+  contactPhoneHref?: string | null;
+  tokensHeading?: string | null;
+  tokensIntro?: string | null;
+  tokenOptions?: TokenOption[] | null;
+  bulkHeading?: string | null;
+  bulkRows?: BulkRow[] | null;
+  bulkNote?: string | null;
+  rules?: Rule[] | null;
+  licensedNote?: string | null;
+  foodIntro?: string | null;
+  deliveryPlaces?: DeliveryPlace[] | null;
+  hoursNormallyOpen?: string | null;
+  hoursAvailableForFunctions?: string | null;
+  freeHireNote?: string | null;
+}
+
 export default async function FunctionsPage() {
-  const testimonials = await sanityClient
-    .fetch<Testimonial[]>(functionTestimonialsQuery)
-    .catch(() => []);
+  const [page, testimonials] = await Promise.all([
+    sanityClient.fetch<FunctionsPage | null>(functionsPageQuery).catch(() => null),
+    sanityClient
+      .fetch<Testimonial[]>(functionTestimonialsQuery)
+      .catch(() => []),
+  ]);
 
   const linkClass =
     "text-high-score-orange underline underline-offset-4 decoration-hairline transition-colors hover:decoration-high-score-orange";
 
+  const tokenOptions = page?.tokenOptions ?? [];
+  const bulkRows = page?.bulkRows ?? [];
+  const rules = page?.rules ?? [];
+  const deliveryPlaces = page?.deliveryPlaces ?? [];
+
   return (
     <>
       <PageHeader
-        kicker="Private hire"
-        title="Book the room."
-        lede="Three ways to do it, one spine: a held room, a bag of tokens per guest, drinks sorted, and food ordered in. Holding the room is usually free; a weekday daytime, or any slot outside our normal trading, costs nothing. The only time you pay to hire is closing a trading night to your group, at $750 an hour. Tokens you don't burn go home with you; drink tickets are spent on the night."
+        kicker={page?.kicker ?? undefined}
+        title={page?.title ?? "Book the room."}
+        lede={page?.lede ?? undefined}
       />
 
       {/* Enquiry — first thing under the heading */}
@@ -44,254 +102,221 @@ export default async function FunctionsPage() {
         <div className="grid gap-12 md:grid-cols-[1fr_560px]">
           <div className="space-y-4">
             <h2 id="enquire-heading" className="t-h2 text-crema">
-              Get in touch.
+              {page?.contactHeading ?? "Get in touch."}
             </h2>
-            <p className="font-body text-crema/70">
-              Tell us your date, rough headcount, and the occasion. You&rsquo;ll
-              get a real reply with a held window and the full breakdown, not a
-              form letter; normally within 24 hours.
-            </p>
-            <p className="font-body text-crema/60 text-sm">
-              Prefer email? Reach us at{" "}
-              <a href="mailto:functions@beercade.com.au" className={linkClass}>
-                functions@beercade.com.au
-              </a>
-              .
-            </p>
-            <p className="font-body text-crema/60 text-sm">
-              Prefer to talk? Call Roger on{" "}
-              <a href="tel:+61400112445" className={linkClass}>
-                0400 112 445
-              </a>
-              .
-            </p>
+            {page?.contactIntro && (
+              <p className="font-body text-crema/70">{page.contactIntro}</p>
+            )}
+            {page?.contactEmail && (
+              <p className="font-body text-crema/60 text-sm">
+                Prefer email? Reach us at{" "}
+                <a href={`mailto:${page.contactEmail}`} className={linkClass}>
+                  {page.contactEmail}
+                </a>
+                .
+              </p>
+            )}
+            {page?.contactPhoneDisplay && (
+              <p className="font-body text-crema/60 text-sm">
+                Prefer to talk? Call{" "}
+                {page.contactPhoneName ? `${page.contactPhoneName} on ` : ""}
+                <a
+                  href={`tel:${page.contactPhoneHref ?? page.contactPhoneDisplay.replace(/\s/g, "")}`}
+                  className={linkClass}
+                >
+                  {page.contactPhoneDisplay}
+                </a>
+                .
+              </p>
+            )}
           </div>
           <FunctionEnquiryFlow />
         </div>
       </Section>
 
       {/* Tokens and drinks — the mechanics behind every package */}
-      <Section hairline aria-labelledby="tokens-heading">
-        <h2 id="tokens-heading" className="t-h2 text-crema">
-          Tokens and drinks.
-        </h2>
-        <p className="font-body text-crema/70 mt-3 max-w-2xl">
-          The machines run on tokens; most games are $2, or two tokens a play.
-          Every guest gets a bag of tokens and drink tickets. Here are the
-          per-head packages, most popular first.
-        </p>
-
-        <div className="mt-8 grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:items-start">
-          <ul
-            className="space-y-3"
-            aria-label="Per-head token and drink options"
-          >
-            <li className="border-high-score-orange bg-surface-raised flex flex-col gap-1 border-l-2 p-4">
-              <span className="font-body text-crema text-sm font-semibold">
-                Option 1 · $50pp{" "}
-                <span className="text-high-score-orange font-normal tracking-wider uppercase">
-                  Most popular
-                </span>
-              </span>
-              <span className="font-body text-crema/70 text-sm">
-                25 tokens and 2 drink tickets.
-              </span>
-            </li>
-            <li className="border-hairline flex flex-col gap-1 border p-4">
-              <span className="font-body text-crema text-sm font-semibold">
-                Option 2 · $50pp
-              </span>
-              <span className="font-body text-crema/70 text-sm">
-                60 tokens, no drinks; guests buy their own at the bar.
-              </span>
-            </li>
-            <li className="border-hairline flex flex-col gap-1 border p-4">
-              <span className="font-body text-crema text-sm font-semibold">
-                Option 3 · $60pp
-              </span>
-              <span className="font-body text-crema/70 text-sm">
-                35 tokens and 3 drink tickets.
-              </span>
-            </li>
-            <li className="border-hairline flex flex-col gap-1 border p-4">
-              <span className="font-body text-crema text-sm font-semibold">
-                Option 4 · bulk tokens
-              </span>
-              <span className="font-body text-crema/70 text-sm">
-                Buy in one lump and let guests help themselves.
-              </span>
-            </li>
-          </ul>
-
-          <div>
-            <p className="t-kicker mb-3">Buy tokens in bulk</p>
-            <table className="font-body w-full border-collapse text-sm">
-              <thead>
-                <tr className="border-hairline text-crema/50 border-b">
-                  <th
-                    scope="col"
-                    className="py-2 text-left text-xs font-medium tracking-widest uppercase"
-                  >
-                    Spend
-                  </th>
-                  <th
-                    scope="col"
-                    className="py-2 text-right text-xs font-medium tracking-widest uppercase"
-                  >
-                    Tokens
-                  </th>
-                </tr>
-              </thead>
-              {/* Token counts in the Press Start accent — the brand §8
-                  HI-SCORE numeral device, used for numerals only. */}
-              <tbody className="text-crema/85">
-                <tr className="border-hairline/60 border-b">
-                  <td className="py-2.5">$100</td>
-                  <td className="font-accent text-high-score-orange py-2.5 text-right text-xs">
-                    125
-                  </td>
-                </tr>
-                <tr className="border-hairline/60 border-b">
-                  <td className="py-2.5">$200</td>
-                  <td className="font-accent text-high-score-orange py-2.5 text-right text-xs">
-                    260
-                  </td>
-                </tr>
-                <tr className="border-hairline/60 border-b">
-                  <td className="py-2.5">$300</td>
-                  <td className="font-accent text-high-score-orange py-2.5 text-right text-xs">
-                    450
-                  </td>
-                </tr>
-                <tr>
-                  <td className="py-2.5">$500</td>
-                  <td className="font-accent text-high-score-orange py-2.5 text-right text-xs">
-                    850
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <p className="font-body text-crema/50 mt-3 text-xs">
-              Buying in bulk on the day saves more again, and whatever’s left
-              over is yours to keep.
+      {(page?.tokensHeading || tokenOptions.length > 0) && (
+        <Section hairline aria-labelledby="tokens-heading">
+          <h2 id="tokens-heading" className="t-h2 text-crema">
+            {page?.tokensHeading ?? "Tokens and drinks."}
+          </h2>
+          {page?.tokensIntro && (
+            <p className="font-body text-crema/70 mt-3 max-w-2xl">
+              {page.tokensIntro}
             </p>
+          )}
+
+          <div className="mt-8 grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:items-start">
+            {tokenOptions.length > 0 && (
+              <ul
+                className="space-y-3"
+                aria-label="Per-head token and drink options"
+              >
+                {tokenOptions.map((opt) => (
+                  <li
+                    key={opt._key}
+                    className={
+                      opt.mostPopular
+                        ? "border-high-score-orange bg-surface-raised flex flex-col gap-1 border-l-2 p-4"
+                        : "border-hairline flex flex-col gap-1 border p-4"
+                    }
+                  >
+                    <span className="font-body text-crema text-sm font-semibold">
+                      {opt.heading}
+                      {opt.mostPopular && (
+                        <>
+                          {" "}
+                          <span className="text-high-score-orange font-normal tracking-wider uppercase">
+                            Most popular
+                          </span>
+                        </>
+                      )}
+                    </span>
+                    {opt.description && (
+                      <span className="font-body text-crema/70 text-sm">
+                        {opt.description}
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {bulkRows.length > 0 && (
+              <div>
+                {page?.bulkHeading && (
+                  <p className="t-kicker mb-3">{page.bulkHeading}</p>
+                )}
+                <table className="font-body w-full border-collapse text-sm">
+                  <thead>
+                    <tr className="border-hairline text-crema/50 border-b">
+                      <th
+                        scope="col"
+                        className="py-2 text-left text-xs font-medium tracking-widest uppercase"
+                      >
+                        Spend
+                      </th>
+                      <th
+                        scope="col"
+                        className="py-2 text-right text-xs font-medium tracking-widest uppercase"
+                      >
+                        Tokens
+                      </th>
+                    </tr>
+                  </thead>
+                  {/* Token counts in the Press Start accent — the brand §8
+                      HI-SCORE numeral device, used for numerals only. */}
+                  <tbody className="text-crema/85">
+                    {bulkRows.map((row, i) => (
+                      <tr
+                        key={row._key}
+                        className={
+                          i < bulkRows.length - 1
+                            ? "border-hairline/60 border-b"
+                            : undefined
+                        }
+                      >
+                        <td className="py-2.5">{row.spend}</td>
+                        <td className="font-accent text-high-score-orange py-2.5 text-right text-xs">
+                          {row.tokens}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {page?.bulkNote && (
+                  <p className="font-body text-crema/50 mt-3 text-xs">
+                    {page.bulkNote}
+                  </p>
+                )}
+              </div>
+            )}
           </div>
-        </div>
 
-        <div className="mt-8 grid max-w-3xl gap-4 sm:grid-cols-2">
-          <p className="font-body text-crema/70 text-sm">
-            <span className="text-crema font-semibold">
-              Tokens never expire.
-            </span>{" "}
-            Don’t burn them all on the night; take the leftovers home and use
-            them whenever. They can’t be cashed out or swapped for drinks, but
-            they keep forever.
-          </p>
-          <p className="font-body text-crema/70 text-sm">
-            <span className="text-crema font-semibold">
-              Drink tickets are spent on the night.
-            </span>{" "}
-            One ticket gets any drink except cocktails, which are two. They
-            can’t be swapped for cash or tokens, and they expire the second your
-            function ends. Tell your guests; they’ll try.
-          </p>
-        </div>
+          {rules.length > 0 && (
+            <div className="mt-8 grid max-w-3xl gap-4 sm:grid-cols-2">
+              {rules.map((rule) => (
+                <p key={rule._key} className="font-body text-crema/70 text-sm">
+                  <span className="text-crema font-semibold">{rule.label}</span>
+                  {rule.body && <> {rule.body}</>}
+                </p>
+              ))}
+            </div>
+          )}
 
-        <p className="font-body text-crema/60 mt-6 max-w-2xl text-sm">
-          We’re fully licensed. Under-18s are welcome as long as they’re with a
-          responsible adult, family or guardian.
-        </p>
-      </Section>
+          {page?.licensedNote && (
+            <p className="font-body text-crema/60 mt-6 max-w-2xl text-sm">
+              {page.licensedNote}
+            </p>
+          )}
+        </Section>
+      )}
 
       {/* Food and hours */}
-      <Section tone="raised" hairline aria-labelledby="food-hours-heading">
-        <h2 id="food-hours-heading" className="sr-only">
-          Food and hours
-        </h2>
-        <div className="grid gap-12 md:grid-cols-2">
-          <div>
-            <p className="t-kicker mb-3">Food</p>
-            <p className="font-body text-crema/70 max-w-prose">
-              The bar does small snacks; toasties and a range of chips. For
-              anything more, bring your own or order in. Plenty of our
-              neighbours deliver straight to us, and we’ll pass on their details
-              so you can place the order yourself for the day.
-            </p>
-            <ul className="font-body text-crema/80 mt-4 space-y-2 text-sm">
-              <li>
-                <a
-                  href="https://www.lacoppola.com.au"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={linkClass}
-                >
-                  La Coppola
-                </a>{" "}
-                · great pizza
-              </li>
-              <li>
-                <a
-                  href="https://www.huxtaburger.com.au"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={linkClass}
-                >
-                  Huxtaburger
-                </a>{" "}
-                · burgers and sliders
-              </li>
-              <li>
-                <a
-                  href="https://www.bigdaddiesburgerbar.com.au"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={linkClass}
-                >
-                  Big Daddies Burger Bar
-                </a>{" "}
-                · American-style burgers
-              </li>
-              <li>Sushi Topia, Redfern · order through Uber Eats</li>
-              <li>
-                <a
-                  href="https://www.rararamen.com.au"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={linkClass}
-                >
-                  Rara Ramen
-                </a>{" "}
-                · vegetarian, and properly good
-              </li>
-            </ul>
+      {(page?.foodIntro || page?.hoursNormallyOpen) && (
+        <Section tone="raised" hairline aria-labelledby="food-hours-heading">
+          <h2 id="food-hours-heading" className="sr-only">
+            Food and hours
+          </h2>
+          <div className="grid gap-12 md:grid-cols-2">
+            <div>
+              <p className="t-kicker mb-3">Food</p>
+              {page?.foodIntro && (
+                <p className="font-body text-crema/70 max-w-prose">
+                  {page.foodIntro}
+                </p>
+              )}
+              {deliveryPlaces.length > 0 && (
+                <ul className="font-body text-crema/80 mt-4 space-y-2 text-sm">
+                  {deliveryPlaces.map((place) => (
+                    <li key={place._key}>
+                      {place.url ? (
+                        <a
+                          href={place.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={linkClass}
+                        >
+                          {place.name}
+                        </a>
+                      ) : (
+                        place.name
+                      )}
+                      {place.note && <> · {place.note}</>}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div>
+              <p className="t-kicker mb-3">Hours</p>
+              <dl className="font-body text-crema/80 space-y-4">
+                {page?.hoursNormallyOpen && (
+                  <div>
+                    <dt className="text-crema/50 text-xs tracking-widest uppercase">
+                      Normally open
+                    </dt>
+                    <dd className="mt-1">{page.hoursNormallyOpen}</dd>
+                  </div>
+                )}
+                {page?.hoursAvailableForFunctions && (
+                  <div>
+                    <dt className="text-crema/50 text-xs tracking-widest uppercase">
+                      Available for functions
+                    </dt>
+                    <dd className="mt-1">{page.hoursAvailableForFunctions}</dd>
+                  </div>
+                )}
+              </dl>
+              {page?.freeHireNote && (
+                <p className="font-body text-crema/60 mt-4 max-w-prose text-sm">
+                  {page.freeHireNote}
+                </p>
+              )}
+            </div>
           </div>
-          <div>
-            <p className="t-kicker mb-3">Hours</p>
-            <dl className="font-body text-crema/80 space-y-4">
-              <div>
-                <dt className="text-crema/50 text-xs tracking-widest uppercase">
-                  Normally open
-                </dt>
-                <dd className="mt-1">
-                  Wed to Sat, 3pm to midnight. Sun, 3pm to 10pm.
-                </dd>
-              </div>
-              <div>
-                <dt className="text-crema/50 text-xs tracking-widest uppercase">
-                  Available for functions
-                </dt>
-                <dd className="mt-1">
-                  Mon to Sat, 10am to midnight. Sun, 10am to 10pm.
-                </dd>
-              </div>
-            </dl>
-            <p className="font-body text-crema/60 mt-4 max-w-prose text-sm">
-              The gap between those two is where the free hire lives. A weekday
-              daytime, a Monday or Tuesday, costs nothing to hold.
-            </p>
-          </div>
-        </div>
-      </Section>
+        </Section>
+      )}
 
       {/* Testimonials */}
       {testimonials.length > 0 && (
