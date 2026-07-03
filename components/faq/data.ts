@@ -12,7 +12,7 @@ import type { FaqItem } from "./Faq";
 export const visiting: FaqItem[] = [
   {
     q: "Where are you?",
-    a: "Regent Street, Redfern. Two minutes' walk from Redfern Station, turn left out of the gate. If you've hit the wine bars, you've gone too far.",
+    a: "Regent Street, Redfern. Two minutes' walk from Redfern Station. If you've hit the wine bars, you've gone too far.",
   },
   {
     q: "What is this place, exactly?",
@@ -75,7 +75,7 @@ export const functions: FaqItem[] = [
   },
   {
     q: "What's included?",
-    a: "A held room, a bag of tokens per guest, drinks sorted, and food ordered in. Tokens you don't burn go home with you; they never expire. Drink tickets are spent on the night; one ticket gets any drink except cocktails, which are two.",
+    a: "A bag of tokens per guest, drinks sorted, and food ordered in. Tokens you don't burn go home with you; they never expire. Drink tickets are spent on the night; one ticket gets any drink except cocktails, which are two.",
   },
   {
     q: "Do you do exclusive venue hire?",
@@ -91,7 +91,7 @@ export const functions: FaqItem[] = [
   },
   {
     q: "What's the run of a function night?",
-    a: "You arrive to a reserved room and machines ready to go. People drift between the tables and the bar; nobody's herded through an agenda. The last group of 18 we hosted left at 11:45 swearing it was the best birthday they'd been to.",
+    a: "You arrive to machines ready to go. People drift between the tables and the bar; nobody's herded through an agenda. The last group of 18 we hosted left at 11:45 swearing it was the best birthday they'd been to.",
   },
   {
     q: "What if I need to change the numbers or the date?",
