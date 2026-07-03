@@ -110,7 +110,7 @@ const functionsPage = {
     },
   ],
   licensedNote:
-    "We're fully licensed. Under-18s are welcome as long as they're with a responsible adult, family or guardian.",
+    "We're fully licensed. Under-18s are welcome until 10pm with a responsible adult, family or guardian; after that it's adults only.",
 
   foodIntro:
     "The bar does small snacks; toasties and a range of chips. For anything more, bring your own or order in. Plenty of our neighbours deliver straight to us, and we'll pass on their details so you can place the order yourself for the day.",

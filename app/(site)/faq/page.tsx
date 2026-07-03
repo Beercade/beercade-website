@@ -8,7 +8,7 @@ import { visiting, functions } from "@/components/faq/data";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Where Beercade is, when we're open, what it costs to play, and how to book the back room for a function. Redfern NSW, two minutes from the station.",
+    "Where Beercade is, when we're open, what it costs to play, and how to book the room for a function. Redfern NSW, two minutes from the station.",
 };
 
 export default function FaqPage() {
@@ -17,7 +17,7 @@ export default function FaqPage() {
       <PageHeader
         kicker="Good to know"
         title="FAQ."
-        lede="Where we are, when we're open, what it costs to play, and how to book the back room. Regent Street, Redfern; two minutes from the station."
+        lede="Where we are, when we're open, what it costs to play, and how to book the room. Regent Street, Redfern; two minutes from the station."
       />
 
       <Section aria-labelledby="faq-visiting">
@@ -34,8 +34,8 @@ export default function FaqPage() {
           Organising a group
         </SectionHeading>
         <p className="mt-6 max-w-prose font-body leading-relaxed text-crema/70">
-          Short version: we&rsquo;ve got a back room built for it, the enquiry is
-          one email, and groups your size have done this before and left happy.
+          Short version: the room gets held for you, the enquiry is one short
+          form, and groups your size have done this before and left happy.
         </p>
         <div className="mt-8">
           <FaqList items={functions} />
