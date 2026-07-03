@@ -1,9 +1,11 @@
 import { Fragment } from "react";
+import Link from "next/link";
 
 export interface FaqItem {
   q: string;
   /**
    * Answer copy as plain text. Inline tokens are rendered specially:
+   *  - `[label](/path)` → internal link (markdown-style).
    *  - `[bracketed]`  → muted "to confirm before launch" span (a real-world
    *    fact the consultant fills in before go-live; mirrors the Footer FILLME
    *    convention).
@@ -13,15 +15,30 @@ export interface FaqItem {
   a: string;
 }
 
-/** Tokenise an answer into bracket-TODOs, bold runs, emails, and plain text. */
+const linkClass =
+  "text-high-score-orange underline underline-offset-4 decoration-hairline transition-colors hover:decoration-high-score-orange";
+
+/** Tokenise an answer into links, bracket-TODOs, bold runs, emails, and plain text. */
 function renderAnswer(text: string) {
-  // Bracket alternative allows one level of nesting, e.g. "[Or call [phone].]".
+  // The link alternative must come first so `[label](/path)` is captured whole
+  // rather than as a bracket-TODO. Bracket alternative allows one level of
+  // nesting, e.g. "[Or call [phone].]".
   const token =
-    /(\[(?:[^[\]]|\[[^[\]]*\])*\]|\*\*[^*]+\*\*|[\w.+-]+@[\w.-]+\.[\w-]+)/g;
+    /(\[[^[\]]+\]\([^()\s]+\)|\[(?:[^[\]]|\[[^[\]]*\])*\]|\*\*[^*]+\*\*|[\w.+-]+@[\w.-]+\.[\w-]+)/g;
   const parts = text.split(token);
 
   return parts.map((part, i) => {
     if (!part) return null;
+
+    // Markdown-style internal link: [label](/path).
+    const link = part.match(/^\[([^[\]]+)\]\(([^()\s]+)\)$/);
+    if (link) {
+      return (
+        <Link key={i} href={link[2]} className={linkClass}>
+          {link[1]}
+        </Link>
+      );
+    }
 
     // Real-world fact the consultant must confirm before launch.
     if (part.startsWith("[") && part.endsWith("]")) {
