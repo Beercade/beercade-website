@@ -48,7 +48,7 @@ export const visiting: FaqItem[] = [
   },
   {
     q: "Can I bring kids?",
-    a: "Until 10pm, yes, with a responsible adult, family or guardian. After 10pm it's adults only. The machines are great; the room still isn't built for a kids' party.",
+    a: "Until 10pm, yes, with a responsible adult, family or guardian. After 10pm it's adults only. The machines are great; the tables still aren't built for a kids' party.",
   },
   {
     q: "Is it any good for a date?",
@@ -60,7 +60,7 @@ export const visiting: FaqItem[] = [
   },
   {
     q: "Do you take walk-in groups?",
-    a: "Small ones, sure. Once you're at the size where someone's organising it, book a function instead; the room gets held and the tokens are sorted before you arrive. See below.",
+    a: "Small ones, sure. Once you're at the size where someone's organising it, book a function instead; the tables get held and the tokens are sorted before you arrive. See below.",
   },
 ];
 
@@ -71,7 +71,7 @@ export const functions: FaqItem[] = [
   },
   {
     q: "What does it cost?",
-    a: "Per head: **$50** gets 25 tokens and 2 drink tickets; most groups book this. The same $50 gets 60 tokens with no drinks, or $60 gets 35 tokens and 3 drink tickets. Or buy tokens in one lump and let guests help themselves. Holding the room is usually free; the only time you pay to hire is closing a trading night to your group, at $750 an hour. You'll get the full breakdown in writing before you commit to anything.",
+    a: "Per head: **$50** gets 25 tokens and 2 drink tickets; most groups book this. The same $50 gets 60 tokens with no drinks, or $60 gets 35 tokens and 3 drink tickets. Or buy tokens in one lump and let guests help themselves. Holding the tables is usually free; the only time you pay to hire is closing a trading night to your group, at $750 an hour. You'll get the full breakdown in writing before you commit to anything.",
   },
   {
     q: "What's included?",
@@ -83,11 +83,11 @@ export const functions: FaqItem[] = [
   },
   {
     q: "How far ahead should I book?",
-    a: "Two to four weeks is normal. Popular dates and Friday/Saturday windows go earlier. If your date's flexible, a midweek booking is easier to lock and the room's all yours.",
+    a: "Two to four weeks is normal. Popular dates and Friday/Saturday windows go earlier. If your date's flexible, a midweek booking is easier to lock and the tables are all yours.",
   },
   {
     q: "Can I see what other groups have done?",
-    a: "Yes; there are photos of real function nights on the Beercade Instagram. Real groups, real Thursday-night room, no stock models pretending to play.",
+    a: "Yes; there are photos of real function nights on the Beercade Instagram. Real groups, real Thursday-night tables, no stock models pretending to play.",
   },
   {
     q: "What's the run of a function night?",
