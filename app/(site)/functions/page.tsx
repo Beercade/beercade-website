@@ -16,7 +16,7 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: "Functions",
   description:
-    "Book the room. Pinball, arcade machines, cold beer, private hire at Beercade Redfern from 8 people.",
+    "Book your function. Pinball, arcade machines, cold beer, private hire at Beercade Redfern from 8 people.",
 };
 
 interface Testimonial {
@@ -93,7 +93,7 @@ export default async function FunctionsPage() {
     <>
       <PageHeader
         kicker={page?.kicker ?? undefined}
-        title={page?.title ?? "Book the room."}
+        title={page?.title ?? "Book your function."}
         lede={page?.lede ?? undefined}
       />
 

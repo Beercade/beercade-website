@@ -42,7 +42,7 @@ const functionsPage = {
   _id: "functionsPage",
   _type: "functionsPage",
   kicker: "Private hire",
-  title: "Book the room.",
+  title: "Book your function.",
   lede: "Three ways to do it, one spine: a bag of tokens per guest, drinks sorted, and food ordered in. Booking is usually free; a weekday daytime, or any slot outside our normal trading, costs nothing. The only time you pay is hiring the entire venue on a trading night, at $750 an hour. Tokens you don't burn go home with you; drink tickets are spent on the night.",
 
   contactHeading: "Get in touch.",
