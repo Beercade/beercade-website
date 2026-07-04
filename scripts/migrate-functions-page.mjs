@@ -43,7 +43,7 @@ const functionsPage = {
   _type: "functionsPage",
   kicker: "Private hire",
   title: "Book your function.",
-  lede: "Three ways to do it, one spine: a bag of tokens per guest, drinks sorted, and food ordered in. Booking is usually free; a weekday daytime, or any slot outside our normal trading, costs nothing. The only time you pay is hiring the entire venue on a trading night, at $750 an hour. Tokens you don't burn go home with you; drink tickets are spent on the night.",
+  lede: "Beercade is the perfect place to host your next birthday party, hens night, corporate event, or random get-together with your mates. Fill out our function enquiry form below, and a team member will get in touch.",
 
   contactHeading: "Get in touch.",
   contactIntro:
