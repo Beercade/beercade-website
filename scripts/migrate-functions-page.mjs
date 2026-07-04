@@ -130,16 +130,17 @@ const functionsPage = {
       note: "burgers and sliders",
     },
     {
-      ...k("bigdaddies"),
+      ...k("chargrillcharlies"),
       _type: "deliveryPlace",
-      name: "Big Daddies Burger Bar",
-      url: "https://www.bigdaddiesburgerbar.com.au",
-      note: "American-style burgers",
+      name: "Chargrill Charlie's",
+      url: "https://chargrillcharlies.com",
+      note: "chargrilled chicken",
     },
     {
-      ...k("sushitopia"),
+      ...k("sushinaya"),
       _type: "deliveryPlace",
-      name: "Sushi Topia, Redfern",
+      name: "Sushi Naya, Redfern",
+      url: "https://sushinaya.com.au",
       note: "order through Uber Eats",
     },
     {
