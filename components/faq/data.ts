@@ -44,7 +44,7 @@ export const visiting: FaqItem[] = [
   },
   {
     q: "Is there food?",
-    a: "The bar does toasties and a range of chips. For anything more, order in; plenty of the neighbours deliver straight to us. Pizza from La Coppola, burgers from Huxtaburger, ramen from Rara Ramen.",
+    a: "The bar does light meals and a range of chips. For anything more, order in; plenty of the neighbours deliver straight to us. Pizza from La Coppola, burgers from Huxtaburger, ramen from Rara Ramen.",
   },
   {
     q: "Can I bring kids?",
