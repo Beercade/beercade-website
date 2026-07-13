@@ -72,26 +72,31 @@ export async function GET(req: NextRequest) {
   }
 
   // Resolve our own origin so the headless browser hits this deployment
-  // (production, preview, or localhost), not a hardcoded host.
-  const proto = req.headers.get("x-forwarded-proto") ?? "http";
-  const host = req.headers.get("x-forwarded-host") ?? req.headers.get("host");
-  if (!host) {
-    return NextResponse.json({ error: "Missing host header." }, { status: 400 });
-  }
+  // (production, preview, or localhost), not a hardcoded host. Never derive
+  // this from request headers: the browser carries the deployment-protection
+  // bypass secret, so an attacker-controlled Host / X-Forwarded-Host would
+  // exfiltrate that secret to any origin they name. On Vercel we use the
+  // server-set VERCEL_URL (always this deployment's own domain); locally we
+  // fall back to the request host, where no secret is attached.
+  const onVercel = Boolean(process.env.VERCEL);
+  const origin = onVercel
+    ? `https://${process.env.VERCEL_URL}`
+    : `http://${req.headers.get("host") ?? "localhost:3000"}`;
 
   let browser: Browser | undefined;
   try {
     browser = await launchBrowser();
     const page = await browser.newPage();
 
-    // Preview deployments sit behind Vercel deployment protection; the
-    // bypass secret lets our own headless browser through.
+    // Preview deployments sit behind Vercel deployment protection; the bypass
+    // secret lets our own headless browser through. Only ever send it on
+    // Vercel, where `origin` is VERCEL_URL — our own deployment host.
     const bypass = process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
-    if (bypass) {
+    if (onVercel && bypass) {
       await page.setExtraHTTPHeaders({ "x-vercel-protection-bypass": bypass });
     }
 
-    await page.goto(`${proto}://${host}/print/menu`, {
+    await page.goto(`${origin}/print/menu`, {
       waitUntil: "networkidle0",
       timeout: 30_000,
     });
