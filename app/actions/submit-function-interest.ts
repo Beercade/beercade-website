@@ -1,6 +1,7 @@
 "use server";
 
 import { z } from "zod";
+import { signupGuard } from "@/lib/security/signup-guard";
 
 const schema = z.object({
   email: z.string().email(),
@@ -19,6 +20,10 @@ const KIT_API = "https://api.kit.com/v4";
 export async function submitFunctionInterest(
   formData: FormData
 ): Promise<{ ok: boolean; error?: string }> {
+  const guard = await signupGuard(formData, "rl:function-interest");
+  if (guard.verdict === "silent-drop") return { ok: true };
+  if (guard.verdict === "reject") return { ok: false, error: guard.error };
+
   const parsed = schema.safeParse(Object.fromEntries(formData.entries()));
   if (!parsed.success) {
     return { ok: false, error: "Enter your name and a valid email address." };
