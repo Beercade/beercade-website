@@ -35,6 +35,16 @@ export function NewsletterSignup({ source }: Props) {
 
   return (
     <form onSubmit={handleSubmit} noValidate>
+      {/* Honeypot — hidden from real users */}
+      <input
+        type="text"
+        name="honeypot"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-2499.75 h-0 w-0 overflow-hidden"
+      />
+
       <div className="flex flex-col gap-2 sm:flex-row">
         <label htmlFor={`newsletter-email-${source}`} className="sr-only">
           Email address

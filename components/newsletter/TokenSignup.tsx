@@ -47,6 +47,16 @@ export function TokenSignup() {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-4">
+      {/* Honeypot — hidden from real users */}
+      <input
+        type="text"
+        name="honeypot"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-2499.75 h-0 w-0 overflow-hidden"
+      />
+
       <div>
         <label
           htmlFor="token-first-name"

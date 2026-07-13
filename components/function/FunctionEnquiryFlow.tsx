@@ -77,6 +77,16 @@ function InterestCapture({ onCaptured }: { onCaptured: (lead: Lead) => void }) {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-4">
+      {/* Honeypot — hidden from real users */}
+      <input
+        type="text"
+        name="honeypot"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-2499.75 h-0 w-0 overflow-hidden"
+      />
+
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label
