@@ -3,6 +3,7 @@ import { ExternalAccountClient } from "google-auth-library";
 import { getVercelOidcToken } from "@vercel/oidc";
 import type { FunctionEnquiryInput } from "@/lib/validation/function-enquiry";
 import { confirmedSummary } from "@/lib/sanity/function-webhook";
+import { sydneyDayBounds } from "@/lib/google/hub-today";
 
 // Keyless auth via Workload Identity Federation.
 // The beercade.com.au org enforces iam.disableServiceAccountKeyCreation, so we
@@ -101,6 +102,37 @@ export async function confirmCalendarEvent(eventId: string): Promise<void> {
     eventId,
     requestBody: { status: "confirmed", summary },
   });
+}
+
+// Today's confirmed functions, for the staff hub's banner (/api/hub/today).
+// Tentative holds are excluded: an enquiry isn't a function until someone
+// flips it to confirmed. Summaries are returned raw here; the route sanitises
+// them before anything leaves the server.
+export async function listTodaysConfirmedFunctions(): Promise<
+  { summary: string; start: string; end: string }[]
+> {
+  const calendar = getCalendarClient();
+  const { timeMin, timeMax } = sydneyDayBounds();
+
+  const res = await calendar.events.list({
+    calendarId: process.env.GOOGLE_BOOKINGS_CALENDAR_ID!,
+    timeMin,
+    timeMax,
+    singleEvents: true,
+    orderBy: "startTime",
+  });
+
+  return (res.data.items ?? [])
+    .filter(
+      (ev) =>
+        ev.status === "confirmed" &&
+        !/^\s*\[TENTATIVE\]/i.test(ev.summary ?? "")
+    )
+    .map((ev) => ({
+      summary: ev.summary ?? "",
+      start: ev.start?.dateTime ?? ev.start?.date ?? "",
+      end: ev.end?.dateTime ?? ev.end?.date ?? "",
+    }));
 }
 
 // Remove an event from the Bookings calendar. Called when an enquiry's status
